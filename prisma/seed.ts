@@ -28,11 +28,14 @@ async function main() {
   // ------------------------------------------------------------------
   // Scenario 1: Fresh Project (Discovery Phase)
   // ------------------------------------------------------------------
-  const freshProject = await prisma.project.create({
+  const freshProjectName = "Corporate Dashboard System";
+  const existingFresh = await prisma.project.findFirst({ where: { projectName: freshProjectName } });
+  
+  const freshProject = existingFresh || await prisma.project.create({
     data: {
       clientName: "PT Sinergi Digital",
       clientPhone: "62895600077007",
-      projectName: "Corporate Dashboard System",
+      projectName: freshProjectName,
       deadline: daysFromNow(60),
       status: "On Progress",
       currentPhase: ProjectWorkPhase.DEVELOPMENT,
@@ -76,16 +79,19 @@ async function main() {
       },
     },
   });
-  console.log(`✅ Created: ${freshProject.projectName}`);
+  console.log(`✅ Ready: ${freshProject.projectName}`);
 
   // ------------------------------------------------------------------
   // Scenario 2: Active Development (Design/Dev Phase)
   // ------------------------------------------------------------------
-  const devProject = await prisma.project.create({
+  const devProjectName = "POS System & Landing Page";
+  const existingDev = await prisma.project.findFirst({ where: { projectName: devProjectName } });
+
+  const devProject = existingDev || await prisma.project.create({
     data: {
       clientName: "Coffeeshop 'Kopi Senja'",
       clientPhone: "62895600077007",
-      projectName: "POS System & Landing Page",
+      projectName: devProjectName,
       deadline: daysFromNow(30),
       status: "On Progress",
       currentPhase: ProjectWorkPhase.DEVELOPMENT,
@@ -139,16 +145,19 @@ async function main() {
       },
     },
   });
-  console.log(`✅ Created: ${devProject.projectName}`);
+  console.log(`✅ Ready: ${devProject.projectName}`);
 
   // ------------------------------------------------------------------
   // Scenario 3: Maintenance Mode (Project Completed & Live)
   // ------------------------------------------------------------------
-  const maintenanceProject = await prisma.project.create({
+  const maintProjectName = "Travel Booking Platform V1";
+  const existingMaint = await prisma.project.findFirst({ where: { projectName: maintProjectName } });
+
+  const maintenanceProject = existingMaint || await prisma.project.create({
     data: {
       clientName: "Buana Travel Agent",
       clientPhone: "62895600077007",
-      projectName: "Travel Booking Platform V1",
+      projectName: maintProjectName,
       deadline: daysFromNow(-30), // Deadline was last month
       status: "Done",
       currentPhase: ProjectWorkPhase.MAINTENANCE,
@@ -202,16 +211,19 @@ async function main() {
       },
     },
   });
-  console.log(`✅ Created: ${maintenanceProject.projectName}`);
+  console.log(`✅ Ready: ${maintenanceProject.projectName}`);
 
   // ------------------------------------------------------------------
   // Scenario 4: Completed but still in warranty (No active maintenance logs yet)
   // ------------------------------------------------------------------
-  const justFinishedProject = await prisma.project.create({
+  const justFinishedProjectName = "Klinik Appointment App";
+  const existingFinished = await prisma.project.findFirst({ where: { projectName: justFinishedProjectName } });
+
+  const justFinishedProject = existingFinished || await prisma.project.create({
     data: {
       clientName: "Dr. Gigi Santoso",
       clientPhone: "62895600077007",
-      projectName: "Klinik Appointment App",
+      projectName: justFinishedProjectName,
       deadline: daysFromNow(-2),
       status: "Done",
       currentPhase: ProjectWorkPhase.DEVELOPMENT, // Just finished, maybe not formally in "Maintenance contract" yet
@@ -231,7 +243,7 @@ async function main() {
       },
     },
   });
-  console.log(`✅ Created: ${justFinishedProject.projectName}`);
+  console.log(`✅ Ready: ${justFinishedProject.projectName}`);
 
   console.log("\n🎉 Seed completed! Use the tokens below to test the tracking page:");
   console.log(`   - Dev (Early): ${freshProject.uniqueToken}`);

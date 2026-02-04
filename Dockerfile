@@ -9,13 +9,12 @@ WORKDIR /app
 RUN npm install -g pnpm
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-
 COPY prisma ./prisma
 
-# Install semua dependencies (dev + prod)
+# Install dependencies (frozen lockfile for consistency)
 RUN pnpm install --frozen-lockfile
 
-# Copy seluruh source code
+# Copy source code
 COPY . .
 
 # Generate Prisma client
@@ -32,9 +31,6 @@ ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
 # Build Next.js app
 RUN pnpm build
 
-# Prune development dependencies to prepare for production copy
-RUN pnpm prune --prod --ignore-scripts
-
 # -----------------------
 # PRODUCTION STAGE
 # -----------------------
@@ -43,21 +39,26 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-# Install pnpm globally di production image
-RUN npm install -g pnpm
+# Create non-root user for security
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-# Copy package files (optional, helpful for debugging or scripts)
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-
-# Copy node_modules from builder (contains prod deps & generated prisma client)
-COPY --from=builder /app/node_modules ./node_modules
-
-COPY prisma ./prisma
-
-# Copy hasil build Next.js
-COPY --from=builder /app/.next ./.next
+# Copy only necessary files from builder
 COPY --from=builder /app/public ./public
+
+# Set correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
 
 EXPOSE 3000
 
@@ -65,4 +66,4 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
   CMD node -e "require('http').get('http://localhost:3000', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
 
-CMD ["pnpm", "start"]
+CMD ["node", "server.js"]

@@ -20,6 +20,25 @@ services:
     networks:
       - progress-tracker-network
 
+  migrator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+      args:
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+    container_name: progress_tracker_migrator
+    environment:
+      DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-progress_tracker}
+    command: >
+      sh -c "pnpm prisma migrate deploy && pnpm prisma db seed"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - progress-tracker-network
+
   app:
     build:
       context: .
@@ -32,11 +51,15 @@ services:
       NODE_ENV: ${NODE_ENV:-production}
       DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-progress_tracker}
       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:3000}
+      FONNTE_API_KEY: ${FONNTE_API_KEY}
+      FONNTE_API_URL: ${FONNTE_API_URL:-https://api.fonnte.com/send}
     ports:
       - "${APP_PORT:-3000}:3000"
     depends_on:
       db:
         condition: service_healthy
+      migrator:
+        condition: service_completed_successfully
     networks:
       - progress-tracker-network
     restart: unless-stopped
