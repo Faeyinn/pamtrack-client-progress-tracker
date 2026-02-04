@@ -1,0 +1,692 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     PREMIUM EMERALD + DEEP SLATE — LIGHT MODE
+     Aesthetic, elegant, professional color palette
+     ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* Background - Soft white with subtle sage hint */
+  --background: oklch(0.985 0.008 155); /* Soft white + sage undertone */
+  --foreground: oklch(0.18 0.015 255); /* Deep slate text */
+
+  /* Cards - Clean elevated surfaces */
+  --card: oklch(0.995 0.005 155); /* Off-white with sage whisper */
+  --card-foreground: oklch(0.18 0.015 255);
+
+  /* Popover */
+  --popover: oklch(0.995 0.005 155);
+  --popover-foreground: oklch(0.18 0.015 255);
+
+  /* Primary - Deep Slate (Elegant Dark) */
+  --primary: oklch(0.22 0.02 255); /* Deep slate - elegant, authoritative */
+  --primary-foreground: oklch(0.98 0.005 155);
+
+  /* Secondary - Muted Sage */
+  --secondary: oklch(0.94 0.025 155); /* Soft sage surface */
+  --secondary-foreground: oklch(0.22 0.015 255);
+
+  /* Muted - Soft Sage Neutral */
+  --muted: oklch(0.95 0.015 155); /* Gentle sage background */
+  --muted-foreground: oklch(0.45 0.02 155); /* Sage-tinted muted text */
+
+  /* Accent - Rich Emerald (Sophisticated & Luxurious) */
+  --accent: oklch(0.82 0.06 155); /* Baby Green - Soft Pastel */
+  --accent-foreground: oklch(
+    0.2 0.02 160
+  ); /* Darker text for contrast on light accent */
+
+  /* Destructive - Sophisticated Red */
+  --destructive: oklch(0.65 0.12 25); /* Soft Red */
+  --destructive-foreground: oklch(0.98 0 0);
+
+  /* Borders & Inputs - Subtle sage undertones */
+  --border: oklch(0.94 0.01 155); /* Barely visible border */
+  --input: oklch(0.97 0.005 155); /* Near white */
+  --ring: oklch(0.82 0.06 155); /* Baby Green focus ring */
+
+  /* Chart Colors - Emerald Spectrum with Gold Accent */
+  --chart-1: oklch(0.82 0.06 155); /* Baby Green */
+  --chart-2: oklch(0.78 0.05 158); /* Pale Sage */
+  --chart-3: oklch(0.7 0.07 162); /* Muted Mint */
+  --chart-4: oklch(0.88 0.04 155); /* Mist Green */
+  --chart-5: oklch(0.85 0.1 85); /* Pastel Gold */
+
+  /* Gold Accent - For premium decorative elements */
+  --gold: oklch(0.85 0.1 85);
+  --gold-muted: oklch(0.88 0.06 85);
+
+  /* Sidebar */
+  --sidebar: oklch(0.99 0.005 155);
+  --sidebar-foreground: oklch(0.22 0.015 255);
+  --sidebar-primary: oklch(0.82 0.06 155); /* Baby Green */
+  --sidebar-primary-foreground: oklch(0.2 0.02 160);
+  --sidebar-accent: oklch(0.97 0.01 155); /* Pale Sage */
+  --sidebar-accent-foreground: oklch(0.22 0.015 255);
+  --sidebar-border: oklch(0.94 0.01 155);
+  --sidebar-ring: oklch(0.82 0.06 155);
+
+  /* Status Colors - Sophisticated */
+  --status-progress: oklch(0.75 0.08 200); /* Pastel Teal */
+  --status-done: oklch(0.82 0.06 155); /* Baby Green */
+  --status-urgent: oklch(0.85 0.1 85); /* Pastel Gold */
+}
+
+.dark {
+  --radius: 0.75rem;
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     PREMIUM EMERALD + DEEP OBSIDIAN — DARK MODE
+     Luxurious, sophisticated, elevated surfaces
+     ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* Background - Deep Obsidian (Cleaner, Darker, More Professional) */
+  --background: oklch(0.10 0.01 240); /* Deep Neutral Zinc/Obsidian */
+  --foreground: oklch(0.98 0.005 155); /* Crisp white/mint */
+
+  /* Cards - Subtle elevation from background */
+  --card: oklch(0.13 0.012 240); /* Slightly lighter Obsidian */
+  --card-foreground: oklch(0.98 0.005 155);
+
+  /* Popover */
+  --popover: oklch(0.12 0.012 240);
+  --popover-foreground: oklch(0.98 0.005 155);
+
+  /* Primary - Vibrant Emerald (Maintains Brand) */
+  --primary: oklch(0.88 0.05 155); /* Mint Cream */
+  --primary-foreground: oklch(0.10 0.01 240);
+
+  /* Secondary - Muted Obsidian Surface */
+  --secondary: oklch(0.18 0.015 240); /* Distinct surface */
+  --secondary-foreground: oklch(0.98 0.005 155);
+
+  /* Muted - Separators and subtler text */
+  --muted: oklch(0.18 0.015 240);
+  --muted-foreground: oklch(0.65 0.02 155);
+
+  /* Accent - Hover states */
+  --accent: oklch(0.18 0.02 240);
+  --accent-foreground: oklch(0.98 0.005 155);
+
+  /* Destructive */
+  --destructive: oklch(0.55 0.15 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  /* Borders & Inputs - Low contrast, refined */
+  --border: oklch(0.20 0.015 240); /* Subtle definition */
+  --input: oklch(0.18 0.015 240);
+  --ring: oklch(0.88 0.05 155);
+
+  /* Chart Colors - Maintains same logic */
+  --chart-1: oklch(0.88 0.05 155);
+  --chart-2: oklch(0.82 0.06 190);
+  --chart-3: oklch(0.75 0.06 155);
+  --chart-4: oklch(0.85 0.1 85);
+  --chart-5: oklch(0.65 0.1 200);
+
+  /* Gold Accent */
+  --gold: oklch(0.85 0.1 85);
+  --gold-muted: oklch(0.75 0.08 85);
+
+  /* Sidebar - Distinct from background but blends well */
+  --sidebar: oklch(0.11 0.01 240); /* Almost same as bg but separated by border */
+  --sidebar-foreground: oklch(0.98 0.005 155);
+  --sidebar-primary: oklch(0.88 0.05 155);
+  --sidebar-primary-foreground: oklch(0.10 0.01 240);
+  --sidebar-accent: oklch(0.16 0.015 240);
+  --sidebar-accent-foreground: oklch(0.98 0.005 155);
+  --sidebar-border: oklch(0.18 0.015 240);
+  --sidebar-ring: oklch(0.88 0.05 155);
+
+  /* Status Colors */
+  --status-progress: oklch(0.75 0.08 200);
+  --status-done: oklch(0.88 0.05 155);
+  --status-urgent: oklch(0.75 0.16 85);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(6rem + env(safe-area-inset-top));
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    min-height: 100svh;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
+
+  /* Focus styles for accessibility */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism - Updated with sage tint */
+  .glass {
+    @apply bg-background/80 backdrop-blur-xl border border-border/30;
+  }
+
+  .glass-card {
+    @apply bg-card/85 backdrop-blur-xl border border-border/40 shadow-lg;
+  }
+
+  /* Emerald Glow Effects - For dark mode hover/active states */
+  .glow-emerald {
+    box-shadow:
+      0 0 20px oklch(0.82 0.06 155 / 0.15),
+      0 0 40px oklch(0.82 0.06 155 / 0.08);
+  }
+
+  .dark .glow-emerald {
+    box-shadow:
+      0 0 25px oklch(0.88 0.05 155 / 0.25),
+      0 0 50px oklch(0.88 0.05 155 / 0.15),
+      0 0 80px oklch(0.88 0.05 155 / 0.08);
+  }
+
+  /* Gold Accent Glow - For premium elements */
+  .glow-gold {
+    box-shadow:
+      0 0 15px oklch(0.72 0.15 85 / 0.2),
+      0 0 30px oklch(0.72 0.15 85 / 0.1);
+  }
+
+  .dark .glow-gold {
+    box-shadow:
+      0 0 20px oklch(0.75 0.16 85 / 0.3),
+      0 0 40px oklch(0.75 0.16 85 / 0.15);
+  }
+
+  /* Gold Text Gradient - Premium touch */
+  .text-gold-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      135deg,
+      oklch(0.78 0.12 85),
+      oklch(0.68 0.15 85)
+    );
+  }
+
+  .dark .text-gold-gradient {
+    background-image: linear-gradient(
+      135deg,
+      oklch(0.8 0.14 85),
+      oklch(0.72 0.16 85)
+    );
+  }
+
+  /* Emerald Gradient - For CTAs and highlights */
+  .bg-emerald-gradient {
+    background: linear-gradient(
+      135deg,
+      oklch(0.78 0.05 158),
+      oklch(0.82 0.06 155),
+      oklch(0.85 0.1 85)
+    );
+  }
+
+  .dark .bg-emerald-gradient {
+    background: linear-gradient(
+      135deg,
+      oklch(0.82 0.06 155 / 0.08),
+      oklch(0.58 0.17 165)
+    );
+  }
+
+  /* Premium Border with gold accent */
+  .border-gold-accent {
+    border-image: linear-gradient(
+        135deg,
+        oklch(0.72 0.15 85 / 0.4),
+        transparent 60%
+      )
+      1;
+  }
+
+  .dark .border-gold-accent {
+    border-image: linear-gradient(
+        135deg,
+        oklch(0.75 0.16 85 / 0.5),
+        transparent 60%
+      )
+      1;
+  }
+
+  /* Dot Grid Pattern - Sage tinted */
+  .bg-dot-grid {
+    background-image:
+      radial-gradient(
+        circle,
+        oklch(0.22 0.02 255 / 0.12) 1.5px,
+        transparent 1.5px
+      ),
+      radial-gradient(circle, oklch(0.22 0.02 255 / 0.05) 1px, transparent 1px);
+    background-size:
+      32px 32px,
+      8px 8px;
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+
+  .dark .bg-dot-grid {
+    background-image:
+      radial-gradient(
+        circle,
+        oklch(0.94 0.01 155 / 0.12) 1.5px,
+        transparent 1.5px
+      ),
+      radial-gradient(circle, oklch(0.94 0.01 155 / 0.05) 1px, transparent 1px);
+  }
+
+  /* Secondary Grid for visual density */
+  .bg-grid-lines {
+    background-size: 40px 40px;
+    background-image:
+      linear-gradient(
+        to right,
+        oklch(0.22 0.02 255 / 0.04) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        oklch(0.22 0.02 255 / 0.04) 1px,
+        transparent 1px
+      );
+    mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+  }
+
+  .dark .bg-grid-lines {
+    background-image:
+      linear-gradient(
+        to right,
+        oklch(0.94 0.01 155 / 0.06) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        oklch(0.94 0.01 155 / 0.06) 1px,
+        transparent 1px
+      );
+  }
+
+  /* Subtle glow for primary elements */
+  .glow-primary {
+    box-shadow:
+      0 0 25px oklch(0.22 0.02 255 / 0.12),
+      0 0 50px oklch(0.22 0.02 255 / 0.05);
+  }
+
+  .dark .glow-primary {
+    box-shadow:
+      0 0 25px oklch(0.94 0.008 155 / 0.12),
+      0 0 50px oklch(0.94 0.008 155 / 0.06);
+  }
+
+  /* Touch-friendly target size */
+  .touch-target {
+    @apply min-h-11 min-w-11;
+  }
+
+  /* Card hover lift effect with emerald shadow */
+  .hover-lift {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-1;
+    box-shadow:
+      0 20px 40px -15px oklch(0.22 0.02 255 / 0.15),
+      0 8px 16px -8px oklch(0.22 0.02 255 / 0.1);
+  }
+
+  .dark .hover-lift:hover {
+    box-shadow:
+      0 20px 40px -15px oklch(0 0 0 / 0.5),
+      0 8px 16px -8px oklch(0.65 0.19 160 / 0.15);
+  }
+
+  /* Premium card with emerald accent border on hover */
+  .card-premium {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+
+  .card-premium::before {
+    content: "";
+    @apply absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-transparent to-transparent transition-all duration-300;
+  }
+
+  .card-premium:hover::before {
+    @apply bg-gradient-to-r from-transparent via-accent to-transparent;
+  }
+
+  .dark .card-premium:hover::before {
+    box-shadow: 0 0 20px oklch(0.65 0.19 160 / 0.4);
+  }
+
+  /* Skeleton loading animation - sage tinted */
+  .skeleton {
+    @apply relative overflow-hidden bg-muted rounded;
+  }
+
+  .skeleton::after {
+    content: "";
+    @apply absolute inset-0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(0.94 0.015 155 / 0.12),
+      transparent
+    );
+    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  }
+
+  .dark .skeleton::after {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(0.65 0.19 160 / 0.08),
+      transparent
+    );
+  }
+
+  /* Progress bar animation with emerald */
+  .progress-animated {
+    animation: progress-fill 1s ease-out forwards;
+    @apply bg-accent;
+  }
+
+  /* Pulse dot - emerald themed */
+  .pulse-dot {
+    @apply relative;
+  }
+
+  .pulse-dot::before {
+    content: "";
+    @apply absolute inset-0 rounded-full;
+    animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Counter animation placeholder */
+  .counter-animated {
+    animation: counter-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  /* Stagger animation for lists */
+  .stagger-item {
+    animation: fade-in-up 0.4s ease-out forwards;
+    opacity: 0;
+  }
+
+  /* Bottom navigation safe area */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0.5rem);
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Smooth card borders */
+  .card-border {
+    @apply border border-border/60 shadow-sm;
+  }
+}
+
+/* Keyframe Animations */
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes progress-fill {
+  from {
+    width: 0%;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes counter-pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounce-subtle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Meteor Animation */
+@layer utilities {
+  .animate-meteor-effect {
+    animation: meteor 5s linear infinite;
+  }
+  .animate-aurora {
+    animation: aurora 60s linear infinite;
+  }
+}
+
+@keyframes aurora {
+  from {
+    background-position:
+      50% 50%,
+      50% 50%;
+  }
+  to {
+    background-position:
+      350% 50%,
+      350% 50%;
+  }
+}
+
+@keyframes meteor {
+  0% {
+    transform: rotate(215deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(215deg) translateX(-500px);
+    opacity: 0;
+  }
+}
+
+/* Shimmer sweep animation for bling effect */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+/* Twinkle animation for sparkle dots */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Glow pulse for accent lines */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.8;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.3);
+  }
+}
+
+@keyframes slide-shine {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 150%;
+  }
+}
