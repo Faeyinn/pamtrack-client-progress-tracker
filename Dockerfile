@@ -5,13 +5,17 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Install pnpm globally
-RUN npm install -g pnpm
+# Install pnpm safely
+RUN npm install -g pnpm@latest
 
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+# Optimize pnpm cache
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml* ./
 COPY prisma ./prisma
 
-# Install dependencies (frozen lockfile for consistency)
+# Install dependencies with pnpm
 RUN pnpm install --frozen-lockfile
 
 # Copy source code
