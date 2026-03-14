@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdminSession } from "@/lib/api/admin";
 import { isArtifactType, isProjectPhase } from "@/lib/project-phase";
-import { supabase } from "@/lib/supabase";
+import { deleteFromCloudinary, uploadToCloudinary } from "@/lib/cloudinary";
 import type {
   ArtifactType as PrismaArtifactType,
   ProjectPhase as PrismaProjectPhase,
@@ -26,18 +26,13 @@ export async function GET(
     });
 
     const payload = artifacts.map((a) => {
-      // Logic to determine file URL:
-      // 1. If we have fileData (legacy), use the API endpoint.
-      // 2. If we have fileName AND sourceLinkUrl (new), use sourceLinkUrl (Supabase).
       let fileUrl = null;
       if (a.fileData) {
         fileUrl = `/api/projects/${projectId}/artifacts/${a.id}/file`;
-      } else if (a.fileName && a.sourceLinkUrl) {
-        fileUrl = a.sourceLinkUrl;
+      } else if (a.fileName && a.fileUrl) {
+        fileUrl = a.fileUrl;
       }
 
-      // Logic to determine "Source Link" (External Link):
-      // Only if it's NOT a file (no fileName).
       const sourceLinkUrl = !a.fileName ? a.sourceLinkUrl : null;
 
       return {
@@ -153,85 +148,82 @@ export async function POST(
       );
     }
 
-    let storagePublicUrl: string | null = null;
+    let uploadedFile:
+      | {
+          url: string;
+          publicId: string;
+        }
+      | null = null;
 
-    // Supabase Storage Upload
     if (hasFile && file) {
-      const fileBuffer = await file.arrayBuffer();
-      const fileName = `${projectId}/docs/${Date.now()}-${file.name.replace(/\s+/g, "-")}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from("project-assets")
-        .upload(fileName, fileBuffer, {
-          contentType: file.type,
-          upsert: false,
+      try {
+        uploadedFile = await uploadToCloudinary({
+          file,
+          folder: `projects/${projectId}/artifacts`,
+          publicIdPrefix: `artifact-${Date.now()}`,
         });
-
-      if (uploadError) {
-        console.error("Supabase artifact upload error:", uploadError);
+      } catch (uploadError) {
+        console.error("Cloudinary artifact upload error:", uploadError);
         return NextResponse.json(
           { message: "Failed to upload file to storage" },
           { status: 500 },
         );
       }
-
-      const { data } = supabase.storage
-        .from("project-assets")
-        .getPublicUrl(fileName);
-      storagePublicUrl = data.publicUrl;
     }
 
-    const created = await prisma.discussionArtifact.create({
-      data: {
-        projectId,
-        title: title.trim(),
-        description: description?.trim() || null,
-        phase: phaseValue,
-        type: typeValue,
-        // If it's a file, we store the Supabase URL in sourceLinkUrl to avoid schema changes for now.
-        // If it's a link, we store the link.
-        sourceLinkUrl: hasFile
-          ? storagePublicUrl
-          : hasLink
-            ? sourceLinkUrl
-            : null,
+    try {
+      const created = await prisma.discussionArtifact.create({
+        data: {
+          projectId,
+          title: title.trim(),
+          description: description?.trim() || null,
+          phase: phaseValue,
+          type: typeValue,
+          sourceLinkUrl: hasLink ? sourceLinkUrl : null,
+          fileName: hasFile ? file?.name : null,
+          mimeType: hasFile ? file?.type : null,
+          fileSize: hasFile ? file?.size : null,
+          fileData: null,
+          fileUrl: uploadedFile?.url || null,
+          cloudinaryPublicId: uploadedFile?.publicId || null,
+        },
+      });
 
-        // Metadata
-        fileName: hasFile ? file?.name : null,
-        mimeType: hasFile ? file?.type : null,
-        fileSize: hasFile ? file?.size : null,
-        fileData: null, // No longer storing BLOB
-      },
-    });
+      let fileUrl = null;
+      let responseLinkUrl = null;
 
-    // Construct response payload to match GET logic
-    let fileUrl = null;
-    let responseLinkUrl = null;
+      if (created.fileName && created.fileUrl) {
+        fileUrl = created.fileUrl;
+      } else {
+        responseLinkUrl = created.sourceLinkUrl;
+      }
 
-    if (created.fileName && created.sourceLinkUrl) {
-      fileUrl = created.sourceLinkUrl;
-    } else {
-      responseLinkUrl = created.sourceLinkUrl;
+      return NextResponse.json(
+        {
+          id: created.id,
+          projectId: created.projectId,
+          title: created.title,
+          description: created.description,
+          phase: created.phase,
+          type: created.type,
+          createdAt: created.createdAt,
+          updatedAt: created.updatedAt,
+          sourceLinkUrl: responseLinkUrl,
+          fileName: created.fileName,
+          mimeType: created.mimeType,
+          fileSize: created.fileSize,
+          fileUrl: fileUrl,
+        },
+        { status: 201 },
+      );
+    } catch (dbError) {
+      if (uploadedFile?.publicId) {
+        await Promise.allSettled([
+          deleteFromCloudinary(uploadedFile.publicId, file?.type),
+        ]);
+      }
+      throw dbError;
     }
-
-    return NextResponse.json(
-      {
-        id: created.id,
-        projectId: created.projectId,
-        title: created.title,
-        description: created.description,
-        phase: created.phase,
-        type: created.type,
-        createdAt: created.createdAt,
-        updatedAt: created.updatedAt,
-        sourceLinkUrl: responseLinkUrl,
-        fileName: created.fileName,
-        mimeType: created.mimeType,
-        fileSize: created.fileSize,
-        fileUrl: fileUrl,
-      },
-      { status: 201 },
-    );
   } catch (error) {
     if (error instanceof Error && error.message === "UNAUTHORIZED") {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

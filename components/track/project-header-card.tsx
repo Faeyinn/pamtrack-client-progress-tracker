@@ -81,7 +81,7 @@ export function ProjectHeaderCard({
   const healthScore = project.maintenanceProgress || 100;
 
   return (
-    <Card className="relative overflow-hidden bg-background/40 backdrop-blur-2xl border-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] group">
+    <Card className="relative overflow-hidden bg-card/82 backdrop-blur-xl border border-border/60 shadow-sm group rounded-[2rem]">
       {/* Dynamic Background Accents */}
       <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-primary/5 rounded-full blur-[100px] -mr-20 -mt-20 pointer-events-none transition-all duration-700 group-hover:bg-primary/10" />
       <div className="absolute bottom-0 left-0 w-[30%] h-[30%] bg-blue-500/5 rounded-full blur-[80px] -ml-10 -mb-10 pointer-events-none" />
@@ -102,7 +102,7 @@ export function ProjectHeaderCard({
               <Badge
                 variant="outline"
                 className={cn(
-                  "flex items-center gap-2 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500",
+                  "flex items-center gap-2 px-4 py-1.5 text-[10px] font-medium uppercase tracking-[0.24em] transition-all duration-500",
                   isDone || isMaintenance
                     ? "bg-foreground text-background border-foreground shadow-2xl shadow-foreground/20"
                     : "bg-background/50 backdrop-blur-md text-foreground border-border/40 shadow-sm",
@@ -119,25 +119,24 @@ export function ProjectHeaderCard({
                   ? "Fase: Maintenance"
                   : `Status: ${project.status}`}
               </Badge>
-              <div className="px-3 py-1.5 rounded-full bg-foreground/5 border border-foreground/5 text-[10px] font-black text-muted-foreground uppercase tracking-widest">
+              <div className="px-3 py-1.5 rounded-full bg-foreground/5 border border-foreground/5 text-[10px] font-medium text-muted-foreground uppercase tracking-[0.2em]">
                 ID PROYEK: {project.id.slice(0, 8)}
               </div>
             </div>
 
             <div className="space-y-4">
-              <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black text-foreground tracking-tighter uppercase leading-[0.9] transition-all">
+              <h2 className="text-4xl sm:text-5xl lg:text-7xl font-[family:var(--font-display)] text-foreground tracking-tight transition-all">
                 {project.projectName}
-                <span className="text-primary">.</span>
               </h2>
               <div className="flex items-center gap-4 text-muted-foreground group/client">
                 <div className="w-10 h-10 rounded-2xl bg-foreground/5 flex items-center justify-center border border-foreground/5 transition-colors group-hover/client:bg-foreground group-hover/client:text-background duration-500">
                   <User className="w-4 h-4" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.24em] opacity-40">
                     Partner Klien
                   </span>
-                  <span className="text-lg font-black tracking-tight uppercase text-foreground/80">
+                  <span className="text-lg font-semibold tracking-tight uppercase text-foreground/80">
                     {project.clientName}
                   </span>
                 </div>
@@ -148,14 +147,14 @@ export function ProjectHeaderCard({
           {/* Premium Progress Meter */}
           <div
             className={cn(
-              "relative flex flex-col items-center lg:items-end justify-center p-8 rounded-[2.5rem] min-w-[220px] group/meter transition-all duration-700 hover:scale-[1.05] overflow-hidden",
+              "relative flex flex-col items-center lg:items-end justify-center p-8 rounded-[2rem] min-w-[220px] group/meter transition-all duration-700 hover:scale-[1.05] overflow-hidden",
               isMaintenance ? "bg-foreground" : "bg-foreground",
             )}
           >
             <div className="absolute inset-0 bg-linear-to-br from-white/10 to-transparent opacity-20" />
 
             <div className="relative z-10 flex flex-col items-center lg:items-end w-full">
-              <span className="text-[10px] font-black text-background/60 uppercase tracking-[0.3em] mb-3 flex items-center gap-2">
+              <span className="text-[10px] font-medium text-background/60 uppercase tracking-[0.3em] mb-3 flex items-center gap-2">
                 {isMaintenance ? (
                   <Activity className="w-3.5 h-3.5 text-background/80" />
                 ) : (
@@ -164,10 +163,10 @@ export function ProjectHeaderCard({
                 {isMaintenance ? "Stabilitas Layanan" : "Total Progres"}
               </span>
               <div className="flex items-baseline gap-1">
-                <span className="text-7xl font-black tracking-tighter text-background leading-none">
+                <span className="text-7xl font-[family:var(--font-display)] tracking-tight text-background leading-none">
                   {isMaintenance ? healthScore : displayProgress}
                 </span>
-                <span className="text-2xl font-black text-background/90">
+                <span className="text-2xl font-medium text-background/90">
                   %
                 </span>
               </div>
@@ -178,7 +177,7 @@ export function ProjectHeaderCard({
           </div>
         </div>
 
-        <div className="bg-foreground/[0.03] backdrop-blur-xl rounded-[2.5rem] p-8 sm:p-10 border border-border/40 relative overflow-hidden group/target">
+        <div className="bg-foreground/[0.03] backdrop-blur-xl rounded-[2rem] p-8 sm:p-10 border border-border/40 relative overflow-hidden group/target">
           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-8 relative z-10">
@@ -187,10 +186,10 @@ export function ProjectHeaderCard({
                 <Calendar className="w-8 h-8 text-foreground" />
               </div>
               <div className="space-y-1">
-                <p className="text-[10px] text-muted-foreground font-black uppercase tracking-[0.3em]">
+                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-[0.24em]">
                   {isMaintenance ? "Layanan Aktif" : "Target Strategis"}
                 </p>
-                <p className="text-xl font-black text-foreground uppercase tracking-tight">
+                <p className="text-2xl font-[family:var(--font-display)] text-foreground tracking-tight">
                   {new Date(project.deadline).toLocaleDateString("id-ID", {
                     day: "numeric",
                     month: "long",
@@ -202,7 +201,7 @@ export function ProjectHeaderCard({
 
             <div className="shrink-0">
               {isMaintenance ? (
-                <div className="flex items-center gap-3 bg-primary text-primary-foreground px-6 py-3 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/20">
+                <div className="flex items-center gap-3 bg-primary text-primary-foreground px-6 py-3 rounded-2xl font-semibold text-[10px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/20">
                   <ShieldCheck className="w-4 h-4" />
                   {isMaintenance
                     ? "Sistem Dalam Pemeliharaan"
@@ -211,7 +210,7 @@ export function ProjectHeaderCard({
               ) : (
                 daysUntilDeadline > 0 &&
                 !isDone && (
-                  <div className="flex items-center gap-3 bg-foreground text-background px-6 py-3 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl shadow-foreground/20">
+                  <div className="flex items-center gap-3 bg-foreground text-background px-6 py-3 rounded-2xl font-semibold text-[10px] uppercase tracking-[0.2em] shadow-2xl shadow-foreground/20">
                     <Clock className="w-4 h-4" />
                     {daysUntilDeadline} Hari
                   </div>
@@ -223,14 +222,14 @@ export function ProjectHeaderCard({
           <div className="mt-12 space-y-4">
             <div className="flex justify-between items-end px-1">
               <div className="space-y-1">
-                <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] block">
+                <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-[0.24em] block">
                   Aktivitas Terakhir
                 </span>
-                <span className="text-xs font-black text-foreground uppercase tracking-widest line-clamp-1">
+                <span className="text-sm font-semibold text-foreground tracking-tight line-clamp-1">
                   {latestLogTitle}
                 </span>
               </div>
-              <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em]">
+              <span className="text-[10px] font-medium text-primary uppercase tracking-[0.24em]">
                 {isMaintenance ? "Statistik Sistem" : "Target Rilis"}
               </span>
             </div>

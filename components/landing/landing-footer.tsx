@@ -1,31 +1,47 @@
+import Link from "next/link";
+
+import { ScrollToAccessLink } from "@/components/landing/scroll-to-access-link";
+
 export function LandingFooter() {
+  const supportPhone =
+    process.env.NEXT_PUBLIC_SUPPORT_PHONE?.trim() || "62895600077007";
+
   return (
-    <div className="text-center space-y-8 pt-12 pb-8">
-      <div className="flex justify-center gap-6 text-sm font-medium text-foreground/80">
-        <a href="#" className="hover:text-foreground">
-          Layanan
-        </a>
-        <a href="#" className="hover:text-foreground">
-          Tentang Kami
-        </a>
-        <a href="#" className="hover:text-foreground">
-          Kontak
-        </a>
+    <footer className="grid gap-6 py-6 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-8">
+      <div className="space-y-3" data-aos="fade-up">
+        <p className="text-sm font-medium uppercase tracking-[0.26em] text-muted-foreground">
+          PAM Techno
+        </p>
+        <p className="max-w-xl text-sm leading-6 text-foreground/78">
+          Portal ini membantu klien memantau progres proyek dengan struktur yang
+          lebih rapi, cepat dipahami, dan aman diakses.
+        </p>
       </div>
 
-      <div className="h-px w-24 bg-border mx-auto" />
-
-      <div className="text-xs text-muted-foreground/60 flex items-center justify-center gap-4">
-        <span>© 2026 PAM Techno</span>
-        <span>•</span>
-        <a href="#" className="hover:text-primary transition-colors">
-          Privacy Policy
+      <div
+        className="flex flex-col items-start gap-3 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-2"
+        data-aos="fade-up"
+        data-aos-delay="120"
+      >
+        <ScrollToAccessLink className="transition-colors hover:text-foreground">
+          Akses Proyek
+        </ScrollToAccessLink>
+        <Link
+          href="/admin/login"
+          className="transition-colors hover:text-foreground"
+        >
+          Portal Admin
+        </Link>
+        <a
+          href={`https://wa.me/${supportPhone}`}
+          target="_blank"
+          rel="noreferrer"
+          className="transition-colors hover:text-foreground"
+        >
+          Hubungi Support
         </a>
-        <span>•</span>
-        <a href="#" className="hover:text-primary transition-colors">
-          Terms
-        </a>
+        <span className="text-xs">© 2026 PAM Techno</span>
       </div>
-    </div>
+    </footer>
   );
 }

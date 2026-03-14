@@ -45,9 +45,10 @@ export function BottomNav({ onProjectCreated }: BottomNavProps) {
                 <button
                   key={index}
                   onClick={() => setShowModal(true)}
-                  className="flex flex-col items-center justify-center gap-1 px-3 py-2 -mt-4"
+                  className="flex flex-col items-center justify-center gap-1 px-3 py-2 -mt-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  aria-label="Tambah proyek"
                 >
-                  <div className="w-12 h-12 rounded-full bg-foreground text-background flex items-center justify-center shadow-lg hover:shadow-xl transition-all active:scale-95">
+                  <div className="w-12 h-12 rounded-full bg-foreground text-background flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow transition-transform active:scale-95">
                     <item.icon className="w-6 h-6" />
                   </div>
                 </button>
@@ -59,7 +60,7 @@ export function BottomNav({ onProjectCreated }: BottomNavProps) {
                 key={index}
                 href={item.href!}
                 className={cn(
-                  "flex flex-col items-center justify-center gap-1 px-3 py-2 min-w-15 rounded-lg transition-all touch-target",
+                  "flex flex-col items-center justify-center gap-1 px-3 py-2 min-w-15 rounded-lg transition-colors touch-target focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                   item.isActive
                     ? "text-foreground"
                     : "text-muted-foreground hover:text-foreground",

@@ -1,55 +1,44 @@
-"use client";
-import React, { useMemo, useCallback } from "react";
-import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 const COLORS = [
-  "#93c5fd",
-  "#f9a8d4",
-  "#86efac",
-  "#fde047",
-  "#fca5a5",
-  "#d8b4fe",
-  "#93c5fd",
-  "#a5b4fc",
-  "#c4b5fd",
+  "oklch(0.82 0.06 155 / 0.22)",
+  "oklch(0.85 0.1 85 / 0.18)",
+  "oklch(0.75 0.08 200 / 0.18)",
+  "oklch(0.78 0.05 158 / 0.2)",
 ];
 
-export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
-  const rows = useMemo(() => new Array(150).fill(1), []);
-  const cols = useMemo(() => new Array(100).fill(1), []);
-  
-  const getRandomColor = useCallback(() => {
-    return COLORS[Math.floor(Math.random() * COLORS.length)];
-  }, []);
+const ROWS = Array.from({ length: 34 });
+const COLS = Array.from({ length: 18 });
 
+export function Boxes({
+  className,
+  ...rest
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       style={{
-        transform: `translate(-40%,-60%) skewX(-48deg) skewY(14deg) scale(0.675) rotate(0deg) translateZ(0)`,
+        transform:
+          "translate(-38%,-56%) skewX(-46deg) skewY(14deg) scale(0.9) translateZ(0)",
       }}
       className={cn(
-        "absolute -top-1/4 left-1/4 z-0 flex h-full w-full -translate-x-1/2 -translate-y-1/2 p-4",
+        "absolute -top-1/4 left-1/4 z-0 flex h-full w-full -translate-x-1/2 -translate-y-1/2 p-4 opacity-70",
         className,
       )}
       {...rest}
     >
-      {rows.map((_, i) => (
-        <motion.div
+      {ROWS.map((_, i) => (
+        <div
           key={`row` + i}
-          className="relative h-8 w-16 border-l border-slate-700"
+          className="relative h-12 w-24 border-l border-foreground/10"
         >
-          {cols.map((_, j) => (
-            <motion.div
-              whileHover={{
-                backgroundColor: `${getRandomColor()}`,
-                transition: { duration: 0 },
-              }}
-              animate={{
-                transition: { duration: 2 },
-              }}
+          {COLS.map((_, j) => (
+            <div
               key={`col` + j}
-              className="relative h-8 w-16 border-t border-r border-slate-700"
+              className="relative h-12 w-24 border-t border-r border-foreground/10 transition-colors duration-500 hover:bg-accent/10"
+              style={{
+                backgroundColor:
+                  (i + j) % 11 === 0 ? COLORS[(i + j) % COLORS.length] : "",
+              }}
             >
               {j % 2 === 0 && i % 2 === 0 ? (
                 <svg
@@ -58,7 +47,7 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="pointer-events-none absolute -top-[14px] -left-[22px] h-6 w-10 stroke-[1px] text-slate-700"
+                  className="pointer-events-none absolute -top-[14px] -left-[22px] h-6 w-10 stroke-[1px] text-foreground/10"
                 >
                   <path
                     strokeLinecap="round"
@@ -67,12 +56,10 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
                   />
                 </svg>
               ) : null}
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       ))}
     </div>
   );
-};
-
-export const Boxes = React.memo(BoxesCore);
+}

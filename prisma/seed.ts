@@ -18,23 +18,25 @@ async function main() {
 
   const admin1 = await prisma.user.upsert({
     where: { username: "pamtechno" },
-    update: {},
+    update: { email: "admin@pamtrack.id" },
     create: {
       username: "pamtechno",
+      email: "admin@pamtrack.id",
       password: hashedPassword,
     },
   });
-  console.log("✅ Admin user 1 ready:", admin1.username);
+  console.log("✅ Admin user 1 ready:", admin1.username, `(${admin1.email})`);
 
   const admin2 = await prisma.user.upsert({
     where: { username: "pamtrack" },
-    update: {},
+    update: { email: "support@pamtrack.id" },
     create: {
       username: "pamtrack",
+      email: "support@pamtrack.id",
       password: hashedPassword,
     },
   });
-  console.log("✅ Admin user 2 ready:", admin2.username);
+  console.log("✅ Admin user 2 ready:", admin2.username, `(${admin2.email})`);
 
   // ------------------------------------------------------------------
   // Helper for Idempotent Project Creation

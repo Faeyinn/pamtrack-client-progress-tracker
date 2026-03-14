@@ -112,10 +112,10 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-1">
         <div className="space-y-1.5">
-          <h2 className="text-2xl font-black tracking-tighter uppercase text-foreground">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground font-[family:var(--font-display)]">
             Dokumen Proyek
           </h2>
-          <div className="text-xs text-muted-foreground font-medium flex items-center gap-2">
+          <div className="text-[12px] text-muted-foreground font-medium flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
             Pusat penyimpanan asset, wireframe, dan dokumentasi proyek.
           </div>
@@ -123,19 +123,19 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
 
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="h-12 px-6 rounded-2xl shadow-2xl shadow-foreground/10 bg-foreground hover:bg-foreground/90 text-background gap-3 group transition-all active:scale-95">
+            <Button className="h-12 px-6 rounded-2xl shadow-2xl shadow-foreground/10 bg-foreground hover:bg-foreground/90 text-background gap-3 group transition-transform transition-shadow active:scale-95">
               <FilePlus2 className="w-5 h-5 transition-transform group-hover:scale-110" />
-              <span className="text-xs font-black uppercase tracking-widest">
+              <span className="text-[11px] font-semibold tracking-[0.16em]">
                 Tambah Dokumen
               </span>
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-2xl bg-background/95 backdrop-blur-2xl border-border/40 rounded-[2rem]">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-black tracking-tighter uppercase">
+              <DialogTitle className="text-2xl font-semibold tracking-tight font-[family:var(--font-display)]">
                 Tambah Dokumen Baru
               </DialogTitle>
-              <DialogDescription className="text-xs font-medium uppercase tracking-widest opacity-60">
+              <DialogDescription className="text-[12px] font-medium tracking-wide opacity-70">
                 Data akan tersinkronisasi secara real-time ke portal klien.
               </DialogDescription>
             </DialogHeader>
@@ -143,7 +143,7 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
             <form onSubmit={onSubmit} className="space-y-6 py-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label className="text-[10px] font-black uppercase tracking-widest ml-1">
+                  <Label className="text-[11px] font-semibold tracking-[0.14em] ml-1">
                     Nama Dokumen *
                   </Label>
                   <Input
@@ -155,7 +155,7 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-[10px] font-black uppercase tracking-widest ml-1">
+                  <Label className="text-[11px] font-semibold tracking-[0.14em] ml-1">
                     Fase Proyek *
                   </Label>
                   <Select
@@ -176,7 +176,7 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-[10px] font-black uppercase tracking-widest ml-1">
+                  <Label className="text-[11px] font-semibold tracking-[0.14em] ml-1">
                     Tipe Dokumen
                   </Label>
                   <Select
@@ -197,7 +197,7 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-[10px] font-black uppercase tracking-widest ml-1">
+                  <Label className="text-[11px] font-semibold tracking-[0.14em] ml-1">
                     Mode Input
                   </Label>
                   <div className="flex p-1 bg-muted/30 rounded-xl border border-border/40 h-12">
@@ -205,7 +205,7 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
                       type="button"
                       onClick={() => setUploadMode("file")}
                       className={cn(
-                        "flex-1 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all",
+                        "flex-1 rounded-lg text-[11px] font-semibold tracking-[0.14em] transition-colors transition-shadow",
                         uploadMode === "file"
                           ? "bg-background shadow-sm text-foreground"
                           : "text-muted-foreground hover:bg-background/50",
@@ -217,7 +217,7 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
                       type="button"
                       onClick={() => setUploadMode("link")}
                       className={cn(
-                        "flex-1 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all",
+                        "flex-1 rounded-lg text-[11px] font-semibold tracking-[0.14em] transition-colors transition-shadow",
                         uploadMode === "link"
                           ? "bg-background shadow-sm text-foreground"
                           : "text-muted-foreground hover:bg-background/50",
@@ -230,7 +230,7 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
               </div>
 
               <div className="space-y-2">
-                <Label className="text-[10px] font-black uppercase tracking-widest ml-1">
+                <Label className="text-[11px] font-semibold tracking-[0.14em] ml-1">
                   Catatan Tambahan
                 </Label>
                 <Textarea
@@ -244,18 +244,18 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
               <div className="p-4 bg-foreground/5 rounded-2xl border border-foreground/5">
                 {uploadMode === "file" ? (
                   <div className="space-y-3">
-                    <Label className="text-[10px] font-black uppercase tracking-widest">
+                    <Label className="text-[11px] font-semibold tracking-[0.14em]">
                       Pilih File Utama
                     </Label>
                     <Input
                       type="file"
                       onChange={(e) => setFile(e.target.files?.[0] || null)}
-                      className="bg-background border-border/40 h-auto py-4 px-4 file:mr-4 file:py-1.5 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-foreground file:text-background hover:file:bg-foreground/90 cursor-pointer border-2 border-dashed transition-all hover:bg-muted/30"
+                      className="bg-background border-border/40 h-auto py-4 px-4 file:mr-4 file:py-1.5 file:px-4 file:rounded-xl file:border-0 file:text-[11px] file:font-semibold file:tracking-[0.14em] file:bg-foreground file:text-background hover:file:bg-foreground/90 cursor-pointer border-2 border-dashed transition-colors hover:bg-muted/30"
                     />
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    <Label className="text-[10px] font-black uppercase tracking-widest">
+                    <Label className="text-[11px] font-semibold tracking-[0.14em]">
                       Alamat URL Link
                     </Label>
                     <div className="relative">
@@ -275,14 +275,14 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
                 <Button
                   type="button"
                   variant="ghost"
-                  className="flex-1 h-12 rounded-xl text-xs font-black uppercase tracking-widest"
+                  className="flex-1 h-12 rounded-xl text-[11px] font-semibold tracking-[0.16em]"
                   onClick={() => setOpen(false)}
                 >
                   Batal
                 </Button>
                 <Button
                   type="submit"
-                  className="flex-1 h-12 rounded-xl bg-foreground text-background text-xs font-black uppercase tracking-widest hover:bg-foreground/90 transition-all active:scale-95 shadow-xl shadow-foreground/10"
+                  className="flex-1 h-12 rounded-xl bg-foreground text-background text-[11px] font-semibold tracking-[0.16em] hover:bg-foreground/90 transition-transform transition-shadow active:scale-95 shadow-xl shadow-foreground/10"
                   disabled={!canSubmit || submitting}
                 >
                   {submitting ? "Menyimpan..." : "Simpan Dokumen"}
@@ -299,13 +299,13 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
       >
         <AlertDialogContent className="rounded-[2rem] border-border/40">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-xl font-black uppercase tracking-tighter">
+            <AlertDialogTitle className="text-xl font-semibold tracking-tight font-[family:var(--font-display)]">
               Hapus Dokumen?
             </AlertDialogTitle>
             <AlertDialogDescription className="text-sm font-medium leading-relaxed">
               Apakah Anda yakin ingin menghapus data ini?
               {itemToDelete && (
-                <span className="block mt-3 px-4 py-3 bg-muted/50 rounded-xl font-black text-foreground border border-border/40 italic">
+                <span className="block mt-3 px-4 py-3 bg-muted/50 rounded-xl font-semibold text-foreground border border-border/40 italic">
                   &quot;{artifacts.find((a) => a.id === itemToDelete)?.title}
                   &quot;
                 </span>
@@ -315,12 +315,12 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="mt-4">
-            <AlertDialogCancel className="rounded-xl font-black uppercase tracking-widest text-[10px]">
+            <AlertDialogCancel className="rounded-xl font-semibold tracking-[0.16em] text-[11px]">
               Batal
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={() => itemToDelete && confirmDelete(itemToDelete)}
-              className="bg-destructive text-white hover:bg-destructive/90 rounded-xl font-black uppercase tracking-widest text-[10px]"
+              className="bg-destructive text-white hover:bg-destructive/90 rounded-xl font-semibold tracking-[0.16em] text-[11px]"
             >
               Ya, Hapus
             </AlertDialogAction>
@@ -333,7 +333,7 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
           <div className="w-10 h-10 rounded-full bg-destructive flex items-center justify-center text-white shrink-0">
             <Trash2 className="w-5 h-5" />
           </div>
-          <p className="text-xs font-bold text-destructive uppercase tracking-widest">
+          <p className="text-[11px] font-semibold text-destructive tracking-[0.14em]">
             {error}
           </p>
         </div>
@@ -363,10 +363,10 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
             <div className="w-20 h-20 rounded-3xl bg-background flex items-center justify-center mb-6 shadow-2xl shadow-foreground/5 transform -rotate-6">
               <FileText className="w-10 h-10 text-muted-foreground/30" />
             </div>
-            <h3 className="text-xl font-black tracking-tighter uppercase mb-2">
+            <h3 className="text-xl font-semibold tracking-tight mb-2 font-[family:var(--font-display)]">
               Belum Ada Dokumen
             </h3>
-            <p className="text-xs text-muted-foreground font-medium max-w-xs uppercase tracking-widest opacity-60">
+            <p className="text-[12px] text-muted-foreground font-medium max-w-xs tracking-wide opacity-70">
               Mulai dengan mengunggah wireframe atau dokumen brief proyek.
             </p>
           </div>
@@ -374,23 +374,23 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
           artifacts.map((a) => (
             <div
               key={a.id}
-              className="group relative bg-background/50 backdrop-blur-sm border border-border/40 rounded-[2rem] p-6 transition-all duration-500 hover:shadow-2xl hover:shadow-foreground/5 hover:-translate-y-1 overflow-hidden"
+              className="group relative bg-background/50 backdrop-blur-sm border border-border/40 rounded-[2rem] p-6 transition-colors transition-shadow transition-transform duration-500 hover:shadow-2xl hover:shadow-foreground/5 hover:-translate-y-1 overflow-hidden"
             >
               {/* Decorative Background */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 transition-all duration-700 group-hover:scale-150" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 transition-transform duration-700 group-hover:scale-150" />
 
               <div className="relative z-10">
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div className="min-w-0">
-                    <h3 className="text-lg font-black tracking-tighter uppercase text-foreground truncate">
+                    <h3 className="text-lg font-semibold tracking-tight text-foreground truncate">
                       {a.title}
                     </h3>
                     <div className="flex gap-2 mt-2">
-                      <div className="px-3 py-1 rounded-full bg-foreground text-background text-[9px] font-black uppercase tracking-widest">
+                      <div className="px-3 py-1 rounded-full bg-foreground text-background text-[11px] font-semibold tracking-[0.16em]">
                         {a.phase}
                       </div>
                       {a.type && (
-                        <div className="px-3 py-1 rounded-full bg-muted text-muted-foreground text-[9px] font-black uppercase tracking-widest border border-border/50">
+                        <div className="px-3 py-1 rounded-full bg-muted text-muted-foreground text-[11px] font-semibold tracking-[0.16em] border border-border/50">
                           {a.type}
                         </div>
                       )}
@@ -407,7 +407,7 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
                 </div>
 
                 {a.description && (
-                  <p className="text-xs text-muted-foreground/80 font-medium mb-6 line-clamp-2 leading-relaxed italic">
+                  <p className="text-[12px] text-muted-foreground/80 font-medium mb-6 line-clamp-2 leading-relaxed italic">
                     &quot;{a.description}&quot;
                   </p>
                 )}
@@ -418,7 +418,7 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
                       asChild
                       variant="outline"
                       size="sm"
-                      className="h-10 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest gap-2.5 border-border/40 bg-background/50 hover:bg-foreground hover:text-background transition-all shadow-sm active:scale-95"
+                      className="h-10 px-4 rounded-xl text-[11px] font-semibold tracking-[0.16em] gap-2.5 border-border/40 bg-background/50 hover:bg-foreground hover:text-background transition-colors transition-shadow transition-transform shadow-sm active:scale-95"
                     >
                       <a href={a.fileUrl} target="_blank" rel="noreferrer">
                         <FileText className="w-4 h-4" /> Buka Dokumen
@@ -430,7 +430,7 @@ export function DiscussionArchiveTab({ projectId }: { projectId: string }) {
                       asChild
                       variant="outline"
                       size="sm"
-                      className="h-10 px-4 rounded-xl text-[10px] font-black uppercase tracking-widest gap-2.5 border-border/40 bg-background/50 hover:bg-foreground hover:text-background transition-all shadow-sm active:scale-95 group/btn"
+                      className="h-10 px-4 rounded-xl text-[11px] font-semibold tracking-[0.16em] gap-2.5 border-border/40 bg-background/50 hover:bg-foreground hover:text-background transition-colors transition-shadow transition-transform shadow-sm active:scale-95 group/btn"
                     >
                       <a
                         href={a.sourceLinkUrl}

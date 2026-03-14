@@ -1,90 +1,156 @@
-import Link from "next/link";
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { LoginForm } from "@/components/admin/login/login-form";
-import { AuroraBackground } from "@/components/anim/aurora-background";
-import { ThemeToggle } from "@/components/admin/shared/theme-toggle";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Lock, Mail, AlertCircle, Loader2, ArrowRight } from "lucide-react";
+import { PageBackground } from "@/components/shared/page-background";
 
 export default function AdminLoginPage() {
-  return (
-    <div className="w-full min-h-dvh lg:min-h-screen lg:grid lg:grid-cols-2">
-      {/* Left Side - Branding & Visuals */}
-      <div className="hidden lg:block relative h-full">
-        <AuroraBackground className="flex h-full flex-col items-start justify-between bg-zinc-50 dark:bg-black p-16 font-sans text-foreground">
-          {/* Logo */}
-          <div className="relative z-10 flex items-center gap-0 animate-in fade-in slide-in-from-top-6 duration-1000">
-            <div className="relative w-16 h-16 bg-white rounded-2xl p-2 shadow-2xl border border-border/10">
-              <Image
-                src="/logo-pure.png"
-                alt="Logo"
-                fill
-                sizes="64px"
-                className="object-contain p-2"
-              />
-            </div>
-            <span className="ml-5 text-3xl font-black tracking-tight uppercase bg-clip-text text-transparent bg-gradient-to-br from-zinc-900 to-zinc-600 dark:from-white dark:to-white/70">
-              PAM Techno
-            </span>
-          </div>
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
 
-          {/* Hero Text */}
-          <div className="relative z-10 space-y-8 max-w-lg mb-12 animate-in fade-in slide-in-from-left-6 duration-1000 delay-200">
-            <h1 className="text-6xl lg:text-7xl font-black tracking-tighter leading-[0.85] uppercase">
-              Admin <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-800/40 to-zinc-800/10 dark:from-white/40 dark:to-white/10">
-                Console
-              </span>
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (res.ok) {
+        router.push("/admin/dashboard");
+      } else {
+        const data = await res.json();
+        setError(data.error || "Email atau password salah.");
+      }
+    } catch {
+      setError("Terjadi kesalahan sistem.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="premium-bg flex items-center justify-center p-4">
+      <PageBackground />
+      
+      <div className="w-full max-w-md relative z-10" data-aos="fade-up">
+        <div className="mb-10 text-center space-y-4">
+          <div className="inline-flex p-4 rounded-[2rem] bg-card/80 backdrop-blur-xl border border-border/60 shadow-2xl shadow-foreground/5 mb-2">
+            <Image
+              src="/logo-pure.png"
+              alt="Logo"
+              width={60}
+              height={60}
+              className="dark:invert opacity-90"
+            />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight text-foreground font-[family:var(--font-display)] uppercase">
+              Admin Access<span className="text-primary">.</span>
             </h1>
-            <p className="text-xl text-muted-foreground font-medium tracking-wide leading-relaxed border-l-2 border-accent/30 pl-6">
-              Pusat kendali proyek digital Kamu. Pantau, kelola, dan sampaikan
-              hasil terbaik untuk klien.
+            <p className="text-sm text-muted-foreground font-medium mt-1">
+              Internal panel PAM Techno Progress Tracker
             </p>
           </div>
-
-          {/* Footer info */}
-          <div className="relative z-10 text-[11px] font-bold tracking-[0.25em] uppercase text-muted-foreground/60 animate-in fade-in duration-1000 delay-500">
-            &copy; 2026 PAM Techno. Restricted Access.
-          </div>
-        </AuroraBackground>
-      </div>
-
-      {/* Right Side - Login Form */}
-      <div className="flex min-h-dvh items-start justify-center bg-background px-4 py-8 sm:px-6 sm:py-12 lg:min-h-screen lg:items-center lg:px-16 relative overflow-y-auto lg:overflow-visible transition-colors duration-500">
-        <div className="absolute top-6 right-6 z-50">
-          <ThemeToggle />
         </div>
-        <div className="w-full max-w-md space-y-8 pb-[calc(2rem+env(safe-area-inset-bottom))]">
-          {/* Mobile Logo (Visible only on lg and below) */}
-          <div className="lg:hidden flex flex-col items-center space-y-4 mb-8 animate-in fade-in slide-in-from-top-4">
-            <div className="relative w-20 h-20 bg-white rounded-3xl p-3 shadow-2xl border border-border/10">
-              <Image
-                src="/logo-pure.png"
-                alt="Logo"
-                fill
-                sizes="80px"
-                className="object-contain p-3"
-              />
-            </div>
-            <h1 className="text-2xl font-black tracking-tighter uppercase">
-              PAM Techno
-            </h1>
-          </div>
 
-          <div className="bg-card/80 backdrop-blur-xl p-10 sm:p-12 lg:p-16 rounded-[2.5rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] border border-border/50 hover:shadow-[0_30px_60px_-20px_rgba(0,0,0,0.15)] transition-all duration-300">
-            <LoginForm />
-          </div>
+        <Card className="border-border/60 bg-card/75 backdrop-blur-xl shadow-2xl shadow-foreground/5 overflow-hidden rounded-[2rem]">
+          <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+          
+          <CardHeader className="space-y-1 pt-8 px-8">
+            <CardTitle className="text-xl font-bold tracking-tight text-foreground">
+              Selamat Datang Kembali
+            </CardTitle>
+            <CardDescription className="text-xs font-medium">
+              Masukkan kredensial Anda untuk masuk ke dashboard.
+            </CardDescription>
+          </CardHeader>
+          
+          <CardContent className="p-8 pt-4">
+            <form onSubmit={handleLogin} className="space-y-6">
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground ml-1">
+                    Email Work
+                  </Label>
+                  <div className="relative group">
+                    <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/60 group-focus-within:text-primary transition-colors" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="admin@pamtrack.id"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="pl-11 h-12 bg-background/50 border-border/60 rounded-xl focus:ring-primary/20 focus:border-primary transition-all text-sm font-medium"
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between ml-1">
+                    <Label htmlFor="password" className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                      Password
+                    </Label>
+                  </div>
+                  <div className="relative group">
+                    <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/60 group-focus-within:text-primary transition-colors" />
+                    <Input
+                      id="password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      className="pl-11 h-12 bg-background/50 border-border/60 rounded-xl focus:ring-primary/20 focus:border-primary transition-all text-sm font-medium"
+                    />
+                  </div>
+                </div>
+              </div>
 
-          <div className="text-center animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
-            <Link
-              href="/"
-              className="text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-all flex items-center justify-center gap-2 group py-2"
-            >
-              <span className="transition-transform group-hover:-translate-x-1">
-                ←
-              </span>
-              Kembali ke Beranda
-            </Link>
-          </div>
-        </div>
+              {error && (
+                <div className="flex items-center gap-3 p-4 text-xs font-semibold text-destructive bg-destructive/5 border border-destructive/20 rounded-xl animate-in fade-in slide-in-from-top-2 duration-300">
+                  <AlertCircle className="h-4 w-4 shrink-0" />
+                  <p>{error}</p>
+                </div>
+              )}
+
+              <Button 
+                type="submit" 
+                className="w-full h-12 bg-foreground text-background hover:bg-foreground/90 rounded-xl font-bold tracking-tight shadow-xl shadow-foreground/10 active:scale-[0.98] transition-all group"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Memverifikasi...
+                  </>
+                ) : (
+                  <div className="flex items-center justify-center gap-2">
+                    Masuk ke Dashboard
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                )}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+        
+        <p className="text-center mt-8 text-[11px] font-medium text-muted-foreground tracking-wide">
+          &copy; {new Date().getFullYear()} PAM Techno. All rights reserved.
+        </p>
       </div>
     </div>
   );

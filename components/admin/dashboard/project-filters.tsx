@@ -44,17 +44,23 @@ export function ProjectFilters({
         <div className="flex gap-2">
           {/* Search */}
           <div className="relative flex-1">
+            <label htmlFor="project-search-mobile" className="sr-only">
+              Cari proyek
+            </label>
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
+              id="project-search-mobile"
               placeholder="Cari proyek..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 pr-8 h-9 text-sm"
+              className="pl-8 pr-8 h-9 text-[11px] font-medium"
             />
             {searchQuery && (
               <button
+                type="button"
                 onClick={() => setSearchQuery("")}
                 className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5"
+                aria-label="Hapus pencarian"
               >
                 <X className="w-3 h-3 text-muted-foreground" />
               </button>
@@ -66,6 +72,7 @@ export function ProjectFilters({
             size="icon"
             className={cn("h-9 w-9 shrink-0", hasFilters && "border-primary")}
             onClick={() => setShowMobileFilters(!showMobileFilters)}
+            aria-label="Tampilkan filter"
           >
             <SlidersHorizontal className="w-4 h-4" />
           </Button>
@@ -75,7 +82,7 @@ export function ProjectFilters({
         {showMobileFilters && (
           <div className="flex gap-2">
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="flex-1 h-9 text-sm">
+              <SelectTrigger className="flex-1 h-9 text-[11px] font-medium">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
@@ -90,6 +97,7 @@ export function ProjectFilters({
               className="h-9 w-9"
               onClick={onReset}
               disabled={!hasFilters}
+              aria-label="Reset filter"
             >
               <X className="w-4 h-4" />
             </Button>
@@ -97,7 +105,7 @@ export function ProjectFilters({
         )}
 
         {/* Count */}
-        <p className="text-xs text-muted-foreground">
+        <p className="text-[11px] text-muted-foreground">
           {resultCount} dari {totalCount} proyek
         </p>
       </div>
@@ -106,17 +114,23 @@ export function ProjectFilters({
       <div className="hidden sm:flex items-center gap-3">
         {/* Search */}
         <div className="relative flex-1 max-w-sm">
+          <label htmlFor="project-search" className="sr-only">
+            Cari proyek
+          </label>
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
+            id="project-search"
             placeholder="Cari proyek..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 h-9"
+            className="pl-9 h-9 text-[11px] font-medium"
           />
           {searchQuery && (
             <button
+              type="button"
               onClick={() => setSearchQuery("")}
               className="absolute right-3 top-1/2 -translate-y-1/2"
+              aria-label="Hapus pencarian"
             >
               <X className="w-3 h-3 text-muted-foreground" />
             </button>
@@ -128,7 +142,7 @@ export function ProjectFilters({
           <Select value={statusFilter} onValueChange={setStatusFilter}>
             <SelectTrigger
               className={cn(
-                "w-[140px] h-9",
+                "w-[140px] h-9 text-[11px] font-medium",
                 statusFilter !== "all" && "border-primary",
               )}
             >
@@ -152,12 +166,13 @@ export function ProjectFilters({
           className="h-9 w-9"
           onClick={onReset}
           disabled={!hasFilters}
+          aria-label="Reset filter"
         >
           <X className="w-4 h-4" />
         </Button>
 
         {/* Count - Right */}
-        <span className="text-sm text-muted-foreground ml-auto tabular-nums">
+        <span className="text-[11px] text-muted-foreground ml-auto tabular-nums">
           {resultCount}/{totalCount}
         </span>
       </div>

@@ -131,7 +131,7 @@ export function AddLogForm({
       {/* Section 1: Progress Context */}
       <div className="bg-muted/30 p-4 rounded-2xl border border-border/50 space-y-4">
         <div className="space-y-3">
-          <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/80">
+          <Label className="text-[11px] font-semibold tracking-[0.16em] text-muted-foreground/80">
             Fase Pengerjaan
           </Label>
           <div className="flex p-1 bg-background/50 rounded-xl border border-border/50">
@@ -140,7 +140,7 @@ export function AddLogForm({
               type="button"
               onClick={() => handlePhaseChange("DEVELOPMENT")}
               className={cn(
-                "flex-1 flex items-center justify-center gap-2 py-2 rounded-lg transition-all text-[10px] font-black uppercase tracking-wider",
+                "flex-1 flex items-center justify-center gap-2 py-2 rounded-lg transition-colors transition-shadow text-[11px] font-semibold tracking-[0.14em]",
                 selectedWorkPhase === "DEVELOPMENT"
                   ? "bg-foreground text-background shadow-sm"
                   : "text-muted-foreground hover:bg-foreground/5",
@@ -158,7 +158,7 @@ export function AddLogForm({
               onClick={() => handlePhaseChange("MAINTENANCE")}
               disabled={!isMaintenanceUnlocked}
               className={cn(
-                "flex-1 flex items-center justify-center gap-2 py-2 rounded-lg transition-all text-[10px] font-black uppercase tracking-wider",
+                "flex-1 flex items-center justify-center gap-2 py-2 rounded-lg transition-colors transition-shadow text-[11px] font-semibold tracking-[0.14em]",
                 !isMaintenanceUnlocked
                   ? "opacity-40 cursor-not-allowed"
                   : selectedWorkPhase === "MAINTENANCE"
@@ -176,7 +176,7 @@ export function AddLogForm({
           {!isMaintenanceUnlocked && (
             <div className="flex items-center gap-2 px-1">
               <AlertCircle className="w-3 h-3 text-amber-500" />
-              <p className="text-[9px] font-bold text-amber-600 uppercase tracking-tight">
+              <p className="text-[11px] font-semibold text-amber-600 tracking-[0.12em]">
                 Maintenance terbuka setelah development 100%
               </p>
             </div>
@@ -187,7 +187,7 @@ export function AddLogForm({
           <div className="space-y-2">
             <Label
               htmlFor="percentage"
-              className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/80"
+              className="text-[11px] font-semibold tracking-[0.16em] text-muted-foreground/80"
             >
               {selectedWorkPhase === "DEVELOPMENT"
                 ? "Update Progres"
@@ -209,21 +209,21 @@ export function AddLogForm({
                   onWheel={(e) => (e.target as HTMLInputElement).blur()}
                   required
                   disabled={isSubmitting}
-                  className="h-11 bg-background border-border/50 focus:border-foreground/30 transition-all font-black text-sm pr-8 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="h-11 bg-background border-border/50 focus:border-foreground/30 transition-colors transition-shadow font-semibold text-sm pr-8 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-black text-muted-foreground pointer-events-none">
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-muted-foreground pointer-events-none">
                   %
                 </span>
               </div>
             ) : (
               <div className="h-11 flex items-center px-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
                 <CheckCircle2 className="w-4 h-4 text-amber-600 mr-2 shrink-0" />
-                <span className="text-xs font-black text-amber-700 uppercase tracking-wider">
+                <span className="text-[11px] font-semibold text-amber-700 tracking-[0.14em]">
                   Mode Pemeliharaan
                 </span>
               </div>
             )}
-            <p className="text-[9px] text-muted-foreground/60 font-bold px-1 uppercase tracking-tighter">
+            <p className="text-[11px] text-muted-foreground/70 font-medium px-1 tracking-tight">
               {selectedWorkPhase === "DEVELOPMENT"
                 ? `Minimal pengerjaan: ${developmentProgress}%`
                 : "Progres terkunci di 100%"}
@@ -231,25 +231,25 @@ export function AddLogForm({
           </div>
 
           <div className="space-y-2">
-            <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/80">
+            <Label className="text-[11px] font-semibold tracking-[0.16em] text-muted-foreground/80">
               Pratinjau Visual
             </Label>
             <div className="h-11 flex items-center px-4 bg-background border border-border/50 rounded-xl relative overflow-hidden group">
               {selectedWorkPhase === "DEVELOPMENT" ? (
                 <>
-                  <div className="absolute inset-y-0 left-0 bg-foreground/5 w-full transition-all group-hover:bg-foreground/10" />
+                  <div className="absolute inset-y-0 left-0 bg-foreground/5 w-full transition-colors group-hover:bg-foreground/10" />
                   <div
-                    className="absolute inset-y-0 left-0 bg-foreground transition-all duration-700 ease-out shadow-[0_0_15px_rgba(0,0,0,0.1)]"
+                    className="absolute inset-y-0 left-0 bg-foreground transition-[width] duration-700 ease-out shadow-[0_0_15px_rgba(0,0,0,0.1)]"
                     style={{
                       width: `${Math.min(Number(logForm.percentage || 0), 100)}%`,
                     }}
                   />
-                  <span className="relative z-10 text-xs font-black tabular-nums mix-blend-difference text-white">
+                  <span className="relative z-10 text-[11px] font-semibold tabular-nums mix-blend-difference text-white">
                     {logForm.percentage || 0}% Selesai
                   </span>
                 </>
               ) : (
-                <span className="text-[10px] font-bold text-muted-foreground italic tracking-tight">
+                <span className="text-[11px] font-medium text-muted-foreground italic tracking-tight">
                   Fase pasca-rilis aktif
                 </span>
               )}
@@ -263,7 +263,7 @@ export function AddLogForm({
         <div className="space-y-2">
           <Label
             htmlFor="title"
-            className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/80 flex items-center gap-1.5"
+            className="text-[11px] font-semibold tracking-[0.16em] text-muted-foreground/80 flex items-center gap-1.5"
           >
             <FileText className="w-3 h-3" /> Judul Progress
           </Label>
@@ -274,14 +274,14 @@ export function AddLogForm({
             onChange={(e) => setLogForm({ ...logForm, title: e.target.value })}
             required
             disabled={isSubmitting}
-            className="h-11 bg-background border-border/50 focus:border-foreground/30 transition-all font-bold text-sm"
+            className="h-11 bg-background border-border/50 focus:border-foreground/30 transition-colors transition-shadow font-semibold text-sm"
           />
         </div>
 
         <div className="space-y-2">
           <Label
             htmlFor="description"
-            className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/80 flex items-center gap-1.5"
+            className="text-[11px] font-semibold tracking-[0.16em] text-muted-foreground/80 flex items-center gap-1.5"
           >
             <MessageSquare className="w-3 h-3" /> Detail Pekerjaan
           </Label>
@@ -295,7 +295,7 @@ export function AddLogForm({
             rows={3}
             required
             disabled={isSubmitting}
-            className="resize-none bg-background border-border/50 focus:border-foreground/30 transition-all text-xs font-medium min-h-[100px] py-3"
+            className="resize-none bg-background border-border/50 focus:border-foreground/30 transition-colors transition-shadow text-[12px] font-medium min-h-[100px] py-3"
           />
         </div>
       </div>
@@ -307,7 +307,7 @@ export function AddLogForm({
             <div className="w-7 h-7 rounded-lg bg-foreground text-background flex items-center justify-center">
               <ImageIcon className="w-4 h-4" />
             </div>
-            <Label className="text-[10px] font-black uppercase tracking-widest text-foreground">
+            <Label className="text-[11px] font-semibold tracking-[0.16em] text-foreground">
               Attachment Visual
             </Label>
           </div>
@@ -316,7 +316,7 @@ export function AddLogForm({
             variant="ghost"
             size="sm"
             onClick={() => setShowVisuals(!showVisuals)}
-            className="h-7 text-[9px] font-black uppercase tracking-widest rounded-full opacity-60 hover:opacity-100"
+            className="h-7 text-[11px] font-semibold tracking-[0.14em] rounded-full opacity-60 hover:opacity-100"
           >
             {showVisuals ? "Sembunyikan" : "Tambah Visual"}
           </Button>
@@ -327,7 +327,7 @@ export function AddLogForm({
             {selectedWorkPhase === "DEVELOPMENT" && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <Label className="text-[9px] font-black text-muted-foreground uppercase px-1">
+                  <Label className="text-[11px] font-semibold text-muted-foreground tracking-[0.14em] px-1">
                     Fase Detail
                   </Label>
                   <Select
@@ -335,7 +335,7 @@ export function AddLogForm({
                     onValueChange={(v) => setLogForm({ ...logForm, phase: v })}
                     disabled={isSubmitting}
                   >
-                    <SelectTrigger className="bg-background border-border/50 h-10 text-xs font-bold">
+                    <SelectTrigger className="bg-background border-border/50 h-10 text-[11px] font-semibold">
                       <SelectValue placeholder="Pilih fase..." />
                     </SelectTrigger>
                     <SelectContent>
@@ -353,7 +353,7 @@ export function AddLogForm({
             )}
 
             <div className="space-y-2.5">
-              <Label className="text-[9px] font-black text-muted-foreground uppercase px-1">
+              <Label className="text-[11px] font-semibold text-muted-foreground tracking-[0.14em] px-1">
                 Unggah Cuplikan Layar
               </Label>
               <div className="flex flex-col gap-3">
@@ -363,7 +363,7 @@ export function AddLogForm({
                   accept="image/*"
                   onChange={handleImageChange}
                   disabled={isSubmitting}
-                  className="bg-background border-border/50 h-auto py-3 px-4 file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-black file:uppercase file:tracking-wider file:bg-foreground file:text-background border-dashed transition-all hover:bg-muted/50 cursor-pointer text-xs font-medium"
+                  className="bg-background border-border/50 h-auto py-3 px-4 file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-[11px] file:font-semibold file:tracking-[0.14em] file:bg-foreground file:text-background border-dashed transition-colors cursor-pointer text-[11px] font-medium hover:bg-muted/50"
                 />
 
                 {imagePreviews.length > 0 && (
@@ -387,7 +387,7 @@ export function AddLogForm({
                     )}
                   </div>
                 )}
-                <p className="text-[9px] text-muted-foreground italic px-1">
+                <p className="text-[11px] text-muted-foreground italic px-1">
                   Maksimal 5 file gambar (JPG, PNG).
                 </p>
               </div>
@@ -395,7 +395,7 @@ export function AddLogForm({
 
             <div className="space-y-3 pt-2">
               <div className="flex items-center justify-between border-t border-border/10 pt-4">
-                <Label className="text-[9px] font-black text-muted-foreground uppercase px-1">
+                <Label className="text-[11px] font-semibold text-muted-foreground tracking-[0.14em] px-1">
                   Links Eksternal
                 </Label>
                 <Button
@@ -403,7 +403,7 @@ export function AddLogForm({
                   size="sm"
                   variant="ghost"
                   onClick={addLink}
-                  className="h-6 px-2 text-[9px] font-black uppercase tracking-wider hover:bg-foreground/5 text-foreground/40"
+                  className="h-6 px-2 text-[11px] font-semibold tracking-[0.14em] hover:bg-foreground/5 text-foreground/50"
                 >
                   <Plus className="w-3 h-3 mr-1" /> Tambah Link
                 </Button>
@@ -419,7 +419,7 @@ export function AddLogForm({
                       placeholder="e.g. Figma"
                       value={link.label}
                       onChange={(e) => updateLink(idx, "label", e.target.value)}
-                      className="flex-1 h-9 text-[11px] font-bold"
+                      className="flex-1 h-9 text-[11px] font-semibold"
                     />
                     <div className="relative flex-[2]">
                       <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 text-muted-foreground" />
@@ -448,7 +448,7 @@ export function AddLogForm({
       </div>
 
       {/* Section 4: Communication */}
-      <div className="flex items-center gap-4 p-5 bg-background border border-border/50 rounded-2xl group transition-all hover:shadow-xl hover:shadow-foreground/5 shrink-0">
+      <div className="flex items-center gap-4 p-5 bg-background border border-border/50 rounded-2xl group transition-shadow duration-300 hover:shadow-xl hover:shadow-foreground/5 shrink-0">
         <div className="relative">
           <input
             type="checkbox"
@@ -458,7 +458,7 @@ export function AddLogForm({
               setLogForm({ ...logForm, sendNotification: e.target.checked })
             }
             className={cn(
-              "w-6 h-6 rounded-lg border-2 transition-all duration-300 cursor-pointer shadow-sm",
+              "w-6 h-6 rounded-lg border-2 transition-colors transition-shadow duration-300 cursor-pointer shadow-sm",
               "appearance-none bg-background border-border/50",
               "checked:bg-foreground checked:border-foreground checked:shadow-lg checked:shadow-foreground/20",
               "focus:ring-2 focus:ring-foreground/10 focus:ring-offset-2",
@@ -499,7 +499,7 @@ export function AddLogForm({
                   : "text-muted-foreground/30",
               )}
             />
-            <span className="text-xs font-black uppercase tracking-widest text-foreground/90">
+            <span className="text-[11px] font-semibold tracking-[0.16em] text-foreground/90">
               Kirim Update via WA
             </span>
           </div>
@@ -515,14 +515,14 @@ export function AddLogForm({
           type="button"
           variant="ghost"
           onClick={onCancel}
-          className="flex-1 h-12 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-muted/80 text-muted-foreground"
+          className="flex-1 h-12 rounded-xl text-[11px] font-semibold tracking-[0.16em] hover:bg-muted/80 text-muted-foreground"
           disabled={isSubmitting}
         >
           Batal
         </Button>
         <Button
           type="submit"
-          className="flex-1 h-12 rounded-xl bg-foreground hover:bg-foreground/90 text-background text-xs font-black uppercase tracking-widest shadow-2xl transition-all active:scale-[0.98] group"
+          className="flex-1 h-12 rounded-xl bg-foreground hover:bg-foreground/90 text-background text-[11px] font-semibold tracking-[0.16em] shadow-2xl transition-transform transition-shadow active:scale-[0.98] group"
           disabled={isSubmitting}
         >
           {isSubmitting ? (

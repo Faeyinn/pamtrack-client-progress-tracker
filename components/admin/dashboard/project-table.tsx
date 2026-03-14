@@ -113,7 +113,7 @@ function ProgressRing({
           strokeDashoffset={offset}
           strokeLinecap="round"
           className={cn(
-            "transition-all duration-700 ease-out",
+            "transition-[stroke-dashoffset,stroke] duration-700 ease-out",
             isMaintenance ? "text-emerald-500" : "text-foreground",
           )}
         />
@@ -283,10 +283,10 @@ export function ProjectTable({
           <div className="absolute inset-0 bg-foreground/5 blur-2xl rounded-full scale-0 group-hover:scale-150 transition-transform duration-700" />
           <FolderKanban className="w-10 h-10 text-foreground/20 relative z-10" />
         </div>
-        <h3 className="text-2xl font-black tracking-tighter text-foreground uppercase mb-3">
+        <h3 className="text-2xl font-semibold tracking-tight text-foreground mb-3 font-[family:var(--font-display)]">
           Daftar Proyek Kosong<span className="text-primary">.</span>
         </h3>
-        <p className="text-[11px] font-bold text-muted-foreground/60 uppercase tracking-[0.2em] max-w-sm mx-auto leading-relaxed mb-10">
+        <p className="text-[12px] font-medium text-muted-foreground/70 tracking-wide max-w-sm mx-auto leading-relaxed mb-10">
           Belum ada proyek yang terdaftar. Tambahkan proyek pertama Anda untuk
           mulai memantau.
         </p>
@@ -297,7 +297,7 @@ export function ProjectTable({
             ) as HTMLElement;
             newProjectBtn?.click();
           }}
-          className="h-14 px-10 rounded-2xl bg-foreground text-background font-black text-[10px] uppercase tracking-[0.2em] hover:scale-110 active:scale-95 transition-all shadow-2xl shadow-foreground/20"
+          className="h-14 px-10 rounded-2xl bg-foreground text-background font-semibold text-[11px] tracking-[0.16em] hover:scale-110 active:scale-95 transition-transform transition-shadow shadow-2xl shadow-foreground/20"
         >
           Tambah Proyek Pertama
         </Button>
@@ -313,7 +313,7 @@ export function ProjectTable({
           <div
             key={project.id}
             className={cn(
-              "group relative bg-white dark:bg-zinc-900 rounded-[2.5rem] p-6 border border-border shadow-md transition-all duration-500 hover:shadow-2xl hover:shadow-foreground/5 active:scale-[0.98] overflow-hidden",
+              "group relative bg-card rounded-[2.5rem] p-6 border border-border/60 shadow-lg transition-shadow transition-transform duration-500 hover:shadow-xl hover:shadow-foreground/5 active:scale-[0.98] overflow-hidden",
             )}
             style={{ animationDelay: `${index * 100}ms` }}
             onClick={() => router.push(`/admin/projects/${project.id}`)}
@@ -334,7 +334,7 @@ export function ProjectTable({
                   <div className="flex items-center gap-2">
                     <Badge
                       className={cn(
-                        "text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-lg border-none shadow-sm",
+                        "text-[10px] font-semibold tracking-[0.16em] px-3 py-1 rounded-lg border-none shadow-sm",
                         project.currentPhase === "MAINTENANCE"
                           ? "bg-emerald-500 text-white"
                           : project.status === "Done"
@@ -353,7 +353,7 @@ export function ProjectTable({
                         <div className="w-2 h-2 rounded-full bg-destructive animate-ping" />
                       )}
                   </div>
-                  <h3 className="text-xl font-black tracking-tighter text-foreground uppercase leading-none mt-1">
+                  <h3 className="text-xl font-semibold tracking-tight text-foreground leading-none mt-1">
                     {project.projectName}
                   </h3>
                 </div>
@@ -364,7 +364,7 @@ export function ProjectTable({
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-10 w-10 rounded-2xl bg-muted/30 border border-border/40 hover:bg-foreground hover:text-background transition-all"
+                        className="h-10 w-10 rounded-2xl bg-muted/30 border border-border/40 hover:bg-foreground hover:text-background transition-colors"
                       >
                         <MoreVertical className="w-5 h-5" />
                       </Button>
@@ -373,12 +373,12 @@ export function ProjectTable({
                       align="end"
                       className="w-56 rounded-2xl bg-background/95 backdrop-blur-xl border-border/40 p-2"
                     >
-                      <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest px-4 py-2 opacity-50">
+                      <DropdownMenuLabel className="text-[11px] font-semibold tracking-[0.14em] px-4 py-2 opacity-50">
                         Aksi
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator className="bg-border/40" />
                       <DropdownMenuItem
-                        className="rounded-xl h-11 px-4 cursor-pointer font-black text-[10px] uppercase tracking-widest"
+                        className="rounded-xl h-11 px-4 cursor-pointer font-semibold text-[11px] tracking-[0.12em]"
                         onClick={() =>
                           router.push(`/admin/projects/${project.id}`)
                         }
@@ -386,7 +386,7 @@ export function ProjectTable({
                         <Eye className="w-4 h-4 mr-3 opacity-50" /> Lihat Detail
                       </DropdownMenuItem>
                       <DropdownMenuItem
-                        className="rounded-xl h-11 px-4 cursor-pointer font-black text-[10px] uppercase tracking-widest"
+                        className="rounded-xl h-11 px-4 cursor-pointer font-semibold text-[11px] tracking-[0.12em]"
                         onClick={() =>
                           router.push(`/admin/projects/${project.id}/edit`)
                         }
@@ -396,7 +396,7 @@ export function ProjectTable({
                       <DropdownMenuSeparator className="bg-border/40" />
                       <DropdownMenuItem
                         onClick={() => setProjectToDelete(project.id)}
-                        className="rounded-xl h-11 px-4 text-destructive focus:bg-destructive focus:text-white cursor-pointer font-black text-[10px] uppercase tracking-widest"
+                        className="rounded-xl h-11 px-4 text-destructive focus:bg-destructive focus:text-white cursor-pointer font-semibold text-[11px] tracking-[0.12em]"
                       >
                         <Trash2 className="w-4 h-4 mr-3" /> Hapus
                       </DropdownMenuItem>
@@ -407,7 +407,7 @@ export function ProjectTable({
 
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="p-4 rounded-2xl bg-muted/20 border border-border/20">
-                  <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1">
+                  <p className="text-[11px] font-medium tracking-wide text-muted-foreground mb-1">
                     Nama Client
                   </p>
                   <p className="text-xs font-bold text-foreground truncate">
@@ -415,7 +415,7 @@ export function ProjectTable({
                   </p>
                 </div>
                 <div className="p-4 rounded-2xl bg-muted/20 border border-border/20">
-                  <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1">
+                  <p className="text-[11px] font-medium tracking-wide text-muted-foreground mb-1">
                     Batas Waktu
                   </p>
                   <p
@@ -436,7 +436,7 @@ export function ProjectTable({
 
               <div className="space-y-4">
                 <div className="flex justify-between items-end">
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground">
+                  <span className="text-[11px] font-semibold tracking-[0.16em] text-foreground">
                     Progress Pengerjaan
                   </span>
                   <span className="text-xl font-black text-foreground tabular-nums">
@@ -446,7 +446,7 @@ export function ProjectTable({
                 <div className="h-3 w-full bg-muted/40 rounded-full overflow-hidden shadow-inner flex">
                   <div
                     className={cn(
-                      "h-full transition-all duration-1000 ease-out",
+                      "h-full transition-[width] duration-1000 ease-out",
                       project.currentPhase === "MAINTENANCE"
                         ? "bg-emerald-500"
                         : "bg-foreground",
@@ -461,12 +461,12 @@ export function ProjectTable({
       </div>
 
       {/* Desktop: Enhanced Table */}
-      <Card className="hidden md:block overflow-hidden rounded-[2.5rem] shadow-xl shadow-foreground/[0.03] bg-white dark:bg-zinc-900 border border-border group/container">
+      <Card className="hidden md:block overflow-hidden rounded-[2.5rem] shadow-lg shadow-foreground/[0.03] bg-card border border-border/60 group/container">
         <Table>
           <TableHeader>
             <TableRow className="bg-foreground/[0.02] hover:bg-foreground/[0.02] border-b border-border/40">
               <TableHead
-                className="py-8 pl-10 font-black text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 cursor-pointer hover:text-foreground transition-colors select-none"
+                className="py-8 pl-10 font-semibold text-[11px] tracking-[0.14em] text-muted-foreground/70 cursor-pointer hover:text-foreground transition-colors select-none"
                 onClick={() => handleSort("clientName")}
               >
                 <div className="flex items-center gap-2">
@@ -475,7 +475,7 @@ export function ProjectTable({
                 </div>
               </TableHead>
               <TableHead
-                className="font-black text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 cursor-pointer hover:text-foreground transition-colors select-none"
+                className="font-semibold text-[11px] tracking-[0.14em] text-muted-foreground/70 cursor-pointer hover:text-foreground transition-colors select-none"
                 onClick={() => handleSort("projectName")}
               >
                 <div className="flex items-center gap-2">
@@ -484,7 +484,7 @@ export function ProjectTable({
                 </div>
               </TableHead>
               <TableHead
-                className="font-black text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 cursor-pointer hover:text-foreground transition-colors select-none"
+                className="font-semibold text-[11px] tracking-[0.14em] text-muted-foreground/70 cursor-pointer hover:text-foreground transition-colors select-none"
                 onClick={() => handleSort("deadline")}
               >
                 <div className="flex items-center gap-2">
@@ -492,11 +492,11 @@ export function ProjectTable({
                   {getSortIcon("deadline")}
                 </div>
               </TableHead>
-              <TableHead className="font-black text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60">
+              <TableHead className="font-semibold text-[11px] tracking-[0.14em] text-muted-foreground/70">
                 Fase
               </TableHead>
               <TableHead
-                className="font-black text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 w-56 cursor-pointer hover:text-foreground transition-colors select-none"
+                className="font-semibold text-[11px] tracking-[0.14em] text-muted-foreground/70 w-56 cursor-pointer hover:text-foreground transition-colors select-none"
                 onClick={() => handleSort("progress")}
               >
                 <div className="flex items-center gap-2">
@@ -504,7 +504,7 @@ export function ProjectTable({
                   {getSortIcon("progress")}
                 </div>
               </TableHead>
-              <TableHead className="font-black text-right pr-10 text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60">
+              <TableHead className="font-semibold text-right pr-10 text-[11px] tracking-[0.14em] text-muted-foreground/70">
                 Aksi
               </TableHead>
             </TableRow>
@@ -513,7 +513,7 @@ export function ProjectTable({
             {currentProjects.map((project, index) => (
               <TableRow
                 key={project.id}
-                className="hover:bg-foreground/[0.03] transition-all duration-300 group/row border-b border-border/20 last:border-0 cursor-pointer h-24"
+                className="hover:bg-foreground/[0.03] transition-colors duration-300 group/row border-b border-border/20 last:border-0 cursor-pointer h-24"
                 style={{ animationDelay: `${index * 50}ms` }}
                 onClick={() => router.push(`/admin/projects/${project.id}`)}
               >
@@ -527,17 +527,17 @@ export function ProjectTable({
                     >
                       {getInitials(project.clientName)}
                     </div>
-                    <span className="font-black text-xs text-foreground uppercase tracking-widest">
+                    <span className="font-semibold text-xs text-foreground tracking-wide">
                       {project.clientName}
                     </span>
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className="flex flex-col gap-0.5">
-                    <span className="font-black text-[13px] text-foreground uppercase tracking-tight group-hover/row:text-primary transition-colors">
+                    <span className="font-semibold text-[13px] text-foreground tracking-tight group-hover/row:text-primary transition-colors">
                       {project.projectName}
                     </span>
-                    <span className="text-[9px] font-bold text-muted-foreground/50 uppercase tracking-widest">
+                    <span className="text-[11px] font-medium text-muted-foreground/60 tracking-wide">
                       ID: {project.id.slice(0, 8)}
                     </span>
                   </div>
@@ -545,7 +545,7 @@ export function ProjectTable({
                 <TableCell>
                   <div
                     className={cn(
-                      "flex items-center gap-2.5 text-[11px] font-black uppercase tracking-widest",
+                      "flex items-center gap-2.5 text-[12px] font-semibold tracking-[0.14em]",
                       isDeadlineUrgent(project.deadline) &&
                         project.status !== "Done"
                         ? "text-destructive"
@@ -565,7 +565,7 @@ export function ProjectTable({
                 <TableCell>
                   <Badge
                     className={cn(
-                      "text-[9px] font-black uppercase tracking-widest py-1.5 px-4 rounded-xl border-none shadow-sm transition-all duration-500",
+                      "text-[11px] font-semibold tracking-[0.14em] py-1.5 px-4 rounded-xl border-none shadow-sm transition-colors transition-shadow duration-500",
                       project.currentPhase === "MAINTENANCE"
                         ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20"
                         : project.status === "Done"
@@ -585,7 +585,7 @@ export function ProjectTable({
                     <div className="flex-1 h-3 bg-muted/40 rounded-full overflow-hidden shadow-inner">
                       <div
                         className={cn(
-                          "h-full rounded-full transition-all duration-1000 ease-out shadow-2xl",
+                          "h-full rounded-full transition-[width] duration-1000 ease-out shadow-2xl",
                           project.currentPhase === "MAINTENANCE"
                             ? "bg-emerald-500"
                             : "bg-foreground",
@@ -608,7 +608,7 @@ export function ProjectTable({
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-10 w-10 p-0 rounded-2xl hover:bg-foreground hover:text-background transition-all"
+                          className="h-10 w-10 p-0 rounded-2xl hover:bg-foreground hover:text-background transition-colors"
                         >
                           <MoreVertical className="w-5 h-5" />
                         </Button>
@@ -617,32 +617,32 @@ export function ProjectTable({
                         align="end"
                         className="w-56 rounded-2xl bg-background/95 backdrop-blur-xl border-border/40 p-2"
                       >
-                        <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest px-4 py-2 opacity-50">
-                          Aksi
-                        </DropdownMenuLabel>
+                      <DropdownMenuLabel className="text-[11px] font-semibold tracking-[0.14em] px-4 py-2 opacity-50">
+                        Aksi
+                      </DropdownMenuLabel>
                         <DropdownMenuSeparator className="bg-border/40" />
                         <DropdownMenuItem
-                          className="rounded-xl h-11 px-4 cursor-pointer font-black text-[10px] uppercase tracking-widest"
-                          onClick={() =>
-                            router.push(`/admin/projects/${project.id}`)
-                          }
+                        className="rounded-xl h-11 px-4 cursor-pointer font-semibold text-[11px] tracking-[0.12em]"
+                        onClick={() =>
+                          router.push(`/admin/projects/${project.id}`)
+                        }
                         >
                           <Eye className="w-4 h-4 mr-3 opacity-50" /> Lihat
                           Detail
                         </DropdownMenuItem>
                         <DropdownMenuItem
-                          className="rounded-xl h-11 px-4 cursor-pointer font-black text-[10px] uppercase tracking-widest"
-                          onClick={() =>
-                            router.push(`/admin/projects/${project.id}/edit`)
-                          }
+                        className="rounded-xl h-11 px-4 cursor-pointer font-semibold text-[11px] tracking-[0.12em]"
+                        onClick={() =>
+                          router.push(`/admin/projects/${project.id}/edit`)
+                        }
                         >
                           <Edit className="w-4 h-4 mr-3 opacity-50" /> Ubah Data
                         </DropdownMenuItem>
                         <DropdownMenuSeparator className="bg-border/40" />
                         <DropdownMenuItem
                           onClick={() => setProjectToDelete(project.id)}
-                          className="rounded-xl h-11 px-4 text-destructive focus:bg-destructive focus:text-white cursor-pointer font-black text-[10px] uppercase tracking-widest"
-                        >
+                        className="rounded-xl h-11 px-4 text-destructive focus:bg-destructive focus:text-white cursor-pointer font-semibold text-[11px] tracking-[0.12em]"
+                      >
                           <Trash2 className="w-4 h-4 mr-3" /> Hapus
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -680,7 +680,7 @@ export function ProjectTable({
                     key={i}
                     onClick={() => setCurrentPage(i + 1)}
                     className={cn(
-                      "w-6 h-6 rounded-md text-[10px] font-bold transition-all",
+                      "w-6 h-6 rounded-md text-[10px] font-bold transition-colors",
                       currentPage === i + 1
                         ? "bg-foreground text-background shadow-sm"
                         : "text-muted-foreground hover:bg-muted",

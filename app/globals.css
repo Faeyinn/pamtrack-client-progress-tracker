@@ -333,6 +333,20 @@
       radial-gradient(circle, oklch(0.94 0.01 155 / 0.05) 1px, transparent 1px);
   }
 
+  /* Premium Page Background - Unified */
+  .premium-bg {
+    @apply relative min-h-svh overflow-hidden bg-background text-foreground;
+  }
+
+  .premium-bg-decoration {
+    @apply pointer-events-none fixed inset-0 overflow-hidden z-0;
+  }
+
+  .premium-bg-overlay {
+    @apply absolute inset-0 bg-[radial-gradient(circle_at_top_left,oklch(0.88_0.04_155_/_0.35),transparent_28%),radial-gradient(circle_at_top_right,oklch(0.85_0.1_85_/_0.12),transparent_22%),linear-gradient(to_bottom,transparent,oklch(0.985_0.008_155)_72%)] 
+           dark:bg-[radial-gradient(circle_at_top_left,oklch(0.3_0.06_155_/_0.2),transparent_24%),radial-gradient(circle_at_top_right,oklch(0.75_0.16_85_/_0.08),transparent_20%),linear-gradient(to_bottom,transparent,oklch(0.10_0.01_240)_72%)];
+  }
+
   /* Secondary Grid for visual density */
   .bg-grid-lines {
     background-size: 40px 40px;
@@ -384,7 +398,7 @@
 
   /* Card hover lift effect with emerald shadow */
   .hover-lift {
-    @apply transition-all duration-300 ease-out;
+    @apply transition-transform transition-shadow duration-300 ease-out;
   }
 
   .hover-lift:hover {
@@ -402,12 +416,12 @@
 
   /* Premium card with emerald accent border on hover */
   .card-premium {
-    @apply relative overflow-hidden transition-all duration-300;
+    @apply relative overflow-hidden transition-colors transition-shadow duration-300;
   }
 
   .card-premium::before {
     content: "";
-    @apply absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-transparent to-transparent transition-all duration-300;
+    @apply absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-transparent to-transparent transition-colors duration-300;
   }
 
   .card-premium:hover::before {

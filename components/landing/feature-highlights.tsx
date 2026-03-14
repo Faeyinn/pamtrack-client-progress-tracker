@@ -1,52 +1,76 @@
-import { GalleryVerticalEnd, Lock, History } from "lucide-react";
+import { GalleryVerticalEnd, History, Lock } from "lucide-react";
+
+const features = [
+  {
+    title: "Timeline yang langsung terbaca",
+    description:
+      "Setiap fase pengerjaan tampil dalam urutan yang mudah dipahami tanpa visual yang berlebihan.",
+    icon: GalleryVerticalEnd,
+    accent: "from-accent/16 to-transparent",
+  },
+  {
+    title: "Akses privat dan tetap praktis",
+    description:
+      "Magic link dan token manual menjaga akses tetap aman, tanpa menambah friction untuk klien.",
+    icon: Lock,
+    accent: "from-primary/10 to-transparent",
+  },
+  {
+    title: "Riwayat kerja tersimpan rapi",
+    description:
+      "File, catatan revisi, dan diskusi tetap terdokumentasi sehingga konteks proyek tidak hilang.",
+    icon: History,
+    accent: "from-[oklch(0.85_0.1_85_/_0.18)] to-transparent",
+  },
+];
 
 export function FeatureHighlights() {
   return (
-    <section className="py-12">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Card 1 */}
-        <div className="group relative overflow-hidden rounded-2xl border border-border/50 bg-background/50 p-8 hover:border-accent/30 hover:shadow-xl hover:shadow-accent/10 transition-all duration-300">
-          <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="h-12 w-12 rounded-xl bg-muted flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 shadow-sm group-hover:bg-accent/10">
-            <GalleryVerticalEnd className="h-6 w-6 text-foreground" />
-          </div>
-          <h3 className="relative font-bold text-foreground text-xl mb-3 tracking-tight">
-            Timeline Langsung
-          </h3>
-          <p className="relative text-sm text-muted-foreground leading-relaxed">
-            Pantau setiap tahap pengerjaan dalam tampilan linear yang sederhana
-            namun detail. Lihat progress realtime tanpa perlu bertanya-tanya.
+    <section className="rounded-[2rem] border border-border/60 bg-card/72 p-5 shadow-sm backdrop-blur-xl sm:p-8">
+      <div className="grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-10">
+        <div className="space-y-4" data-aos="fade-up">
+          <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted-foreground">
+            Highlight
+          </p>
+          <h2 className="text-balance font-[family:var(--font-display)] text-[2.15rem] leading-none tracking-tight sm:text-5xl">
+            Modern, clean, dan tetap terasa serius untuk konteks profesional.
+          </h2>
+          <p className="max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">
+            Redesign difokuskan pada hierarchy yang lebih kuat, permukaan yang
+            lebih bersih, dan informasi yang lebih cepat dipindai.
           </p>
         </div>
 
-        {/* Card 2 */}
-        <div className="group relative overflow-hidden rounded-2xl border border-border/50 bg-background/50 p-8 hover:border-accent/30 hover:shadow-xl hover:shadow-accent/10 transition-all duration-300">
-          <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="h-12 w-12 rounded-xl bg-muted flex items-center justify-center mb-6 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300 shadow-sm group-hover:bg-accent/10">
-            <Lock className="h-6 w-6 text-foreground" />
-          </div>
-          <h3 className="relative font-bold text-foreground text-xl mb-3 tracking-tight">
-            Akses Privat
-          </h3>
-          <p className="relative text-sm text-muted-foreground leading-relaxed">
-            Magic link unik dan enkripsi end-to-end. Data proyek Anda hanya
-            milik Anda, aman dari akses yang tidak berhak.
-          </p>
-        </div>
-
-        {/* Card 3 */}
-        <div className="group relative overflow-hidden rounded-2xl border border-border/50 bg-background/50 p-8 hover:border-accent/30 hover:shadow-xl hover:shadow-accent/10 transition-all duration-300">
-          <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="h-12 w-12 rounded-xl bg-muted flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 shadow-sm group-hover:bg-accent/10">
-            <History className="h-6 w-6 text-foreground" />
-          </div>
-          <h3 className="relative font-bold text-foreground text-xl mb-3 tracking-tight">
-            Arsip Digital
-          </h3>
-          <p className="relative text-sm text-muted-foreground leading-relaxed">
-            Semua riwayat percakapan, file, dan revisi tersimpan rapi. Cari
-            dokumen lama semudah scrolling sosial media.
-          </p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+          {features.map(({ title, description, icon: Icon, accent }) => (
+            <article
+              key={title}
+              className="group relative overflow-hidden rounded-[1.75rem] border border-border/60 bg-background/72 p-5 transition-colors duration-300 hover:border-border"
+              data-aos="fade-up"
+              data-aos-delay={
+                title === "Timeline yang langsung terbaca"
+                  ? "80"
+                  : title === "Akses privat dan tetap praktis"
+                    ? "160"
+                    : "240"
+              }
+            >
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${accent} opacity-80`}
+              />
+              <div className="relative flex items-start gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-border/60 bg-card shadow-sm">
+                  <Icon className="size-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold tracking-tight">{title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {description}
+                  </p>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>

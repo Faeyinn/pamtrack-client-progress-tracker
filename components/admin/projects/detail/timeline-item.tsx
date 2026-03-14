@@ -44,7 +44,7 @@ export function TimelineItem({ log, isLatest, index }: TimelineItemProps) {
         <div
           className={cn(
             "w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center",
-            "shadow-2xl transition-all duration-500",
+            "shadow-2xl transition-transform transition-shadow duration-500",
             "group-hover:scale-110 group-hover:rotate-3",
             isMaintenance
               ? "bg-amber-100 border-2 border-amber-200 text-amber-600"
@@ -56,7 +56,7 @@ export function TimelineItem({ log, isLatest, index }: TimelineItemProps) {
           {isMaintenance ? (
             <Wrench className="w-5 h-5 sm:w-6 sm:h-6" />
           ) : (
-            <span className="font-black text-base sm:text-xl tabular-nums tracking-tighter">
+            <span className="font-semibold text-base sm:text-xl tabular-nums tracking-tight">
               {log.percentage}%
             </span>
           )}
@@ -75,7 +75,7 @@ export function TimelineItem({ log, isLatest, index }: TimelineItemProps) {
       <div className="flex-1 pb-4 min-w-0">
         <div
           className={cn(
-            "rounded-[1.5rem] p-5 sm:p-7 transition-all duration-500",
+            "rounded-[1.5rem] p-5 sm:p-7 transition-colors transition-shadow transition-transform duration-500",
             "border border-border/40 hover:border-foreground/20",
             "shadow-xl shadow-foreground/[0.02] hover:shadow-2xl hover:shadow-foreground/[0.05] hover:-translate-y-1",
             isLatest
@@ -86,13 +86,13 @@ export function TimelineItem({ log, isLatest, index }: TimelineItemProps) {
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
             <div className="flex items-center gap-3 flex-wrap">
-              <h3 className="text-sm sm:text-lg font-black tracking-tighter text-foreground line-clamp-2 uppercase">
+              <h3 className="text-sm sm:text-lg font-semibold tracking-tight text-foreground line-clamp-2">
                 {log.title}
               </h3>
               {log.phase && (
                 <div
                   className={cn(
-                    "text-[9px] font-black tracking-[0.2em] uppercase px-3 py-1 rounded-full border",
+                    "text-[10px] font-medium tracking-[0.2em] uppercase px-3 py-1 rounded-full border",
                     getPhaseDisplay(log.phase)?.color || "",
                   )}
                 >
@@ -102,7 +102,7 @@ export function TimelineItem({ log, isLatest, index }: TimelineItemProps) {
             </div>
             <div
               className={cn(
-                "w-fit text-[10px] sm:text-[11px] shrink-0 font-black tracking-widest uppercase px-3 py-1 rounded-lg",
+                "w-fit text-[10px] shrink-0 font-medium tracking-[0.2em] uppercase px-3 py-1 rounded-lg",
                 isLatest
                   ? "bg-foreground text-background"
                   : "bg-muted text-muted-foreground/70",
@@ -117,7 +117,7 @@ export function TimelineItem({ log, isLatest, index }: TimelineItemProps) {
           </div>
 
           {/* Description */}
-          <p className="text-xs sm:text-sm text-muted-foreground/80 mb-6 leading-relaxed whitespace-pre-wrap font-medium">
+          <p className="text-sm text-muted-foreground/80 mb-6 leading-relaxed whitespace-pre-wrap font-medium">
             {log.description}
           </p>
 
@@ -163,7 +163,7 @@ export function TimelineItem({ log, isLatest, index }: TimelineItemProps) {
                       asChild
                       variant="outline"
                       size="sm"
-                      className="h-9 text-[10px] sm:text-xs font-black uppercase tracking-wider gap-2 rounded-xl border-border/50 hover:bg-foreground hover:text-background transition-all hover:shadow-lg active:scale-95"
+                      className="h-9 text-[10px] font-medium tracking-[0.2em] uppercase gap-2 rounded-xl border-border/50 hover:bg-foreground hover:text-background transition-colors transition-shadow transition-transform hover:shadow-lg active:scale-95"
                     >
                       <a href={l.url} target="_blank" rel="noreferrer">
                         <Link2 className="w-3.5 h-3.5" />
@@ -177,7 +177,7 @@ export function TimelineItem({ log, isLatest, index }: TimelineItemProps) {
               {log.progressUpdate.phase && (
                 <div className="flex items-center gap-2 opacity-40">
                   <div className="h-px flex-1 bg-foreground/20" />
-                  <span className="text-[9px] font-black uppercase tracking-[0.3em]">
+                  <span className="text-[10px] font-medium tracking-[0.24em] uppercase">
                     {log.progressUpdate.phase}
                   </span>
                   <div className="h-px flex-1 bg-foreground/20" />
@@ -187,10 +187,10 @@ export function TimelineItem({ log, isLatest, index }: TimelineItemProps) {
           )}
 
           {/* Footer */}
-          <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-muted-foreground/40 pt-4 border-t border-border/10">
+          <div className="flex items-center justify-between text-[10px] text-muted-foreground/50 pt-4 border-t border-border/10">
             <div className="flex items-center">
               <Calendar className="w-3.5 h-3.5 mr-2 shrink-0" />
-              <span className="font-bold tracking-tight">
+              <span className="font-medium tracking-tight uppercase tracking-[0.1em]">
                 {new Date(log.createdAt).toLocaleDateString("id-ID", {
                   weekday: "long",
                   year: "numeric",
@@ -199,7 +199,7 @@ export function TimelineItem({ log, isLatest, index }: TimelineItemProps) {
                 })}
               </span>
             </div>
-            <div className="font-black tabular-nums tracking-widest opacity-60">
+            <div className="font-medium tabular-nums tracking-[0.2em] uppercase opacity-70">
               {new Date(log.createdAt).toLocaleTimeString("id-ID", {
                 hour: "2-digit",
                 minute: "2-digit",

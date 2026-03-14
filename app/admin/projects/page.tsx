@@ -11,8 +11,6 @@ import { BottomNav } from "@/components/admin/shared/bottom-nav";
 import { Button } from "@/components/ui/button";
 import { RefreshCcw, FolderKanban } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function ProjectsPage() {
@@ -35,18 +33,12 @@ export default function ProjectsPage() {
   }, [fetchProjects]);
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden transition-colors duration-500">
-      {/* Premium Background Decorations */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[-10%] right-[-10%] w-[45%] h-[45%] rounded-full bg-primary/5 blur-[120px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[45%] h-[45%] rounded-full bg-blue-500/5 blur-[120px]" />
-      </div>
-
+    <div className="relative">
       <DashboardHeader />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pb-24 md:pb-12 space-y-10 relative z-10">
         {/* Page Header - Modern Hero Style */}
-        <div className="relative animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="relative" data-aos="fade-up">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div className="flex items-center gap-5">
               <div className="h-14 w-14 rounded-2xl bg-foreground text-background flex items-center justify-center shadow-2xl shadow-foreground/20 transition-transform duration-500">
@@ -55,14 +47,14 @@ export default function ProjectsPage() {
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                  <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em]">
+                  <p className="text-[11px] font-semibold text-muted-foreground tracking-[0.18em]">
                     Daftar Proyek
                   </p>
                 </div>
-                <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-foreground uppercase leading-none">
+                <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground leading-none font-[family:var(--font-display)]">
                   PROYEK<span className="text-primary">.</span>
                 </h1>
-                <p className="text-xs text-muted-foreground font-medium mt-1.5 max-w-xl opacity-70">
+                <p className="text-[12px] text-muted-foreground font-medium mt-1.5 max-w-xl opacity-70">
                   Kelola seluruh proyek client, siklus pengerjaan, dan performa
                   tim dalam satu dashboard.
                 </p>
@@ -73,7 +65,7 @@ export default function ProjectsPage() {
               <Button
                 variant="outline"
                 size="sm"
-                className="h-11 px-6 text-[10px] font-black uppercase tracking-widest rounded-xl border-border/40 hover:bg-foreground hover:text-background transition-all hover:shadow-xl active:scale-95 bg-background/50 backdrop-blur-sm"
+                className="h-11 px-6 text-[11px] font-semibold tracking-[0.16em] rounded-xl border-border/40 hover:bg-foreground hover:text-background transition-colors transition-shadow transition-transform hover:shadow-xl active:scale-95 bg-background/50 backdrop-blur-sm"
                 onClick={fetchProjects}
                 disabled={isLoading}
               >
@@ -95,7 +87,11 @@ export default function ProjectsPage() {
         </div>
 
         {/* Projects Section - Modern Container */}
-        <div className="rounded-[2.5rem] shadow-2xl shadow-foreground/5 animate-in fade-in slide-in-from-bottom-12 duration-700 delay-300 bg-card border border-border relative overflow-hidden">
+        <div 
+          className="rounded-[2.5rem] shadow-2xl shadow-foreground/5 bg-card border border-border relative overflow-hidden"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
           {/* Decorative Internal Background */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -mr-32 -mt-32 pointer-events-none" />
 
@@ -114,19 +110,19 @@ export default function ProjectsPage() {
                     <TabsList className="bg-muted p-1 rounded-2xl h-auto border border-border">
                       <TabsTrigger
                         value="all"
-                        className="rounded-xl text-[10px] font-black uppercase tracking-widest data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:shadow-xl px-6 py-3 transition-all"
+                        className="rounded-xl text-[11px] font-semibold tracking-[0.14em] data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:shadow-xl px-6 py-3 transition-colors transition-shadow"
                       >
                         Semua
                       </TabsTrigger>
                       <TabsTrigger
                         value="On Progress"
-                        className="rounded-xl text-[10px] font-black uppercase tracking-widest data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:shadow-xl px-6 py-3 transition-all"
+                        className="rounded-xl text-[11px] font-semibold tracking-[0.14em] data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:shadow-xl px-6 py-3 transition-colors transition-shadow"
                       >
                         Development
                       </TabsTrigger>
                       <TabsTrigger
                         value="Done"
-                        className="rounded-xl text-[10px] font-black uppercase tracking-widest data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:shadow-xl px-6 py-3 transition-all"
+                        className="rounded-xl text-[11px] font-semibold tracking-[0.14em] data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:shadow-xl px-6 py-3 transition-colors transition-shadow"
                       >
                         Done
                       </TabsTrigger>
@@ -173,7 +169,7 @@ export default function ProjectsPage() {
         className={cn(
           "fixed bottom-24 right-6 z-40 md:hidden",
           "h-14 w-14 rounded-2xl shadow-2xl shadow-primary/30",
-          "hover:scale-110 active:scale-90 transition-all duration-300",
+          "hover:scale-110 active:scale-90 transition-transform duration-300",
         )}
         onClick={fetchProjects}
         disabled={isLoading}

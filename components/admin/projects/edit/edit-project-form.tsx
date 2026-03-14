@@ -172,14 +172,14 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
         <CardHeader className="p-8 sm:p-10 border-b border-border/40 relative z-10">
           <div className="flex items-center gap-2 mb-2">
             <Sparkles className="w-4 h-4 text-primary" />
-            <p className="text-[11px] font-black text-muted-foreground uppercase tracking-[0.2em]">
+            <p className="text-[11px] font-semibold text-muted-foreground tracking-[0.18em]">
               Sinkronisasi Data
             </p>
           </div>
-          <CardTitle className="text-2xl font-black tracking-tighter uppercase text-foreground">
+          <CardTitle className="text-2xl font-semibold tracking-tight text-foreground font-[family:var(--font-display)]">
             Perbarui Data Proyek
           </CardTitle>
-          <CardDescription className="text-xs font-medium uppercase tracking-[0.15em] opacity-60">
+          <CardDescription className="text-[12px] font-medium tracking-wide opacity-70">
             Pastikan data klien dan proyek tetap akurat. Token unik tidak dapat
             diatur ulang.
           </CardDescription>
@@ -188,17 +188,17 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
         <CardContent className="p-8 sm:p-10 relative z-10">
           <form onSubmit={handleSubmit} className="space-y-10">
             {/* Immutable Token Section */}
-            <div className="group relative p-6 rounded-[2rem] bg-foreground/[0.03] border border-border/40 overflow-hidden transition-all duration-500 hover:bg-foreground/[0.05]">
+            <div className="group relative p-6 rounded-[2rem] bg-foreground/[0.03] border border-border/40 overflow-hidden transition-colors duration-500 hover:bg-foreground/[0.05]">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                 <AlertTriangle className="w-12 h-12" />
               </div>
               <div className="relative z-10">
-                <Label className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] mb-2 block">
+                <Label className="text-[11px] font-semibold text-muted-foreground tracking-[0.18em] mb-2 block">
                   Token Unik Proyek (Permanen)
                 </Label>
                 <div className="flex items-center gap-3">
                   <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <p className="font-mono text-xl font-black text-foreground tracking-tighter">
+                  <p className="font-mono text-xl font-semibold text-foreground tracking-tight">
                     {project.uniqueToken}
                   </p>
                 </div>
@@ -212,7 +212,7 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                   <div className="w-8 h-8 rounded-xl bg-foreground/5 flex items-center justify-center">
                     <User className="w-4 h-4 text-foreground/60" />
                   </div>
-                  <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-foreground">
+                  <h3 className="text-[11px] font-semibold tracking-[0.16em] text-foreground">
                     Informasi Klien
                   </h3>
                 </div>
@@ -220,17 +220,17 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                 <div className="space-y-2">
                   <Label
                     htmlFor="clientName"
-                    className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-70"
+                    className="text-[11px] font-semibold tracking-[0.14em] ml-1 opacity-70"
                   >
                     Nama Klien
                   </Label>
                   <div className="relative group">
-                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40 group-focus-within:text-foreground transition-all duration-300" />
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40 group-focus-within:text-foreground transition-colors duration-300" />
                     <Input
                       id="clientName"
                       name="clientName"
                       placeholder="Contoh: PT. Maju Jaya"
-                      className="pl-12 h-14 rounded-2xl bg-muted/20 border-border/40 focus:ring-2 focus:ring-foreground/5 transition-all text-xs font-bold"
+                      className="pl-12 h-14 rounded-2xl bg-muted/20 border-border/40 focus-visible:ring-2 focus-visible:ring-foreground/20 transition-colors transition-shadow text-sm font-semibold"
                       value={formData.clientName}
                       onChange={handleChange}
                       required
@@ -242,18 +242,18 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                 <div className="space-y-2">
                   <Label
                     htmlFor="clientPhone"
-                    className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-70"
+                    className="text-[11px] font-semibold tracking-[0.14em] ml-1 opacity-70"
                   >
                     Nomor WhatsApp
                   </Label>
                   <div className="relative group">
-                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40 group-focus-within:text-foreground transition-all duration-300" />
+                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40 group-focus-within:text-foreground transition-colors duration-300" />
                     <Input
                       id="clientPhone"
                       name="clientPhone"
                       type="tel"
                       placeholder="628123456789"
-                      className="pl-12 h-14 rounded-2xl bg-muted/20 border-border/40 focus:ring-2 focus:ring-foreground/5 transition-all text-xs font-bold"
+                      className="pl-12 h-14 rounded-2xl bg-muted/20 border-border/40 focus-visible:ring-2 focus-visible:ring-foreground/20 transition-colors transition-shadow text-sm font-semibold"
                       value={formData.clientPhone}
                       onChange={handleChange}
                       required
@@ -263,7 +263,7 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                   {phoneChanged && (
                     <div className="flex items-center gap-2 p-3 rounded-xl bg-amber-500/5 border border-amber-500/10 animate-in fade-in slide-in-from-top-2">
                       <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />
-                      <p className="text-[10px] font-black uppercase tracking-widest text-amber-600">
+                      <p className="text-[11px] font-semibold tracking-[0.14em] text-amber-600">
                         Perubahan nomor terdeteksi
                       </p>
                     </div>
@@ -277,7 +277,7 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                   <div className="w-8 h-8 rounded-xl bg-foreground/5 flex items-center justify-center">
                     <Briefcase className="w-4 h-4 text-foreground/60" />
                   </div>
-                  <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-foreground">
+                  <h3 className="text-[11px] font-semibold tracking-[0.16em] text-foreground">
                     Parameter Operasional
                   </h3>
                 </div>
@@ -285,17 +285,17 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                 <div className="space-y-2">
                   <Label
                     htmlFor="projectName"
-                    className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-70"
+                    className="text-[11px] font-semibold tracking-[0.14em] ml-1 opacity-70"
                   >
                     Nama Proyek
                   </Label>
                   <div className="relative group">
-                    <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40 group-focus-within:text-foreground transition-all duration-300" />
+                    <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40 group-focus-within:text-foreground transition-colors duration-300" />
                     <Input
                       id="projectName"
                       name="projectName"
                       placeholder="Contoh: Website E-Commerce"
-                      className="pl-12 h-14 rounded-2xl bg-muted/20 border-border/40 focus:ring-2 focus:ring-foreground/5 transition-all text-xs font-bold"
+                      className="pl-12 h-14 rounded-2xl bg-muted/20 border-border/40 focus-visible:ring-2 focus-visible:ring-foreground/20 transition-colors transition-shadow text-sm font-semibold"
                       value={formData.projectName}
                       onChange={handleChange}
                       required
@@ -306,7 +306,7 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-70">
+                    <Label className="text-[11px] font-semibold tracking-[0.14em] ml-1 opacity-70">
                       Batas Waktu
                     </Label>
                     <Popover>
@@ -314,7 +314,7 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                         <Button
                           variant="outline"
                           className={cn(
-                            "w-full justify-start text-left h-14 px-4 rounded-2xl bg-muted/20 border-border/40 transition-all duration-300 hover:bg-muted/40 text-xs font-black uppercase tracking-widest",
+                            "w-full justify-start text-left h-14 px-4 rounded-2xl bg-muted/20 border-border/40 transition-colors duration-300 hover:bg-muted/40 text-sm font-semibold tracking-[0.14em]",
                             !formData.deadline && "text-muted-foreground",
                           )}
                           disabled={isSubmitting}
@@ -350,7 +350,7 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                   <div className="space-y-2">
                     <Label
                       htmlFor="status"
-                      className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-70"
+                      className="text-[11px] font-semibold tracking-[0.14em] ml-1 opacity-70"
                     >
                       Status Proyek
                     </Label>
@@ -359,19 +359,19 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                       onValueChange={handleStatusChange}
                       disabled={isSubmitting}
                     >
-                      <SelectTrigger className="h-14 rounded-2xl bg-muted/20 border-border/40 focus:ring-2 focus:ring-foreground/5 transition-all text-[10px] font-black uppercase tracking-widest px-4">
+                      <SelectTrigger className="h-14 rounded-2xl bg-muted/20 border-border/40 focus-visible:ring-2 focus-visible:ring-foreground/20 transition-colors transition-shadow text-[11px] font-semibold tracking-[0.14em] px-4">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="rounded-2xl border-border/40 shadow-2xl bg-background/95 backdrop-blur-xl">
                         <SelectItem
                           value="On Progress"
-                          className="text-[10px] font-black uppercase tracking-widest h-12 rounded-xl focus:bg-foreground focus:text-background"
+                          className="text-[11px] font-semibold tracking-[0.14em] h-12 rounded-xl focus:bg-foreground focus:text-background"
                         >
                           Dalam Pengerjaan
                         </SelectItem>
                         <SelectItem
                           value="Done"
-                          className="text-[10px] font-black uppercase tracking-widest h-12 rounded-xl focus:bg-foreground focus:text-background"
+                          className="text-[11px] font-semibold tracking-[0.14em] h-12 rounded-xl focus:bg-foreground focus:text-background"
                         >
                           Selesai
                         </SelectItem>
@@ -386,7 +386,7 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
               <Button
                 type="button"
                 variant="ghost"
-                className="w-full sm:w-1/3 h-16 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-muted/50 transition-all border border-transparent hover:border-border/40"
+                className="w-full sm:w-1/3 h-16 rounded-2xl text-[11px] font-semibold tracking-[0.16em] hover:bg-muted/50 transition-colors border border-transparent hover:border-border/40"
                 disabled={isSubmitting}
                 onClick={() => router.push(`/admin/projects/${project.id}`)}
               >
@@ -394,7 +394,7 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
               </Button>
               <Button
                 type="submit"
-                className="w-full sm:flex-1 h-16 rounded-2xl bg-foreground text-background font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl shadow-foreground/20 hover:scale-[1.02] active:scale-98 transition-all"
+                className="w-full sm:flex-1 h-16 rounded-2xl bg-foreground text-background font-semibold text-[11px] tracking-[0.16em] shadow-2xl shadow-foreground/20 hover:scale-[1.02] active:scale-98 transition-transform transition-shadow"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (

@@ -78,7 +78,7 @@ function CircularProgress({
           strokeDashoffset={offset}
           strokeLinecap="round"
           className={cn(
-            "transition-all duration-1000 ease-out drop-shadow-[0_0_8px_rgba(0,0,0,0.1)]",
+            "transition-[stroke-dashoffset,stroke] duration-1000 ease-out drop-shadow-[0_0_8px_rgba(0,0,0,0.1)]",
             isMaintenance ? "text-emerald-500" : "text-foreground",
           )}
         />
@@ -88,7 +88,7 @@ function CircularProgress({
           <span className="text-4xl font-black tracking-tighter tabular-nums text-foreground">
             {progress}
           </span>
-          <span className="text-sm font-black text-muted-foreground opacity-50">
+          <span className="text-[11px] font-semibold text-muted-foreground/70 tracking-tight">
             %
           </span>
         </div>
@@ -99,7 +99,7 @@ function CircularProgress({
               isMaintenance ? "bg-emerald-500" : "bg-foreground/50",
             )}
           />
-          <span className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em]">
+          <span className="text-[11px] font-semibold text-muted-foreground/70 tracking-[0.16em]">
             {isMaintenance ? "Status" : "Progress"}
           </span>
         </div>
@@ -195,7 +195,7 @@ export function ProjectInfoCard({
       />
       <CardHeader className="pb-6 pt-8">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-xl font-black tracking-tighter flex items-center gap-3 uppercase">
+          <CardTitle className="text-xl font-semibold tracking-tight flex items-center gap-3 font-[family:var(--font-display)]">
             <div className="w-10 h-10 rounded-xl bg-foreground text-background flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
               <Briefcase className="w-5 h-5" />
             </div>
@@ -206,7 +206,7 @@ export function ProjectInfoCard({
           <Button
             variant="ghost"
             size="sm"
-            className="lg:hidden text-[10px] font-black uppercase tracking-widest h-8 bg-muted/50 rounded-full px-4 border border-border/50"
+            className="lg:hidden text-[11px] font-semibold tracking-[0.16em] h-8 bg-muted/50 rounded-full px-4 border border-border/50"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             {isExpanded ? "Tutup" : "Detail"}
@@ -231,7 +231,7 @@ export function ProjectInfoCard({
         {/* Collapsible Section on Mobile / Always Visible on Desktop */}
         <div
           className={cn(
-            "space-y-8 lg:block transition-all duration-500 ease-in-out overflow-hidden",
+            "space-y-8 lg:block transition-[max-height,opacity,transform] duration-500 ease-in-out overflow-hidden",
             isExpanded
               ? "max-h-[1000px] opacity-100"
               : "max-h-0 opacity-0 lg:max-h-none lg:opacity-100",
@@ -242,21 +242,21 @@ export function ProjectInfoCard({
           {/* Client Info Section */}
           <div className="space-y-5 p-6 bg-muted/20 backdrop-blur-sm rounded-3xl border border-border/10">
             <div>
-              <Label className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em]">
+              <Label className="text-[11px] font-semibold text-muted-foreground/70 tracking-[0.16em]">
                 Informasi Klien
               </Label>
               <div className="flex items-center gap-4 mt-3">
                 <div className="w-11 h-11 rounded-full bg-background flex items-center justify-center border border-border/50 shadow-sm">
                   <User className="w-5 h-5 text-foreground" />
                 </div>
-                <p className="font-black text-lg tracking-tight text-foreground uppercase">
+                <p className="font-semibold text-lg tracking-tight text-foreground">
                   {project.clientName}
                 </p>
               </div>
             </div>
 
             <div>
-              <Label className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em]">
+              <Label className="text-[11px] font-semibold text-muted-foreground/70 tracking-[0.16em]">
                 Kontak Klien
               </Label>
               <div className="flex items-center gap-4 mt-3">
@@ -267,7 +267,7 @@ export function ProjectInfoCard({
                   href={`https://wa.me/${project.clientPhone.replace(/^0/, "62")}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-bold text-foreground hover:underline transition-colors flex items-center gap-1.5"
+                  className="font-semibold text-foreground hover:underline transition-colors flex items-center gap-1.5"
                 >
                   {project.clientPhone}
                   <ExternalLink className="w-3.5 h-3.5 opacity-50" />
@@ -281,14 +281,14 @@ export function ProjectInfoCard({
           {/* Project Details */}
           <div className="space-y-5 px-1">
             <div>
-              <Label className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em]">
+              <Label className="text-[11px] font-semibold text-muted-foreground/70 tracking-[0.16em]">
                 Batas Waktu
               </Label>
               <div className="flex items-center gap-3 mt-3">
                 <div className="w-9 h-9 rounded-xl bg-muted flex items-center justify-center shadow-inner">
                   <Calendar className="w-4 h-4 text-foreground/70" />
                 </div>
-                <p className="font-bold text-sm text-foreground">
+                <p className="font-semibold text-sm text-foreground">
                   {new Date(project.deadline).toLocaleDateString("id-ID", {
                     day: "numeric",
                     month: "long",
@@ -299,7 +299,7 @@ export function ProjectInfoCard({
             </div>
 
             <div>
-              <Label className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em]">
+              <Label className="text-[11px] font-semibold text-muted-foreground/70 tracking-[0.16em]">
                 Status Proyek
               </Label>
               <div className="mt-3">
@@ -310,7 +310,7 @@ export function ProjectInfoCard({
                       : "outline"
                   }
                   className={cn(
-                    "text-[10px] font-black uppercase tracking-widest py-1.5 px-4 transition-all",
+                    "text-[11px] font-semibold tracking-[0.16em] py-1.5 px-4 transition-colors transition-shadow",
                     isMaintenance
                       ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20"
                       : project.status === "Done"
@@ -341,19 +341,19 @@ export function ProjectInfoCard({
           {/* Token & Links Section - High Contrast */}
           <div className="space-y-6 pt-2">
             <div className="group/token relative">
-              <Label className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em] mb-2.5 flex items-center gap-2">
+              <Label className="text-[11px] font-semibold text-muted-foreground/70 tracking-[0.16em] mb-2.5 flex items-center gap-2">
                 <Hash className="w-3 h-3" /> Token Unik Proyek
               </Label>
               <div className="relative group/field">
                 <div className="absolute inset-0 bg-foreground/5 blur-xl opacity-0 group-hover/field:opacity-100 transition-opacity rounded-xl" />
-                <p className="relative font-mono text-[11px] font-black bg-muted/50 px-4 py-3 rounded-xl border border-border/50 text-foreground tracking-widest uppercase shadow-inner">
+                <p className="relative font-mono text-[12px] font-semibold bg-muted/50 px-4 py-3 rounded-xl border border-border/50 text-foreground tracking-[0.16em] shadow-inner">
                   {project.uniqueToken}
                 </p>
               </div>
             </div>
 
             <div className="space-y-3 pt-2">
-              <Label className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em] flex items-center gap-2">
+              <Label className="text-[11px] font-semibold text-muted-foreground/70 tracking-[0.16em] flex items-center gap-2">
                 <LinkIcon className="w-3 h-3" /> Link Pelacakan Klien
               </Label>
               <div className="flex items-center gap-2 mt-2">
@@ -361,7 +361,7 @@ export function ProjectInfoCard({
                   <Input
                     value={magicLink}
                     readOnly
-                    className="text-[11px] font-bold bg-background/50 h-12 border-border/40 rounded-xl pr-10 focus-visible:ring-foreground/20 transition-all overflow-hidden text-ellipsis shadow-sm"
+                    className="text-[12px] font-semibold bg-background/50 h-12 border-border/40 rounded-xl pr-10 focus-visible:ring-foreground/20 transition-colors transition-shadow overflow-hidden text-ellipsis shadow-sm"
                   />
                   <div className="absolute right-3 top-1/2 -translate-y-1/2">
                     <ExternalLink className="w-3.5 h-3.5 text-muted-foreground/40" />
@@ -372,7 +372,7 @@ export function ProjectInfoCard({
                   variant="outline"
                   onClick={onCopyLink}
                   className={cn(
-                    "flex-shrink-0 h-12 w-12 rounded-xl transition-all active:scale-95 border-border/40 shadow-sm",
+                    "flex-shrink-0 h-12 w-12 rounded-xl transition-colors transition-shadow active:scale-95 border-border/40 shadow-sm",
                     copied
                       ? "bg-foreground text-background border-foreground shadow-xl shadow-foreground/20"
                       : "hover:bg-foreground/5 hover:border-foreground/20",
@@ -388,7 +388,7 @@ export function ProjectInfoCard({
 
               <div
                 className={cn(
-                  "overflow-hidden transition-all duration-500",
+                  "overflow-hidden transition-[max-height,opacity,transform] duration-500",
                   copied
                     ? "max-h-12 opacity-100 transform translate-y-0"
                     : "max-h-0 opacity-0 transform translate-y-2",
@@ -396,7 +396,7 @@ export function ProjectInfoCard({
               >
                 <div className="bg-foreground/[0.03] border border-foreground/10 px-3 py-2 rounded-lg flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-foreground animate-pulse" />
-                  <p className="text-[10px] text-foreground/80 font-black uppercase tracking-widest">
+                  <p className="text-[11px] text-foreground/80 font-semibold tracking-[0.16em]">
                     Link Disalin ke Clipboard
                   </p>
                 </div>

@@ -2,23 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendWhatsAppFonnte } from "@/lib/whatsapp";
 import { requireAdminSession } from "@/lib/api/admin";
-
-type ProjectWithLatestLog = {
-  id: string;
-  clientName: string;
-  clientPhone: string;
-  projectName: string;
-  uniqueToken: string;
-  deadline: Date;
-  status: string;
-  currentPhase: "DEVELOPMENT" | "MAINTENANCE";
-  developmentProgress: number;
-  maintenanceProgress: number;
-  developmentCompletedAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
-  logs: Array<{ percentage: number }>;
-};
+import { getProjects } from "@/lib/api/projects-server";
 
 function normalizePhone(input: string): string {
   let phone = input.replace(/\D/g, "");
@@ -33,35 +17,7 @@ function isValidIndoWhatsApp(phone: string): boolean {
 
 export async function GET() {
   try {
-    await requireAdminSession();
-    const projects = (await prisma.project.findMany({
-      include: {
-        logs: {
-          orderBy: [{ createdAt: "desc" }, { percentage: "desc" }],
-          take: 1,
-        },
-      },
-      orderBy: { createdAt: "desc" },
-    })) as ProjectWithLatestLog[];
-
-    const projectsWithProgress = projects.map(
-      (project: ProjectWithLatestLog) => {
-        const progress = project.logs[0]?.percentage || 0;
-        // Ensure status is consistent with progress, handling existing data issues
-        const status = progress === 100 ? "Done" : project.status;
-
-        return {
-          ...project,
-          progress,
-          status,
-          currentPhase: project.currentPhase,
-          developmentProgress: project.developmentProgress,
-          maintenanceProgress: project.maintenanceProgress,
-          developmentCompletedAt: project.developmentCompletedAt,
-        };
-      },
-    );
-
+    const projectsWithProgress = await getProjects();
     return NextResponse.json(projectsWithProgress);
   } catch (error: unknown) {
     const errorObject =

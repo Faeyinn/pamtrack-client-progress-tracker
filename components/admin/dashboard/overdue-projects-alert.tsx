@@ -41,7 +41,11 @@ export function OverdueProjectsAlert({ projects }: OverdueProjectsAlertProps) {
   };
 
   return (
-    <Card className="rounded-[1.25rem] shadow-lg hover:shadow-xl transition-shadow duration-300 border-destructive/20 bg-gradient-to-br from-destructive/10 to-destructive/5 animate-in fade-in slide-in-from-bottom-4">
+    <Card 
+      className="rounded-[1.25rem] shadow-lg hover:shadow-xl transition-shadow duration-300 border-destructive/20 bg-gradient-to-br from-destructive/10 to-destructive/5"
+      data-aos="fade-up"
+      data-aos-duration="500"
+    >
       <CardHeader className="pb-3 pt-5 px-5">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-start gap-3 flex-1">
@@ -49,10 +53,10 @@ export function OverdueProjectsAlert({ projects }: OverdueProjectsAlertProps) {
               <AlertTriangle className="w-5 h-5 text-destructive" />
             </div>
             <div className="flex-1">
-              <CardTitle className="text-lg font-black tracking-tight text-destructive uppercase">
+              <CardTitle className="text-lg font-semibold tracking-tight text-destructive font-[family:var(--font-display)]">
                 Proyek Terlewat
               </CardTitle>
-              <p className="text-xs font-medium text-destructive/70 uppercase tracking-widest mt-0.5">
+              <p className="text-[12px] font-medium text-destructive/70 tracking-wide mt-1">
                 {overdueProjects.length} proyek melewati deadline
               </p>
             </div>

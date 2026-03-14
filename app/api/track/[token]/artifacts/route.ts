@@ -35,7 +35,9 @@ export async function GET(
       fileName: a.fileName,
       mimeType: a.mimeType,
       fileSize: a.fileSize,
-      fileUrl: a.fileData ? `/api/track/${token}/artifacts/${a.id}/file` : null,
+      fileUrl: a.fileData
+        ? `/api/track/${token}/artifacts/${a.id}/file`
+        : a.fileUrl,
     }));
 
     return NextResponse.json(payload);

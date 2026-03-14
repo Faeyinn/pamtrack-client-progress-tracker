@@ -111,7 +111,11 @@ export function RecoveryLinkDialog(props: {
 
         <form onSubmit={onSubmit} className="space-y-4">
           {success && (
-            <Alert className="border-border/70 bg-muted/30 text-foreground">
+            <Alert
+              className="border-border/70 bg-muted/30 text-foreground"
+              role="status"
+              aria-live="polite"
+            >
               <CheckCircle className="h-4 w-4 text-foreground" />
               <AlertDescription>
                 Tautan sudah dikirim. Silakan cek WhatsApp Kamu.
@@ -123,6 +127,8 @@ export function RecoveryLinkDialog(props: {
             <Alert
               variant="destructive"
               className="border-border/70 bg-muted/30 text-foreground"
+              role="alert"
+              aria-live="assertive"
             >
               <AlertDescription className="font-medium">
                 {error}
@@ -139,7 +145,10 @@ export function RecoveryLinkDialog(props: {
               <Input
                 id="phone"
                 type="tel"
-                placeholder="0812..."
+                placeholder="0812…"
+                name="whatsappPhone"
+                autoComplete="tel"
+                spellCheck={false}
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 className="pl-9 border-border/70 focus-visible:ring-ring/30"
@@ -150,7 +159,7 @@ export function RecoveryLinkDialog(props: {
             <p className="text-xs text-muted-foreground">
               Akan diformat menjadi{" "}
               <span className="font-medium">
-                {normalizedPhonePreview || "62..."}
+                {normalizedPhonePreview || "62…"}
               </span>
             </p>
           </div>
@@ -163,7 +172,7 @@ export function RecoveryLinkDialog(props: {
             {isSending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Mengirim...
+                Mengirim…
               </>
             ) : success ? (
               "Terkirim"

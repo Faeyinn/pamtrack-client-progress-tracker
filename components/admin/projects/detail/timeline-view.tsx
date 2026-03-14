@@ -40,7 +40,7 @@ function PhaseSeparator({ phase }: { phase: "DEVELOPMENT" | "MAINTENANCE" }) {
       <div className="flex-1 border-t-2 border-dashed border-border/50 relative">
         <span
           className={cn(
-            "absolute left-4 -top-3 px-3 py-0.5 text-[10px] font-black uppercase tracking-[0.2em] rounded-full border bg-background",
+            "absolute left-4 -top-3 px-3 py-0.5 text-[11px] font-semibold tracking-[0.16em] rounded-full border bg-background",
             isMaintenance
               ? "text-amber-600 border-amber-200"
               : "text-blue-600 border-blue-200",
@@ -73,7 +73,7 @@ export function TimelineView({ logs }: TimelineViewProps) {
   }
 
   return (
-    <Card className="border-border/40 shadow-2xl shadow-foreground/5 bg-background/50 backdrop-blur-xl rounded-[2rem] overflow-hidden">
+    <Card className="border-border/40 shadow-2xl shadow-foreground/5 bg-card/60 backdrop-blur-xl rounded-[2rem] overflow-hidden">
       <CardContent className="pt-10 pb-6 px-4 sm:px-8">
         <div className="relative">
           {/* Timeline Line - Modern Floating Style */}

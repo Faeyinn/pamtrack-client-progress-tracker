@@ -14,6 +14,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BarChart as BarChartIcon } from "lucide-react";
 import { Project } from "@/lib/types/project";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   format,
   subMonths,
@@ -26,9 +27,10 @@ import { id } from "date-fns/locale";
 
 interface AnalyticsSectionProps {
   projects: Project[];
+  isLoading?: boolean;
 }
 
-export function AnalyticsSection({ projects }: AnalyticsSectionProps) {
+export function AnalyticsSection({ projects, isLoading }: AnalyticsSectionProps) {
   const [monthRange, setMonthRange] = useState(6);
 
   const chartData = useMemo(() => {
@@ -64,11 +66,40 @@ export function AnalyticsSection({ projects }: AnalyticsSectionProps) {
     { label: "1 Tahun", value: 12 },
   ];
 
+  if (isLoading) {
+    return (
+      <Card className="h-[400px] flex flex-col shadow-lg shadow-foreground/[0.03] border border-border/60 bg-card rounded-[2rem] overflow-hidden">
+        <CardHeader className="flex-none p-4 sm:p-6 pb-2 sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
+          <div className="space-y-2">
+            <Skeleton className="h-6 w-32" />
+            <Skeleton className="h-3 w-48" />
+          </div>
+          <div className="flex bg-muted/50 p-1 rounded-lg gap-1">
+            <Skeleton className="h-7 w-16" />
+            <Skeleton className="h-7 w-16" />
+            <Skeleton className="h-7 w-16" />
+          </div>
+        </CardHeader>
+        <CardContent className="flex-1 p-4 sm:p-6 min-h-0 flex items-end gap-3 pb-8">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="flex-1 flex flex-col items-center gap-2">
+              <Skeleton 
+                className="w-full rounded-t-lg opacity-20" 
+                style={{ height: `${30 + ((i * 13) % 60)}%` }} 
+              />
+              <Skeleton className="h-3 w-8" />
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
-    <Card className="h-[400px] flex flex-col shadow-xl shadow-foreground/[0.03] border border-border bg-white dark:bg-zinc-900 rounded-[2rem] overflow-hidden">
+    <Card className="h-[400px] flex flex-col shadow-lg shadow-foreground/[0.03] border border-border/60 bg-card rounded-[2rem] overflow-hidden">
       <CardHeader className="flex-none p-4 sm:p-6 pb-2 sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
         <div className="space-y-1">
-          <CardTitle className="text-base sm:text-lg font-bold tracking-tight flex items-center gap-2">
+          <CardTitle className="text-base sm:text-lg font-semibold tracking-tight flex items-center gap-2 font-[family:var(--font-display)]">
             <BarChartIcon className="w-4 h-4 text-primary" />
             Statistik Proyek
           </CardTitle>
@@ -83,7 +114,7 @@ export function AnalyticsSection({ projects }: AnalyticsSectionProps) {
               variant={monthRange === option.value ? "secondary" : "ghost"}
               size="sm"
               onClick={() => setMonthRange(option.value)}
-              className="h-7 text-xs px-3 rounded-md transition-all font-semibold"
+              className="h-7 text-xs px-3 rounded-md transition-colors font-semibold"
             >
               {option.label}
             </Button>
@@ -155,7 +186,7 @@ export function AnalyticsSection({ projects }: AnalyticsSectionProps) {
                   if (active && payload && payload.length) {
                     const data = payload[0].payload;
                     return (
-                      <div className="p-3 bg-popover/90 backdrop-blur-md border border-border rounded-lg shadow-xl outline-none">
+                      <div className="p-3 bg-popover/90 backdrop-blur-md border border-border rounded-lg shadow-lg">
                         <p className="text-xs font-bold mb-2 text-foreground">
                           {data.fullName}
                         </p>

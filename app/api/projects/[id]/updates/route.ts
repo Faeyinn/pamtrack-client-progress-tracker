@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdminSession } from "@/lib/api/admin";
 import { isProjectPhase } from "@/lib/project-phase";
-import { supabase } from "@/lib/supabase";
+import { deleteFromCloudinary, uploadToCloudinary } from "@/lib/cloudinary";
 import type { ProjectPhase as PrismaProjectPhase } from "@prisma/client";
 
 type IncomingLink = { label: string; url: string };
@@ -120,74 +120,91 @@ export async function POST(
       .getAll("images")
       .filter((x): x is File => x instanceof File && x.size > 0);
 
-    // Upload images to Supabase first
-    const uploadedImages = await Promise.all(
-      imageFiles.map(async (f, index) => {
-        const fileBuffer = await f.arrayBuffer();
-        const fileName = `${projectId}/${Date.now()}-${f.name.replace(/\s+/g, "-")}`;
+    const uploadedImages: {
+      fileName: string;
+      mimeType: string;
+      fileSize: number;
+      fileUrl: string;
+      cloudinaryPublicId: string;
+      sortOrder: number;
+    }[] = [];
 
-        const { error: uploadError } = await supabase.storage
-          .from("project-assets")
-          .upload(fileName, fileBuffer, {
-            contentType: f.type,
-            upsert: false,
-          });
+    try {
+      for (const [index, file] of imageFiles.entries()) {
+        const uploaded = await uploadToCloudinary({
+          file,
+          folder: `projects/${projectId}/updates`,
+          publicIdPrefix: `update-${Date.now()}-${index}`,
+        });
 
-        if (uploadError) {
-          console.error("Supabase upload error:", uploadError);
-          throw new Error("Gagal mengupload gambar ke storage");
-        }
-
-        const {
-          data: { publicUrl },
-        } = supabase.storage.from("project-assets").getPublicUrl(fileName);
-
-        return {
-          fileName: f.name,
-          mimeType: f.type,
-          fileSize: f.size,
-          fileUrl: publicUrl,
+        uploadedImages.push({
+          fileName: file.name,
+          mimeType: file.type,
+          fileSize: file.size,
+          fileUrl: uploaded.url,
+          cloudinaryPublicId: uploaded.publicId,
           sortOrder: index,
-        };
-      }),
-    );
+        });
+      }
+    } catch (uploadError) {
+      await Promise.allSettled(
+        uploadedImages.map((image) =>
+          deleteFromCloudinary(image.cloudinaryPublicId, image.mimeType),
+        ),
+      );
+      console.error("Create update upload error:", uploadError);
+      return NextResponse.json(
+        { message: "Failed to upload images" },
+        { status: 500 },
+      );
+    }
 
-    const created = await prisma.progressUpdate.create({
-      data: {
-        projectId,
-        description,
-        phase: phaseValue,
-        links: {
-          create: links.map((l) => ({ label: l.label.trim(), url: l.url })),
+    try {
+      const created = await prisma.progressUpdate.create({
+        data: {
+          projectId,
+          description,
+          phase: phaseValue,
+          links: {
+            create: links.map((l) => ({ label: l.label.trim(), url: l.url })),
+          },
+          images: {
+            create: uploadedImages,
+          },
         },
-        images: {
-          create: uploadedImages,
-        },
-      },
-      include: { images: { orderBy: { sortOrder: "asc" } }, links: true },
-    });
+        include: { images: { orderBy: { sortOrder: "asc" } }, links: true },
+      });
 
-    return NextResponse.json(
-      {
-        id: created.id,
-        projectId: created.projectId,
-        description: created.description,
-        phase: created.phase,
-        createdAt: created.createdAt,
-        images: created.images.map((img) => ({
-          id: img.id,
-          url: img.fileUrl,
-          fileName: img.fileName,
-          mimeType: img.mimeType,
-        })),
-        links: created.links.map((l) => ({
-          id: l.id,
-          label: l.label,
-          url: l.url,
-        })),
-      },
-      { status: 201 },
-    );
+      return NextResponse.json(
+        {
+          id: created.id,
+          projectId: created.projectId,
+          description: created.description,
+          phase: created.phase,
+          createdAt: created.createdAt,
+          images: created.images.map((img) => ({
+            id: img.id,
+            url: img.fileUrl,
+            fileName: img.fileName,
+            mimeType: img.mimeType,
+          })),
+          links: created.links.map((l) => ({
+            id: l.id,
+            label: l.label,
+            url: l.url,
+          })),
+        },
+        { status: 201 },
+      );
+    } catch (dbError) {
+      await Promise.allSettled(
+        uploadedImages
+          .map((image) => image.cloudinaryPublicId)
+          .filter((publicId): publicId is string => Boolean(publicId))
+          .map((publicId) => deleteFromCloudinary(publicId, "image/*")),
+      );
+      throw dbError;
+    }
   } catch (error) {
     if (error instanceof Error && error.message === "UNAUTHORIZED") {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

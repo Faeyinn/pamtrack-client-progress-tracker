@@ -95,7 +95,7 @@ export async function GET(
         fileSize: a.fileSize,
         fileUrl: a.fileData
           ? `/api/track/${token}/artifacts/${a.id}/file`
-          : null,
+          : a.fileUrl,
       })),
       updates: project.updates.map((u) => ({
         id: u.id,

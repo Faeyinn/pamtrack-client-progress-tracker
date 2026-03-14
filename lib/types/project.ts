@@ -68,6 +68,7 @@ export interface DiscussionArtifact {
   fileName?: string | null;
   mimeType?: string | null;
   fileSize?: number | null;
+  cloudinaryPublicId?: string | null;
 }
 
 export interface ProgressUpdateLink {
@@ -81,6 +82,7 @@ export interface ProgressUpdateImage {
   url: string;
   fileName?: string | null;
   mimeType?: string | null;
+  cloudinaryPublicId?: string | null;
 }
 
 export interface ProgressUpdate {

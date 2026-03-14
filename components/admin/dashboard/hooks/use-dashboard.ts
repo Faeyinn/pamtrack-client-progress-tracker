@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { Project, DashboardStats } from "@/lib/types/project";
 import { toast } from "sonner";
 
-export function useDashboardLogic() {
+export function useDashboardLogic(initialData: Project[] = []) {
   const router = useRouter();
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [projects, setProjects] = useState<Project[]>(initialData);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -37,7 +37,7 @@ export function useDashboardLogic() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [router]);
 
   const handleDelete = useCallback(async (id: string) => {
     try {

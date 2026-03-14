@@ -117,7 +117,7 @@ export default function EditProjectPage() {
                 href={`/admin/projects/${projectId}`}
                 className="transition-transform hover:-translate-x-1"
               >
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-background/50 border border-border/40 hover:bg-background hover:shadow-2xl hover:shadow-foreground/5 transition-all group">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-background/50 border border-border/40 hover:bg-background hover:shadow-2xl hover:shadow-foreground/5 transition-colors transition-shadow group">
                   <ArrowLeft className="w-6 h-6 text-muted-foreground group-hover:text-foreground transition-colors" />
                 </div>
               </Link>
@@ -135,14 +135,14 @@ export default function EditProjectPage() {
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                    <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em]">
+                    <p className="text-[11px] font-semibold text-muted-foreground tracking-[0.18em]">
                       Protokol Ubah Data
                     </p>
                   </div>
-                  <h1 className="text-2xl font-black text-foreground tracking-tighter uppercase leading-none">
+                  <h1 className="text-2xl font-semibold text-foreground tracking-tight leading-none font-[family:var(--font-display)]">
                     Ubah Proyek<span className="text-primary">.</span>
                   </h1>
-                  <p className="text-xs font-bold text-muted-foreground/60 uppercase tracking-widest mt-1">
+                  <p className="text-[12px] font-medium text-muted-foreground/70 tracking-wide mt-1">
                     {project.projectName}
                   </p>
                 </div>

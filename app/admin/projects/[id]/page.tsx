@@ -92,7 +92,7 @@ export default function ProjectDetailPage() {
       <header className="bg-background/40 backdrop-blur-2xl border-b border-border/40 sticky top-0 z-50 supports-backdrop-filter:bg-background/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60 mb-5 overflow-hidden">
+          <div className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.16em] text-muted-foreground/70 mb-5 overflow-hidden">
             <Link
               href="/admin/dashboard"
               className="hover:text-foreground transition-colors truncate"
@@ -122,7 +122,7 @@ export default function ProjectDetailPage() {
                 href="/admin/projects"
                 className="transition-transform hover:-translate-x-1 shrink-0"
               >
-                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-background/50 border border-border/40 hover:bg-background hover:shadow-lg transition-all group">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-background/50 border border-border/40 hover:bg-background hover:shadow-lg transition-colors transition-shadow group">
                   <ArrowLeft className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
                 </div>
               </Link>
@@ -145,7 +145,7 @@ export default function ProjectDetailPage() {
                     </div>
                   ) : (
                     <>
-                      <h1 className="text-xl sm:text-2xl font-black text-foreground tracking-tighter truncate uppercase">
+                      <h1 className="text-xl sm:text-2xl font-semibold text-foreground tracking-tight truncate font-[family:var(--font-display)]">
                         {project?.projectName}
                       </h1>
                       <div className="flex items-center gap-2 mt-0.5">
@@ -158,7 +158,7 @@ export default function ProjectDetailPage() {
                                 : "bg-blue-500 animate-pulse",
                             )}
                           />
-                          <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                          <span className="text-[11px] font-semibold tracking-[0.16em] text-muted-foreground">
                             {project?.status === "Done"
                               ? "Proyek Selesai"
                               : "Dalam Pengembangan"}
@@ -201,7 +201,7 @@ export default function ProjectDetailPage() {
               <TabsList className="grid w-full grid-cols-3 mb-6 h-12 p-1 bg-muted/50 rounded-xl">
                 <TabsTrigger
                   value="timeline"
-                  className="data-[state=active]:bg-background data-[state=active]:shadow-sm flex items-center gap-2"
+                  className="data-[state=active]:bg-background data-[state=active]:shadow-sm flex items-center gap-2 text-[11px] font-semibold tracking-[0.14em]"
                 >
                   <Clock className="w-4 h-4" />
                   <span className="hidden sm:inline">Timeline & Update</span>
@@ -209,7 +209,7 @@ export default function ProjectDetailPage() {
                 </TabsTrigger>
                 <TabsTrigger
                   value="documents"
-                  className="data-[state=active]:bg-background data-[state=active]:shadow-sm flex items-center gap-2"
+                  className="data-[state=active]:bg-background data-[state=active]:shadow-sm flex items-center gap-2 text-[11px] font-semibold tracking-[0.14em]"
                 >
                   <FileText className="w-4 h-4" />
                   <span className="hidden sm:inline">Dokumen</span>
@@ -217,7 +217,7 @@ export default function ProjectDetailPage() {
                 </TabsTrigger>
                 <TabsTrigger
                   value="feedback"
-                  className="data-[state=active]:bg-background data-[state=active]:shadow-sm flex items-center gap-2 relative"
+                  className="data-[state=active]:bg-background data-[state=active]:shadow-sm flex items-center gap-2 relative text-[11px] font-semibold tracking-[0.14em]"
                 >
                   <MessageSquare className="w-4 h-4" />
                   <span className="hidden sm:inline">Feedback & Pesan</span>
@@ -262,10 +262,10 @@ export default function ProjectDetailPage() {
                   <>
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-1">
                       <div className="space-y-1.5">
-                        <h2 className="text-2xl font-black tracking-tighter uppercase text-foreground">
+                        <h2 className="text-2xl font-semibold tracking-tight text-foreground font-[family:var(--font-display)]">
                           Timeline Update
                         </h2>
-                        <div className="text-xs text-muted-foreground font-medium flex items-center gap-2">
+                        <div className="text-[12px] text-muted-foreground font-medium flex items-center gap-2">
                           <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
                           Memantau siklus operasional dan pengerjaan proyek.
                         </div>
@@ -273,19 +273,19 @@ export default function ProjectDetailPage() {
 
                       <Dialog open={showLogForm} onOpenChange={setShowLogForm}>
                         <DialogTrigger asChild>
-                          <Button className="h-12 px-6 rounded-2xl shadow-2xl shadow-foreground/10 bg-foreground hover:bg-foreground/90 text-background gap-3 group transition-all active:scale-95">
+                          <Button className="h-12 px-6 rounded-2xl shadow-2xl shadow-foreground/10 bg-foreground hover:bg-foreground/90 text-background gap-3 group transition-transform transition-shadow active:scale-95">
                             <Plus className="w-5 h-5 transition-transform group-hover:scale-110" />
-                            <span className="text-xs font-black uppercase tracking-widest">
+                            <span className="text-[11px] font-semibold tracking-[0.16em]">
                               Tambah Update
                             </span>
                           </Button>
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-xl bg-background/95 backdrop-blur-2xl border-border/40 rounded-[2.5rem]">
                           <DialogHeader>
-                            <DialogTitle className="text-2xl font-black tracking-tighter uppercase">
+                            <DialogTitle className="text-2xl font-semibold tracking-tight font-[family:var(--font-display)]">
                               Update Proyek
                             </DialogTitle>
-                            <DialogDescription className="text-xs font-medium uppercase tracking-widest opacity-60">
+                            <DialogDescription className="text-[12px] font-medium tracking-wide opacity-70">
                               Masukkan data operasional terbaru untuk koordinasi
                               dengan klien.
                             </DialogDescription>
@@ -340,10 +340,10 @@ export default function ProjectDetailPage() {
                   <>
                     <div className="px-1">
                       <div className="space-y-1.5">
-                        <h2 className="text-2xl font-black tracking-tighter uppercase text-foreground">
+                        <h2 className="text-2xl font-semibold tracking-tight text-foreground font-[family:var(--font-display)]">
                           Feedback Client
                         </h2>
-                        <div className="text-xs text-muted-foreground font-medium flex items-center gap-2">
+                        <div className="text-[12px] text-muted-foreground font-medium flex items-center gap-2">
                           <div className="w-1.5 h-1.5 rounded-full bg-amber-500/40" />
                           Daftar masukan dan permintaan dari klien.
                         </div>
@@ -355,10 +355,10 @@ export default function ProjectDetailPage() {
                         <div className="w-20 h-20 rounded-[1.5rem] bg-background shadow-2xl shadow-foreground/5 flex items-center justify-center mb-6">
                           <MessageSquare className="w-10 h-10 text-foreground/10" />
                         </div>
-                        <h3 className="text-xl font-black tracking-tighter text-foreground uppercase mb-2">
+                        <h3 className="text-xl font-semibold tracking-tight text-foreground mb-2 font-[family:var(--font-display)]">
                           Belum Ada Pesan<span className="text-primary">.</span>
                         </h3>
-                        <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-[0.2em] max-w-xs mx-auto leading-relaxed">
+                        <p className="text-[12px] font-medium text-muted-foreground/70 tracking-wide max-w-xs mx-auto leading-relaxed">
                           Belum ada feedback atau permintaan perubahan dari
                           klien yang terdeteksi.
                         </p>
@@ -369,11 +369,11 @@ export default function ProjectDetailPage() {
                           <div
                             key={item.id}
                             className={cn(
-                              "group relative bg-background/60 backdrop-blur-xl rounded-[2rem] p-6 sm:p-8 border border-border/40 transition-all duration-500 hover:shadow-2xl hover:shadow-foreground/5 overflow-hidden",
+                              "group relative bg-background/60 backdrop-blur-xl rounded-[2rem] p-6 sm:p-8 border border-border/40 transition-colors transition-shadow duration-500 hover:shadow-2xl hover:shadow-foreground/5 overflow-hidden",
                             )}
                             style={{ animationDelay: `${index * 50}ms` }}
                           >
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-3xl -mr-12 -mt-12 transition-all duration-700 group-hover:scale-150" />
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-3xl -mr-12 -mt-12 transition-transform duration-700 group-hover:scale-150" />
 
                             <div className="relative z-10 flex flex-col sm:flex-row sm:items-start gap-6">
                               <div className="w-12 h-12 rounded-2xl bg-foreground text-background flex items-center justify-center shrink-0 shadow-xl shadow-foreground/10 group-hover:rotate-6 transition-transform">
@@ -382,10 +382,10 @@ export default function ProjectDetailPage() {
 
                               <div className="flex-1 min-w-0">
                                 <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-                                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground px-3 py-1 bg-foreground/5 rounded-lg border border-foreground/5">
+                                  <span className="text-[11px] font-semibold tracking-[0.16em] text-foreground px-3 py-1 bg-foreground/5 rounded-lg border border-foreground/5">
                                     Pesan Klien
                                   </span>
-                                  <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                                  <span className="text-[11px] font-semibold tracking-[0.14em] text-muted-foreground/60">
                                     {new Date(
                                       item.createdAt,
                                     ).toLocaleDateString("id-ID", {
@@ -399,7 +399,7 @@ export default function ProjectDetailPage() {
                                 </div>
 
                                 <div className="relative">
-                                  <p className="text-sm font-bold text-foreground leading-relaxed italic opacity-80 decoration-primary/20 decoration-2">
+                                  <p className="text-sm font-semibold text-foreground leading-relaxed italic opacity-80 decoration-primary/20 decoration-2">
                                     &ldquo;{item.message}&rdquo;
                                   </p>
                                 </div>

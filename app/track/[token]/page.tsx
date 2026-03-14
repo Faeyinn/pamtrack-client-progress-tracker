@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle } from "lucide-react";
@@ -11,6 +12,7 @@ import { FeedbackForm } from "@/components/track/feedback-form";
 import { ContactFooter } from "@/components/track/contact-footer";
 import { useTracking } from "@/components/track/hooks/use-tracking";
 import { DiscussionArchiveViewer } from "@/components/track/hub/discussion-archive-viewer";
+import { PageBackground } from "@/components/shared/page-background";
 
 export default function TrackPage() {
   const params = useParams();
@@ -21,15 +23,16 @@ export default function TrackPage() {
 
   if (error || (!project && !isLoading)) {
     return (
-      <div className="min-h-screen bg-muted/10 flex items-center justify-center p-4">
-        <Card className="max-w-md w-full border border-border/60 shadow-lg bg-card text-card-foreground">
+      <div className="premium-bg flex items-center justify-center p-4">
+        <PageBackground variant="simple" />
+        <Card className="max-w-md w-full border border-border/60 shadow-lg bg-card/80 backdrop-blur-xl text-card-foreground relative z-10 rounded-[2rem]">
           <CardContent className="pt-8 pb-8 px-6">
             <div className="text-center space-y-4">
               <div className="w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center mx-auto">
                 <AlertCircle className="w-8 h-8 text-destructive" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground mb-2">
+                <h2 className="text-2xl font-bold text-foreground mb-2 font-[family:var(--font-display)]">
                   Data Tidak Ditemukan
                 </h2>
                 <p className="text-muted-foreground">
@@ -38,10 +41,10 @@ export default function TrackPage() {
                 </p>
               </div>
               <Button
-                onClick={() => (window.location.href = "/")}
-                className="w-full bg-foreground hover:bg-foreground/90 text-background shadow-sm transition-all"
+                asChild
+                className="w-full bg-foreground hover:bg-foreground/90 text-background shadow-sm transition-all rounded-xl"
               >
-                Kembali ke Beranda
+                <Link href="/">Kembali ke Beranda</Link>
               </Button>
             </div>
           </CardContent>
@@ -51,12 +54,8 @@ export default function TrackPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Premium Background Decorations */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-500/5 blur-[120px]" />
-      </div>
+    <div className="premium-bg selection:bg-foreground selection:text-background">
+      <PageBackground />
 
       <TrackHeader />
 
@@ -64,7 +63,7 @@ export default function TrackPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
           {/* Main Content Column */}
           <div className="lg:col-span-8 space-y-12 lg:space-y-20">
-            <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <div data-aos="fade-up">
               <ProjectHeaderCard
                 project={project}
                 latestProgress={latestProgress}
@@ -73,14 +72,14 @@ export default function TrackPage() {
               />
             </div>
 
-            <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+            <div data-aos="fade-up" data-aos-delay="100">
               <DiscussionArchiveViewer
                 artifacts={artifacts}
                 isLoading={isLoading}
               />
             </div>
 
-            <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 delay-400">
+            <div data-aos="fade-up" data-aos-delay="200">
               <TimelineSection logs={logs} isLoading={isLoading} />
             </div>
           </div>
@@ -88,11 +87,11 @@ export default function TrackPage() {
           {/* Sidebar Column - Sticky on Desktop */}
           <div className="lg:col-span-4 space-y-10">
             <div className="lg:sticky lg:top-28 space-y-10">
-              <div className="animate-in fade-in slide-in-from-right-8 duration-700 delay-500">
+              <div data-aos="fade-up" data-aos-delay="300">
                 <FeedbackForm token={token} />
               </div>
 
-              <div className="animate-in fade-in slide-in-from-right-8 duration-700 delay-700">
+              <div data-aos="fade-up" data-aos-delay="400">
                 <ContactFooter />
               </div>
             </div>

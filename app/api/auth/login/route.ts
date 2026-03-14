@@ -6,22 +6,29 @@ import { cookies } from "next/headers";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { username, password } = body;
+    const { email, username, password } = body;
 
-    if (!username || !password) {
+    const loginIdentifier = email || username;
+
+    if (!loginIdentifier || !password) {
       return NextResponse.json(
-        { message: "Username dan password wajib diisi" },
+        { message: "Identitas (email/username) dan password wajib diisi" },
         { status: 400 },
       );
     }
 
-    const user = await prisma.user.findUnique({
-      where: { username },
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email: loginIdentifier },
+          { username: loginIdentifier }
+        ]
+      },
     });
 
     if (!user) {
       return NextResponse.json(
-        { message: "Username atau password salah" },
+        { message: "Kredensial yang Anda masukkan salah" },
         { status: 401 },
       );
     }

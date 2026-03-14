@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendWhatsAppFonnte } from "@/lib/whatsapp";
 import { requireAdminSession } from "@/lib/api/admin";
-import { supabase } from "@/lib/supabase";
+import { deleteFromCloudinary, uploadToCloudinary } from "@/lib/cloudinary";
 import { ProjectWorkPhase } from "@prisma/client";
 import {
   isPhaseUnlocked,
@@ -110,49 +110,41 @@ export async function POST(
       links = [];
     }
 
-    // 1. Upload images to Supabase (Outside Transaction)
-    let uploadedImages: {
+    // 1. Upload images to Cloudinary (Outside Transaction)
+    const uploadedImages: {
       fileName: string;
       mimeType: string;
       fileSize: number;
       fileUrl: string;
+      cloudinaryPublicId: string;
       sortOrder: number;
     }[] = [];
     if (imageFiles.length > 0) {
-      console.log("CREATE_LOG_INFO: Uploading images to Supabase...");
+      console.log("CREATE_LOG_INFO: Uploading images to Cloudinary...");
       try {
-        uploadedImages = await Promise.all(
-          imageFiles.map(async (f, index) => {
-            const fileBuffer = await f.arrayBuffer();
-            const fileName = `${projectId}/${Date.now()}-${f.name.replace(/\s+/g, "-")}`;
+        for (const [index, file] of imageFiles.entries()) {
+          const uploaded = await uploadToCloudinary({
+            file,
+            folder: `projects/${projectId}/logs`,
+            publicIdPrefix: `log-${Date.now()}-${index}`,
+          });
 
-            const { error: uploadError } = await supabase.storage
-              .from("project-assets")
-              .upload(fileName, fileBuffer, {
-                contentType: f.type,
-                upsert: false,
-              });
-
-            if (uploadError) {
-              console.error("Supabase upload error:", uploadError);
-              throw new Error("Gagal mengupload gambar ke storage");
-            }
-
-            const {
-              data: { publicUrl },
-            } = supabase.storage.from("project-assets").getPublicUrl(fileName);
-
-            return {
-              fileName: f.name,
-              mimeType: f.type,
-              fileSize: f.size,
-              fileUrl: publicUrl,
-              sortOrder: index,
-            };
-          }),
-        );
+          uploadedImages.push({
+            fileName: file.name,
+            mimeType: file.type,
+            fileSize: file.size,
+            fileUrl: uploaded.url,
+            cloudinaryPublicId: uploaded.publicId,
+            sortOrder: index,
+          });
+        }
         console.log("CREATE_LOG_INFO: Images uploaded successfully.");
       } catch (err) {
+        await Promise.allSettled(
+          uploadedImages.map((image) =>
+            deleteFromCloudinary(image.cloudinaryPublicId, image.mimeType),
+          ),
+        );
         console.error("CREATE_LOG_UPLOAD_ERROR:", err);
         return NextResponse.json(
           { message: "Gagal mengupload gambar. Silakan coba lagi." },
@@ -162,87 +154,95 @@ export async function POST(
     }
 
     // 2. Database Transaction
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const log = (await prisma.$transaction(async (tx) => {
-      let progressUpdateId = null;
+    let log;
+    try {
+      log = await prisma.$transaction(async (tx) => {
+        let progressUpdateId = null;
 
-      if (
-        visualDescription.trim() ||
-        uploadedImages.length > 0 ||
-        links.length > 0
-      ) {
-        console.log("CREATE_LOG_INFO: Creating new ProgressUpdate.");
+        if (
+          visualDescription.trim() ||
+          uploadedImages.length > 0 ||
+          links.length > 0
+        ) {
+          console.log("CREATE_LOG_INFO: Creating new ProgressUpdate.");
 
-        const update = await tx.progressUpdate.create({
+          const update = await tx.progressUpdate.create({
+            data: {
+              projectId,
+              description: visualDescription.trim() || description.trim(),
+              phase: (phaseRaw as ProjectPhase) || "DEVELOPMENT",
+              links: { create: links },
+              images: {
+                create: uploadedImages,
+              },
+            },
+          });
+          progressUpdateId = update.id;
+          console.log(
+            `CREATE_LOG_INFO: ProgressUpdate created with ID ${progressUpdateId}.`,
+          );
+        }
+
+        const newLog = await tx.projectLog.create({
           data: {
             projectId,
-            description: visualDescription.trim() || description.trim(),
-            phase: (phaseRaw as ProjectPhase) || "DEVELOPMENT",
-            links: { create: links },
-            images: {
-              create: uploadedImages,
+            title,
+            description,
+            percentage: percentageInt,
+            phase: workPhase,
+            progressUpdateId: progressUpdateId,
+          },
+          include: {
+            progressUpdate: {
+              include: {
+                images: true,
+                links: true,
+              },
             },
           },
         });
-        progressUpdateId = update.id;
-        console.log(
-          `CREATE_LOG_INFO: ProgressUpdate created with ID ${progressUpdateId}.`,
-        );
-      }
+        console.log(`CREATE_LOG_INFO: ProjectLog created with ID ${newLog.id}.`);
 
-      const newLog = await tx.projectLog.create({
-        data: {
-          projectId,
-          title,
-          description,
-          percentage: percentageInt,
-          phase: workPhase,
-          progressUpdateId: progressUpdateId,
-        },
-        include: {
-          progressUpdate: {
-            include: {
-              images: true,
-              links: true,
-            },
-          },
-        },
-      });
-      console.log(`CREATE_LOG_INFO: ProjectLog created with ID ${newLog.id}.`);
+        // Update project phase-specific progress and check for auto-transition
+        let newPhase = project.currentPhase;
+        let newDevelopmentProgress = project.developmentProgress;
+        let newMaintenanceProgress = project.maintenanceProgress;
+        let developmentCompletedAt = project.developmentCompletedAt;
 
-      // Update project phase-specific progress and check for auto-transition
-      let newPhase = project.currentPhase;
-      let newDevelopmentProgress = project.developmentProgress;
-      let newMaintenanceProgress = project.maintenanceProgress;
-      let developmentCompletedAt = project.developmentCompletedAt;
+        if (workPhase === "DEVELOPMENT") {
+          newDevelopmentProgress = percentageInt;
 
-      if (workPhase === "DEVELOPMENT") {
-        newDevelopmentProgress = percentageInt;
-
-        // Check if Development should complete
-        if (percentageInt === 100 && !developmentCompletedAt) {
-          newPhase = "MAINTENANCE";
-          developmentCompletedAt = new Date();
+          if (percentageInt === 100 && !developmentCompletedAt) {
+            newPhase = "MAINTENANCE";
+            developmentCompletedAt = new Date();
+          }
+        } else if (workPhase === "MAINTENANCE") {
+          newMaintenanceProgress = percentageInt;
         }
-      } else if (workPhase === "MAINTENANCE") {
-        newMaintenanceProgress = percentageInt;
-      }
 
-      await tx.project.update({
-        where: { id: projectId },
-        data: {
-          updatedAt: new Date(),
-          developmentProgress: newDevelopmentProgress,
-          maintenanceProgress: newMaintenanceProgress,
-          currentPhase: newPhase,
-          developmentCompletedAt: developmentCompletedAt,
-          status: percentageInt === 100 ? "Done" : "On Progress",
-        },
+        await tx.project.update({
+          where: { id: projectId },
+          data: {
+            updatedAt: new Date(),
+            developmentProgress: newDevelopmentProgress,
+            maintenanceProgress: newMaintenanceProgress,
+            currentPhase: newPhase,
+            developmentCompletedAt: developmentCompletedAt,
+            status: percentageInt === 100 ? "Done" : "On Progress",
+          },
+        });
+        console.log(`CREATE_LOG_INFO: Project ${projectId} updated.`);
+
+        return newLog;
       });
-      console.log(`CREATE_LOG_INFO: Project ${projectId} updated.`);
-
-      return newLog;
-    })) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    } catch (dbError) {
+      await Promise.allSettled(
+        uploadedImages.map((image) =>
+          deleteFromCloudinary(image.cloudinaryPublicId, image.mimeType),
+        ),
+      );
+      throw dbError;
+    }
 
     if (sendNotification && project.clientPhone) {
       console.log(

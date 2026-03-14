@@ -79,10 +79,10 @@ export function VelocityTrend({ projects }: VelocityTrendProps) {
         illuminationColor="oklch(0.82 0.06 155 / 0.2)" // Baby Green glow
       >
         <CardHeader className="pt-4 pb-4">
-          <CardTitle className="text-lg font-black tracking-tight uppercase text-foreground">
+          <CardTitle className="text-lg font-semibold tracking-tight text-foreground font-[family:var(--font-display)]">
             Tren Produktivitas
           </CardTitle>
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest mt-1">
+          <p className="text-[12px] font-medium text-muted-foreground tracking-wide mt-1">
             Kecepatan Penyelesaian vs Rata-rata Progress
           </p>
         </CardHeader>
@@ -150,7 +150,7 @@ export function VelocityTrend({ projects }: VelocityTrendProps) {
                           </p>
                           <div className="grid grid-cols-2 gap-4">
                             <div className="flex flex-col">
-                              <span className="text-[10px] uppercase text-accent/80 font-bold tracking-wide">
+                              <span className="text-[11px] text-accent/80 font-semibold tracking-[0.14em]">
                                 Velocity
                               </span>
                               <span className="text-xl font-black text-accent">
@@ -158,7 +158,7 @@ export function VelocityTrend({ projects }: VelocityTrendProps) {
                               </span>
                             </div>
                             <div className="flex flex-col">
-                              <span className="text-[10px] uppercase text-chart-5/80 font-bold tracking-wide">
+                              <span className="text-[11px] text-chart-5/80 font-semibold tracking-[0.14em]">
                                 Avg Progress
                               </span>
                               <span className="text-xl font-black text-chart-5">

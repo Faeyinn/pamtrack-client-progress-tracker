@@ -22,10 +22,11 @@ export function StatsOverview({ projects, isLoading }: StatsOverviewProps) {
     // On-time Calculation
     const onTimeProjects = projects.filter((p) => {
       if (p.status !== "Done") return false;
+      if (!p.deadline) return false;
       const deadline = new Date(p.deadline);
-      const now = new Date(); // Or verify against completedAt if available, using now for simplicity/consistency with previous logic
-      return deadline >= now || true; // Revert to simpler logic if data is missing, but sticking to previous logic:
-      // Note: Previous logic in KPICards compared deadline to now.
+      if (Number.isNaN(deadline.getTime())) return false;
+      const now = new Date();
+      return deadline >= now;
     }).length;
 
     const onTimeRate =
@@ -86,10 +87,10 @@ export function StatsOverview({ projects, isLoading }: StatsOverviewProps) {
         return (
           <Card
             key={idx}
-            className="group relative overflow-hidden bg-white dark:bg-zinc-900 border-border hover:border-foreground/30 shadow-xl shadow-foreground/[0.03] hover:shadow-2xl transition-all duration-500 rounded-[1.5rem]"
+            className="group relative overflow-hidden bg-card/75 backdrop-blur-md border-border/60 hover:border-foreground/30 shadow-lg shadow-foreground/[0.03] hover:shadow-xl transition-colors transition-shadow duration-500 rounded-[1.5rem]"
           >
             {/* Soft background glow */}
-            <div className="absolute top-0 right-0 w-24 h-24 bg-foreground/[0.02] rounded-full blur-3xl -mr-12 -mt-12 transition-all duration-700 group-hover:scale-150" />
+            <div className="absolute top-0 right-0 w-24 h-24 bg-foreground/[0.02] rounded-full blur-3xl -mr-12 -mt-12 transition-transform duration-700 group-hover:scale-150" />
 
             <CardContent className="p-5 sm:p-6 flex flex-col justify-between h-full space-y-4 relative z-10">
               <div className="flex justify-between items-start">
@@ -97,27 +98,27 @@ export function StatsOverview({ projects, isLoading }: StatsOverviewProps) {
                   <Icon className="w-5 h-5" />
                 </div>
                 {card.unit && (
-                  <span className="text-[10px] font-black tabular-nums bg-primary/10 text-primary px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                  <span className="text-[11px] font-semibold tabular-nums bg-primary/10 text-primary px-2 py-0.5 rounded-full tracking-tight">
                     Real-time
                   </span>
                 )}
               </div>
               <div>
                 <div className="flex items-baseline gap-1">
-                  <h3 className="text-3xl sm:text-4xl font-black tracking-tighter text-foreground tabular-nums">
+                  <h3 className="text-3xl sm:text-4xl font-bold tracking-tighter text-foreground tabular-nums">
                     {card.value}
                   </h3>
                   {card.unit && (
-                    <span className="text-sm font-black text-muted-foreground opacity-50 uppercase tracking-tighter">
+                    <span className="text-[11px] font-semibold text-muted-foreground/70 tracking-tight">
                       {card.unit}
                     </span>
                   )}
                 </div>
                 <div className="flex flex-col mt-2">
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground">
+                  <p className="text-[12px] font-semibold tracking-tight text-foreground">
                     {card.label}
                   </p>
-                  <p className="text-[9px] text-muted-foreground/60 font-bold uppercase tracking-wider mt-0.5 truncate">
+                  <p className="text-[11px] text-muted-foreground/70 font-medium mt-1 truncate">
                     {card.desc}
                   </p>
                 </div>
@@ -126,7 +127,7 @@ export function StatsOverview({ projects, isLoading }: StatsOverviewProps) {
               {/* Progress-like decorative line */}
               <div className="h-1 w-full bg-foreground/[0.05] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-foreground/10 group-hover:bg-foreground/30 transition-all duration-500"
+                  className="h-full bg-foreground/10 group-hover:bg-foreground/30 transition-colors duration-500"
                   style={{ width: idx % 2 === 0 ? "70%" : "40%" }}
                 />
               </div>

@@ -60,24 +60,24 @@ export function FeedbackForm({ token }: FeedbackFormProps) {
         <div className="w-10 h-10 rounded-2xl bg-foreground/5 flex items-center justify-center border border-foreground/5">
           <MessageSquare className="w-5 h-5 text-foreground/60" />
         </div>
-        <div className="space-y-0.5">
-          <h3 className="text-xl font-black tracking-tighter uppercase text-foreground">
+        <div className="space-y-1">
+          <p className="text-sm font-medium uppercase tracking-[0.28em] text-muted-foreground">
+            Support
+          </p>
+          <h3 className="text-2xl font-[family:var(--font-display)] tracking-tight text-foreground">
             Bantuan & Feedback
           </h3>
-          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">
-            Sampaikan masukan Anda di sini
-          </p>
         </div>
       </div>
 
-      <Card className="overflow-hidden bg-background/40 backdrop-blur-xl border-border/40 rounded-[2rem] shadow-2xl shadow-foreground/5 relative group">
+      <Card className="overflow-hidden bg-card/82 backdrop-blur-xl border border-border/60 rounded-[2rem] shadow-sm relative group">
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-[60px] -mr-16 -mt-16 pointer-events-none transition-all duration-700 group-hover:bg-primary/10" />
 
-        <CardHeader className="pb-4 relative z-10 px-6 pt-8">
-          <CardTitle className="text-lg font-black uppercase tracking-tighter text-foreground">
-            Ada pertanyaan atau masukan?<span className="text-primary">.</span>
+        <CardHeader className="pb-6 relative z-10 px-6 pt-8">
+          <CardTitle className="text-2xl font-[family:var(--font-display)] tracking-tight text-foreground">
+            Ada pertanyaan atau masukan?
           </CardTitle>
-          <CardDescription className="text-[10px] font-bold uppercase tracking-widest opacity-60 leading-relaxed">
+          <CardDescription className="text-sm leading-relaxed text-muted-foreground font-medium">
             Kirimkan pertanyaan, masukan, atau permintaan khusus Anda langsung
             ke tim pengembang kami.
           </CardDescription>
@@ -91,20 +91,20 @@ export function FeedbackForm({ token }: FeedbackFormProps) {
                 value={feedback}
                 onChange={(e) => setFeedback(e.target.value)}
                 rows={5}
-                className="resize-none text-xs font-bold leading-relaxed bg-muted/20 border-border/40 rounded-2xl focus:ring-2 focus:ring-foreground/5 transition-all"
+                className="resize-none text-sm font-medium leading-relaxed bg-muted/20 border-border/40 rounded-2xl focus:ring-2 focus:ring-foreground/5 transition-all"
                 disabled={isSending}
                 maxLength={500}
               />
               <div className="flex items-center justify-between px-1">
-                <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/40">
+                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground/50">
                   Batas Karakter: 500
                 </span>
                 <span
                   className={cn(
-                    "text-[9px] font-black uppercase tracking-widest transition-colors",
+                    "text-[10px] font-medium uppercase tracking-[0.2em] transition-colors",
                     feedback.length > 450
                       ? "text-primary/100"
-                      : "text-muted-foreground/40",
+                      : "text-muted-foreground/50",
                   )}
                 >
                   {feedback.length}/500
@@ -114,7 +114,7 @@ export function FeedbackForm({ token }: FeedbackFormProps) {
 
             <Button
               type="submit"
-              className="w-full h-14 rounded-2xl bg-foreground text-background font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl shadow-foreground/20 hover:scale-[1.02] active:scale-95 transition-all"
+              className="w-full h-14 rounded-2xl bg-foreground text-background font-semibold text-sm uppercase tracking-[0.24em] shadow-2xl shadow-foreground/20 hover:scale-[1.02] active:scale-95 transition-all"
               disabled={isSending || !feedback.trim()}
             >
               {isSending ? (

@@ -31,6 +31,7 @@ enum ArtifactType {
 model User {
   id        String   @id @default(cuid())
   username  String   @unique
+  email     String   @unique
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -71,12 +72,14 @@ model DiscussionArtifact {
   phase       ProjectPhase
   type        ArtifactType?
 
-  // Either provide fileData OR sourceLinkUrl
-  fileName     String? @map("file_name")
-  mimeType     String? @map("mime_type")
-  fileSize     Int?    @map("file_size")
-  fileData     Bytes?  @map("file_data")
-  sourceLinkUrl String? @map("source_link_url")
+  // `sourceLinkUrl` is for external links; uploaded files are tracked separately.
+  fileName           String? @map("file_name")
+  mimeType           String? @map("mime_type")
+  fileSize           Int?    @map("file_size")
+  fileData           Bytes?  @map("file_data")
+  fileUrl            String? @map("file_url")
+  sourceLinkUrl      String? @map("source_link_url")
+  cloudinaryPublicId String? @map("cloudinary_public_id")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -108,14 +111,15 @@ model ProgressUpdate {
 }
 
 model ProgressUpdateImage {
-  id              String @id @default(cuid())
+  id               String @id @default(cuid())
   progressUpdateId String @map("progress_update_id")
-  fileName        String? @map("file_name")
-  mimeType        String? @map("mime_type")
-  fileSize        Int?    @map("file_size")
-  fileUrl         String  @map("file_url")
-  sortOrder       Int     @default(0) @map("sort_order")
-  createdAt       DateTime @default(now()) @map("created_at")
+  fileName         String? @map("file_name")
+  mimeType         String? @map("mime_type")
+  fileSize         Int?    @map("file_size")
+  fileUrl          String  @map("file_url")
+  cloudinaryPublicId String? @map("cloudinary_public_id")
+  sortOrder        Int     @default(0) @map("sort_order")
+  createdAt        DateTime @default(now()) @map("created_at")
 
   progressUpdate ProgressUpdate @relation(fields: [progressUpdateId], references: [id], onDelete: Cascade)
 
@@ -145,7 +149,7 @@ model ProjectLog {
   phase            ProjectWorkPhase    @default(DEVELOPMENT) @map("phase")
   createdAt        DateTime            @default(now()) @map("created_at")
   project          Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  progressUpdate   ProgressUpdate?     @relation(fields: [progressUpdateId], references: [id])
+  progressUpdate   ProgressUpdate?     @relation(fields: [progressUpdateId], references: [id], onDelete: SetNull)
   progressUpdateId String?             @map("progress_update_id")
 
   @@index([projectId])

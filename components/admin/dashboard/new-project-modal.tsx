@@ -117,14 +117,14 @@ export function NewProjectModal({
         <DialogHeader className="relative z-10">
           <div className="flex items-center gap-2 mb-2">
             <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em]">
+            <p className="text-[11px] font-semibold text-muted-foreground tracking-[0.18em]">
               Tambah Proyek
             </p>
           </div>
-          <DialogTitle className="text-3xl font-black tracking-tighter text-foreground uppercase leading-tight">
+          <DialogTitle className="text-3xl font-semibold tracking-tight text-foreground leading-tight font-[family:var(--font-display)]">
             Proyek Baru<span className="text-primary">.</span>
           </DialogTitle>
-          <DialogDescription className="text-xs font-medium text-muted-foreground/80 uppercase tracking-widest mt-1">
+          <DialogDescription className="text-[12px] font-medium text-muted-foreground/80 tracking-wide mt-2">
             Masukkan data proyek baru untuk mulai memantau perkembangan.
           </DialogDescription>
         </DialogHeader>
@@ -134,23 +134,23 @@ export function NewProjectModal({
         <div className="space-y-8 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
           {/* Client Intelligence Section */}
           <div className="space-y-4">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/40 px-1">
+            <h4 className="text-[11px] font-semibold tracking-[0.16em] text-foreground/50 px-1">
               Data Client
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label
                   htmlFor="clientName"
-                  className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-70"
+                  className="text-[11px] font-semibold tracking-[0.14em] ml-1 opacity-70"
                 >
                   Nama Client
                 </Label>
                 <div className="relative group">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40 group-focus-within:text-foreground transition-all duration-300" />
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40 group-focus-within:text-foreground transition-colors duration-300" />
                   <Input
                     id="clientName"
                     placeholder="Contoh: PT Angkasa Jaya"
-                    className="pl-12 h-14 rounded-2xl bg-muted/30 border-border/40 focus:ring-2 focus:ring-foreground/5 transition-all text-xs font-bold"
+                    className="pl-12 h-14 rounded-2xl bg-muted/30 border-border/40 focus-visible:ring-2 focus-visible:ring-foreground/20 transition-colors transition-shadow text-sm font-semibold"
                     value={formData.clientName}
                     onChange={handleChange}
                     required
@@ -161,17 +161,17 @@ export function NewProjectModal({
               <div className="space-y-2">
                 <Label
                   htmlFor="clientPhone"
-                  className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-70"
+                  className="text-[11px] font-semibold tracking-[0.14em] ml-1 opacity-70"
                 >
                   Nomor WhatsApp
                 </Label>
                 <div className="relative group">
-                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40 group-focus-within:text-foreground transition-all duration-300" />
+                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40 group-focus-within:text-foreground transition-colors duration-300" />
                   <Input
                     id="clientPhone"
                     placeholder="08xxxxxxxx"
                     type="tel"
-                    className="pl-12 h-14 rounded-2xl bg-muted/30 border-border/40 focus:ring-2 focus:ring-foreground/5 transition-all text-xs font-bold"
+                    className="pl-12 h-14 rounded-2xl bg-muted/30 border-border/40 focus-visible:ring-2 focus-visible:ring-foreground/20 transition-colors transition-shadow text-sm font-semibold"
                     value={formData.clientPhone}
                     onChange={handleChange}
                     required
@@ -183,23 +183,23 @@ export function NewProjectModal({
 
           {/* Project Parameters Section */}
           <div className="space-y-4 pt-4 border-t border-border/10">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/40 px-1">
+            <h4 className="text-[11px] font-semibold tracking-[0.16em] text-foreground/50 px-1">
               Detail Proyek
             </h4>
 
             <div className="space-y-2">
               <Label
                 htmlFor="projectName"
-                className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-70"
+                className="text-[11px] font-semibold tracking-[0.14em] ml-1 opacity-70"
               >
                 Nama Proyek
               </Label>
               <div className="relative group">
-                <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40 group-focus-within:text-foreground transition-all duration-300" />
+                <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40 group-focus-within:text-foreground transition-colors duration-300" />
                 <Input
                   id="projectName"
                   placeholder="Contoh: Website E-Commerce"
-                  className="pl-12 h-14 rounded-2xl bg-muted/30 border-border/40 focus:ring-2 focus:ring-foreground/5 transition-all text-xs font-bold"
+                  className="pl-12 h-14 rounded-2xl bg-muted/30 border-border/40 focus-visible:ring-2 focus-visible:ring-foreground/20 transition-colors transition-shadow text-sm font-semibold"
                   value={formData.projectName}
                   onChange={handleChange}
                   required
@@ -208,7 +208,7 @@ export function NewProjectModal({
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-70">
+              <Label className="text-[11px] font-semibold tracking-[0.14em] ml-1 opacity-70">
                 Batas Waktu Pengerjaan
               </Label>
               <Popover>
@@ -216,7 +216,7 @@ export function NewProjectModal({
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left h-14 px-4 rounded-2xl bg-muted/30 border-border/40 transition-all duration-300 hover:bg-muted/50 text-xs font-bold",
+                      "w-full justify-start text-left h-14 px-4 rounded-2xl bg-muted/30 border-border/40 transition-colors duration-300 hover:bg-muted/50 text-sm font-semibold",
                       !date && "text-muted-foreground",
                     )}
                   >
@@ -224,7 +224,7 @@ export function NewProjectModal({
                     {date ? (
                       format(date, "PPP")
                     ) : (
-                      <span className="opacity-40 uppercase tracking-widest font-black text-[9px]">
+                      <span className="opacity-50 tracking-[0.16em] font-semibold text-[11px]">
                         Pilih Tanggal Selesai
                       </span>
                     )}
@@ -253,14 +253,14 @@ export function NewProjectModal({
             variant="ghost"
             type="button"
             onClick={() => setIsOpen(false)}
-            className="w-full sm:w-auto h-14 px-8 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-muted/50 transition-all"
+            className="w-full sm:w-auto h-14 px-8 rounded-2xl text-[11px] font-semibold tracking-[0.16em] hover:bg-muted/50 transition-colors"
           >
             Batal
           </Button>
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full sm:flex-1 h-14 px-8 rounded-2xl bg-foreground text-background font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl shadow-foreground/20 hover:scale-[1.02] active:scale-95 transition-all"
+            className="w-full sm:flex-1 h-14 px-8 rounded-2xl bg-foreground text-background font-semibold text-[11px] tracking-[0.16em] shadow-2xl shadow-foreground/20 hover:scale-[1.02] active:scale-95 transition-transform transition-shadow"
           >
             {isLoading ? (
               <>
@@ -292,7 +292,7 @@ export function NewProjectModal({
       <DialogTrigger asChild>
         <Button
           data-new-project-trigger
-          className="h-11 px-6 rounded-xl bg-foreground text-background font-black text-[10px] uppercase tracking-widest shadow-xl shadow-foreground/10 hover:shadow-foreground/20 hover:scale-105 active:scale-95 transition-all"
+          className="h-11 px-6 rounded-xl bg-foreground text-background font-semibold text-[11px] tracking-[0.16em] shadow-xl shadow-foreground/10 hover:shadow-foreground/20 hover:scale-105 active:scale-95 transition-transform transition-shadow"
         >
           <Plus className="w-4 h-4 mr-2" />
           <span className="hidden sm:inline">Tambah Proyek</span>

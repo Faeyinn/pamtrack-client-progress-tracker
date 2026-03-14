@@ -14,6 +14,7 @@ import {
   FileText,
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
 interface ProjectLog {
@@ -80,20 +81,20 @@ export function ActivityFeed() {
   };
 
   return (
-    <Card className="h-full flex flex-col shadow-xl shadow-foreground/[0.03] border border-border bg-white dark:bg-zinc-900 rounded-[2rem] overflow-hidden">
+    <Card className="h-full flex flex-col shadow-lg shadow-foreground/[0.03] border border-border/60 bg-card/75 backdrop-blur-md rounded-[2rem] overflow-hidden">
       <CardHeader className="flex-none p-6 sm:p-8 pb-4 border-b border-border/50">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center shadow-lg shadow-amber-500/20">
               <Clock className="w-4 h-4" />
             </div>
-            <CardTitle className="text-sm font-black tracking-widest uppercase text-foreground/80">
+            <CardTitle className="text-sm font-semibold tracking-[0.14em] text-foreground/80 font-[family:var(--font-display)]">
               Aktivitas
             </CardTitle>
           </div>
           <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[9px] font-black uppercase tracking-tighter text-emerald-600">
+            <span className="text-[11px] font-semibold tracking-[0.14em] text-emerald-600">
               Aktif
             </span>
           </div>
@@ -106,12 +107,13 @@ export function ActivityFeed() {
             [...Array(5)].map((_, i) => (
               <div key={i} className="flex gap-4">
                 <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-xl bg-muted/40 animate-pulse" />
-                  <div className="w-0.5 h-full bg-muted/40 animate-pulse mt-3" />
+                  <Skeleton className="w-10 h-10 rounded-xl" />
+                  <Skeleton className="w-0.5 h-full mt-3 opacity-20" />
                 </div>
                 <div className="space-y-3 flex-1 pt-1">
-                  <div className="h-4 w-3/4 bg-muted/40 animate-pulse rounded" />
-                  <div className="h-3 w-1/2 bg-muted/40 animate-pulse rounded" />
+                  <Skeleton className="h-4 w-3/4 rounded" />
+                  <Skeleton className="h-3 w-1/2 rounded" />
+                  <Skeleton className="h-16 w-full rounded-2xl opacity-50" />
                 </div>
               </div>
             ))
@@ -120,7 +122,7 @@ export function ActivityFeed() {
               <div className="w-20 h-20 rounded-[2rem] bg-muted/20 flex items-center justify-center shadow-inner">
                 <Clock className="w-10 h-10 opacity-20" />
               </div>
-              <p className="text-xs font-black uppercase tracking-widest opacity-40">
+              <p className="text-[11px] font-semibold tracking-[0.16em] opacity-40">
                 Belum ada aktivitas
               </p>
             </div>
@@ -136,7 +138,7 @@ export function ActivityFeed() {
                   <div className="flex flex-col items-center">
                     <div
                       className={cn(
-                        "w-10 h-10 rounded-xl flex items-center justify-center shadow-2xl transition-all duration-500 z-10",
+                        "w-10 h-10 rounded-xl flex items-center justify-center shadow-2xl transition-colors transition-shadow duration-500 z-10",
                         "bg-background border-2 border-border group-hover:border-foreground group-hover:bg-foreground group-hover:text-background",
                         activity.percentage === 100 &&
                           "bg-emerald-500 border-emerald-500 text-white group-hover:bg-emerald-600",
@@ -157,16 +159,16 @@ export function ActivityFeed() {
                   <div className="pb-4 min-w-0 flex-1">
                     <div className="flex flex-col gap-1.5">
                       <p className="text-xs font-bold text-foreground/90 leading-tight">
-                        <span className="font-black text-foreground uppercase tracking-widest block mb-1 opacity-40 text-[9px]">
+                        <span className="font-semibold text-foreground tracking-[0.16em] block mb-1 opacity-40 text-[11px]">
                           {config.message}
                         </span>
-                        <span className="font-black uppercase tracking-tight group-hover:text-primary transition-colors cursor-pointer">
+                        <span className="font-semibold tracking-tight group-hover:text-primary transition-colors cursor-pointer">
                           {activity.project.projectName}
                         </span>
                       </p>
 
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-[10px] text-muted-foreground/60 font-black uppercase tracking-widest flex items-center gap-1.5">
+                        <span className="text-[11px] text-muted-foreground/70 font-semibold tracking-[0.14em] flex items-center gap-1.5">
                           <Clock className="w-3 h-3 opacity-40" />
                           {formatDistanceToNow(new Date(activity.createdAt), {
                             addSuffix: true,
@@ -177,11 +179,11 @@ export function ActivityFeed() {
                     </div>
 
                     {(activity.title || activity.description) && (
-                      <div className="mt-4 text-[11px] text-muted-foreground bg-foreground/[0.03] p-4 rounded-2xl border border-foreground/[0.05] group-hover:border-foreground/10 transition-all duration-500 hover:bg-background hover:shadow-xl shadow-foreground/[0.02]">
-                        <p className="font-black text-foreground uppercase tracking-wider mb-1">
+                      <div className="mt-4 text-[12px] text-muted-foreground bg-foreground/[0.03] p-4 rounded-2xl border border-foreground/[0.05] group-hover:border-foreground/10 transition-colors transition-shadow duration-500 hover:bg-background hover:shadow-xl shadow-foreground/[0.02]">
+                        <p className="font-semibold text-foreground tracking-tight mb-1">
                           {activity.title}
                         </p>
-                        <p className="line-clamp-2 leading-relaxed font-medium opacity-70 italic">
+                        <p className="line-clamp-2 leading-relaxed font-normal opacity-70 italic">
                           &quot;{activity.description}&quot;
                         </p>
                       </div>

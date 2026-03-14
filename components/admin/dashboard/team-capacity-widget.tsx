@@ -82,10 +82,10 @@ export function TeamCapacityWidget({ projects }: TeamCapacityWidgetProps) {
                 <Users className="w-5 h-5" />
               </div>
               <div className="flex-1">
-                <CardTitle className="text-lg font-black tracking-tight uppercase text-foreground">
+                <CardTitle className="text-lg font-semibold tracking-tight text-foreground font-[family:var(--font-display)]">
                   Kapasitas Tim
                 </CardTitle>
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest mt-1">
+                <p className="text-[12px] font-medium text-muted-foreground tracking-wide mt-1">
                   {getWorkloadLabel(capacityMetrics.workloadLevel)}
                 </p>
               </div>
@@ -106,7 +106,7 @@ export function TeamCapacityWidget({ projects }: TeamCapacityWidgetProps) {
             </div>
             <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
               <div
-                className="h-full transition-all duration-700 ease-out rounded-full"
+                className="h-full transition-[width] duration-700 ease-out rounded-full"
                 style={{
                   background:
                     capacityMetrics.workloadLevel === "critical"
@@ -123,7 +123,7 @@ export function TeamCapacityWidget({ projects }: TeamCapacityWidgetProps) {
           {/* Project Status Grid */}
           <div className="grid grid-cols-2 gap-4">
             <div className="p-3 rounded-lg bg-muted/50 border border-border">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
+              <p className="text-[11px] font-medium text-muted-foreground tracking-wide mb-1">
                 Proyek Aktif
               </p>
               <p className="text-2xl font-black text-foreground">
@@ -135,7 +135,7 @@ export function TeamCapacityWidget({ projects }: TeamCapacityWidgetProps) {
             </div>
 
             <div className="p-3 rounded-lg bg-muted/50 border border-border">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
+              <p className="text-[11px] font-medium text-muted-foreground tracking-wide mb-1">
                 Progress Rata-rata
               </p>
               <p className="text-2xl font-black text-foreground">
@@ -150,7 +150,7 @@ export function TeamCapacityWidget({ projects }: TeamCapacityWidgetProps) {
             <div className="flex gap-2 items-start">
               <AlertCircle className="w-4 h-4 mt-0.5 shrink-0 text-muted-foreground" />
               <div className="flex-1">
-                <p className="text-xs font-semibold text-foreground mb-1">
+                <p className="text-[11px] font-semibold text-foreground mb-1">
                   {capacityMetrics.workloadLevel === "critical"
                     ? "Status: Kapasitas Penuh"
                     : capacityMetrics.workloadLevel === "high"

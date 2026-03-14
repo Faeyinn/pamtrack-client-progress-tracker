@@ -48,6 +48,8 @@ export function TokenInputForm() {
         <Alert
           variant="destructive"
           className="animate-in fade-in slide-in-from-top-2 border-border/70 bg-muted/30 text-foreground"
+          role="alert"
+          aria-live="assertive"
         >
           <AlertDescription className="font-medium">
             {tokenError}
@@ -66,28 +68,31 @@ export function TokenInputForm() {
           <Input
             id="token"
             type="text"
-            placeholder="Contoh: trx-8823-pam"
+            placeholder="Contoh: trx-8823-pam…"
+            name="projectToken"
+            autoComplete="one-time-code"
+            spellCheck={false}
             value={token}
             onChange={(e) => setToken(e.target.value)}
-            className="pl-10 h-12 text-base bg-background/50 border-border/70 focus:border-foreground/40 focus-visible:ring-ring/30 transition-all rounded-xl"
+            className="pl-10 h-12 text-base bg-background/50 border-border/70 focus:border-foreground/40 focus-visible:ring-ring/30 transition-colors rounded-xl"
             required
             disabled={isValidating}
           />
         </div>
         <p className="text-xs text-muted-foreground">
-          Opsional. Gunakan jika Kamu hanya punya token.
+          Gunakan hanya jika Anda tidak membuka dari magic link WhatsApp.
         </p>
       </div>
 
       <Button
         type="submit"
-        className="w-full h-11 text-sm font-medium transition-all rounded-xl"
+        className="w-full h-11 text-sm font-medium transition-colors rounded-xl"
         disabled={isValidating || !token}
       >
         {isValidating ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Memeriksa...
+            Memeriksa…
           </>
         ) : (
           <>
@@ -95,6 +100,10 @@ export function TokenInputForm() {
           </>
         )}
       </Button>
+
+      <p className="text-center text-xs leading-5 text-muted-foreground">
+        Tip: salin token persis seperti yang dikirim agar validasi lebih cepat.
+      </p>
     </form>
   );
 }
