@@ -88,10 +88,12 @@ export function RecentProjectsList({
               </p>
             </div>
           ) : (
-            recentProjects.map((project) => (
+            recentProjects.map((project, idx) => (
               <Link
                 key={project.id}
                 href={`/admin/projects/${project.id}`}
+                data-aos="fade-left"
+                data-aos-delay={idx * 50}
                 className="flex items-center gap-4 p-4 rounded-[1.25rem] bg-background/40 hover:bg-foreground border border-foreground/[0.03] hover:border-foreground shadow-sm hover:shadow-xl hover:shadow-foreground/10 transition-colors transition-shadow duration-500 group relative overflow-hidden"
               >
                 {/* Visual Accent */}

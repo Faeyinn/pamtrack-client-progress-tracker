@@ -130,7 +130,10 @@ export function ProjectInfoCard({
 
   if (isLoading || !project) {
     return (
-      <Card className="border-border/50 shadow-sm bg-card h-fit">
+      <Card 
+        data-aos="fade-right"
+        className="border-border/50 shadow-sm bg-card h-fit"
+      >
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -186,7 +189,10 @@ export function ProjectInfoCard({
   const isMaintenance = project.currentPhase === "MAINTENANCE";
 
   return (
-    <Card className="glass-card border-none shadow-2xl overflow-hidden hover-lift group">
+    <Card 
+      data-aos="fade-right"
+      className="glass-card border-none shadow-2xl overflow-hidden hover-lift group"
+    >
       <div
         className={cn(
           "h-1.5 w-full opacity-90 transition-colors duration-500",

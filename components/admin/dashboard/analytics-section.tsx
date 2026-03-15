@@ -96,7 +96,11 @@ export function AnalyticsSection({ projects, isLoading }: AnalyticsSectionProps)
   }
 
   return (
-    <Card className="h-[400px] flex flex-col shadow-lg shadow-foreground/[0.03] border border-border/60 bg-card rounded-[2rem] overflow-hidden">
+    <Card 
+      data-aos="fade-up"
+      data-aos-delay="300"
+      className="h-[400px] flex flex-col shadow-lg shadow-foreground/[0.03] border border-border/60 bg-card rounded-[2rem] overflow-hidden"
+    >
       <CardHeader className="flex-none p-4 sm:p-6 pb-2 sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
         <div className="space-y-1">
           <CardTitle className="text-base sm:text-lg font-semibold tracking-tight flex items-center gap-2 font-[family:var(--font-display)]">

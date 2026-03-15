@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { DashboardHeader } from "@/components/admin/dashboard/dashboard-header";
 import { useDashboardLogic } from "@/components/admin/dashboard/hooks/use-dashboard";
 import { BottomNav } from "@/components/admin/shared/bottom-nav";
@@ -7,11 +8,27 @@ import { Button } from "@/components/ui/button";
 import { RefreshCcw, LayoutDashboard } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { StatsOverview } from "@/components/admin/dashboard/stats-overview";
-import { AnalyticsSection } from "@/components/admin/dashboard/analytics-section";
 import { RecentProjectsList } from "@/components/admin/dashboard/recent-projects-list";
-import { ActivityFeed } from "@/components/admin/dashboard/activity-feed";
 import { OverdueProjectsAlert } from "@/components/admin/dashboard/overdue-projects-alert";
 import { Project } from "@/lib/types/project";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Lazy load heavy components
+const AnalyticsSection = dynamic(
+  () => import("@/components/admin/dashboard/analytics-section").then((mod) => mod.AnalyticsSection),
+  { 
+    ssr: false,
+    loading: () => <Skeleton className="h-[400px] w-full rounded-[2rem]" /> 
+  }
+);
+
+const ActivityFeed = dynamic(
+  () => import("@/components/admin/dashboard/activity-feed").then((mod) => mod.ActivityFeed),
+  { 
+    ssr: false,
+    loading: () => <Skeleton className="h-full w-full rounded-[2rem]" /> 
+  }
+);
 
 export function DashboardClient({ initialProjects }: { initialProjects: Project[] }) {
   const { projects, isLoading, fetchProjects } = useDashboardLogic(initialProjects);

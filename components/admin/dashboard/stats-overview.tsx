@@ -87,6 +87,8 @@ export function StatsOverview({ projects, isLoading }: StatsOverviewProps) {
         return (
           <Card
             key={idx}
+            data-aos="fade-up"
+            data-aos-delay={idx * 100}
             className="group relative overflow-hidden bg-card/75 backdrop-blur-md border-border/60 hover:border-foreground/30 shadow-lg shadow-foreground/[0.03] hover:shadow-xl transition-colors transition-shadow duration-500 rounded-[1.5rem]"
           >
             {/* Soft background glow */}

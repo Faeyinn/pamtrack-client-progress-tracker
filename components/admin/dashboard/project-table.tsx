@@ -312,10 +312,11 @@ export function ProjectTable({
         {currentProjects.map((project, index) => (
           <div
             key={project.id}
+            data-aos="fade-up"
+            data-aos-delay={index * 100}
             className={cn(
               "group relative bg-card rounded-[2.5rem] p-6 border border-border/60 shadow-lg transition-shadow transition-transform duration-500 hover:shadow-xl hover:shadow-foreground/5 active:scale-[0.98] overflow-hidden",
             )}
-            style={{ animationDelay: `${index * 100}ms` }}
             onClick={() => router.push(`/admin/projects/${project.id}`)}
           >
             {/* Status Background Accent */}
@@ -513,8 +514,9 @@ export function ProjectTable({
             {currentProjects.map((project, index) => (
               <TableRow
                 key={project.id}
+                data-aos="fade-left"
+                data-aos-delay={index * 50}
                 className="hover:bg-foreground/[0.03] transition-colors duration-300 group/row border-b border-border/20 last:border-0 cursor-pointer h-24"
-                style={{ animationDelay: `${index * 50}ms` }}
                 onClick={() => router.push(`/admin/projects/${project.id}`)}
               >
                 <TableCell className="pl-10">

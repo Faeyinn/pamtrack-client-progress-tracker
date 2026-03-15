@@ -13,7 +13,11 @@ interface TimelineViewProps {
 function PhaseSeparator({ phase }: { phase: "DEVELOPMENT" | "MAINTENANCE" }) {
   const isMaintenance = phase === "MAINTENANCE";
   return (
-    <div className="relative flex items-center gap-4 py-4 animate-in fade-in zoom-in duration-500">
+    <div 
+      className="relative flex items-center gap-4 py-4"
+      data-aos="zoom-in"
+      data-aos-duration="600"
+    >
       <div className="relative z-10 flex-shrink-0">
         <div
           className={cn(

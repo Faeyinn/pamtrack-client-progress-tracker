@@ -185,7 +185,11 @@ export default function ProjectDetailPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Project Info */}
-          <div className="lg:col-span-1 lg:sticky lg:top-24 lg:self-start">
+          <div 
+            className="lg:col-span-1 lg:sticky lg:top-24 lg:self-start"
+            data-aos="fade-right"
+            data-aos-duration="800"
+          >
             <ProjectInfoCard
               project={project}
               latestProgress={latestProgress}
@@ -196,7 +200,12 @@ export default function ProjectDetailPage() {
           </div>
 
           {/* Right Column - Tabs */}
-          <div className="lg:col-span-2">
+          <div 
+            className="lg:col-span-2"
+            data-aos="fade-left"
+            data-aos-duration="800"
+            data-aos-delay="200"
+          >
             <Tabs defaultValue="timeline" className="w-full">
               <TabsList className="grid w-full grid-cols-3 mb-6 h-12 p-1 bg-muted/50 rounded-xl">
                 <TabsTrigger
@@ -368,10 +377,11 @@ export default function ProjectDetailPage() {
                         {feedbacks.map((item, index) => (
                           <div
                             key={item.id}
+                            data-aos="fade-up"
+                            data-aos-delay={index * 100}
                             className={cn(
                               "group relative bg-background/60 backdrop-blur-xl rounded-[2rem] p-6 sm:p-8 border border-border/40 transition-colors transition-shadow duration-500 hover:shadow-2xl hover:shadow-foreground/5 overflow-hidden",
                             )}
-                            style={{ animationDelay: `${index * 50}ms` }}
                           >
                             <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-3xl -mr-12 -mt-12 transition-transform duration-700 group-hover:scale-150" />
 

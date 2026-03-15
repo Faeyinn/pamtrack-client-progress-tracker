@@ -30,7 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PROJECT_PHASES } from "@/lib/project-phase";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 interface AddLogFormProps {
   projectId: string;
@@ -58,6 +58,7 @@ export function AddLogForm({
   } = useAddLog(projectId, onSuccess, selectedWorkPhase);
   const [showVisuals, setShowVisuals] = useState(false);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Check if Maintenance is unlocked
   const isMaintenanceUnlocked = developmentProgress === 100;
@@ -65,18 +66,34 @@ export function AddLogForm({
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    if (files.length > 5) {
+    const totalCurrentImages = logForm.images.length;
+    
+    if (totalCurrentImages + files.length > 5) {
       alert("Maksimal 5 gambar");
       return;
     }
 
-    setLogForm({ ...logForm, images: files });
+    const updatedImages = [...logForm.images, ...files];
+    setLogForm({ ...logForm, images: updatedImages });
 
-    // Generate previews
+    // Generate new previews
     const newPreviews = files.map((file) => URL.createObjectURL(file));
-    // Cleanup old previews to avoid memory leaks
-    imagePreviews.forEach((url) => URL.revokeObjectURL(url));
-    setImagePreviews(newPreviews);
+    setImagePreviews([...imagePreviews, ...newPreviews]);
+
+    // Reset input value so the same file can be selected again if needed
+    if (e.target) {
+      e.target.value = "";
+    }
+  };
+
+  const removeImage = (index: number) => {
+    const updatedImages = logForm.images.filter((_, i) => i !== index);
+    setLogForm({ ...logForm, images: updatedImages });
+
+    // Revoke and remove preview
+    URL.revokeObjectURL(imagePreviews[index]);
+    const updatedPreviews = imagePreviews.filter((_, i) => i !== index);
+    setImagePreviews(updatedPreviews);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -316,9 +333,15 @@ export function AddLogForm({
             variant="ghost"
             size="sm"
             onClick={() => setShowVisuals(!showVisuals)}
-            className="h-7 text-[11px] font-semibold tracking-[0.14em] rounded-full opacity-60 hover:opacity-100"
+            className="h-7 text-[11px] font-semibold tracking-[0.14em] rounded-full opacity-60 hover:opacity-100 flex items-center gap-1.5"
           >
-            {showVisuals ? "Sembunyikan" : "Tambah Visual"}
+            {showVisuals ? (
+              "Sembunyikan"
+            ) : (
+              <>
+                <Plus className="w-3 h-3" /> Tambah Visual
+              </>
+            )}
           </Button>
         </div>
 
@@ -358,6 +381,7 @@ export function AddLogForm({
               </Label>
               <div className="flex flex-col gap-3">
                 <Input
+                  ref={fileInputRef}
                   type="file"
                   multiple
                   accept="image/*"
@@ -378,12 +402,23 @@ export function AddLogForm({
                           alt={`preview ${idx}`}
                           className="w-full h-full object-cover transition-transform group-hover:scale-110"
                         />
+                        <button
+                          type="button"
+                          onClick={() => removeImage(idx)}
+                          className="absolute inset-0 bg-destructive/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
                       </div>
                     ))}
                     {imagePreviews.length < 5 && (
-                      <div className="w-16 h-16 rounded-lg border-2 border-dashed border-border/30 flex items-center justify-center text-muted-foreground/30">
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="w-16 h-16 rounded-lg border-2 border-dashed border-border/30 flex items-center justify-center text-muted-foreground/30 hover:bg-muted/20 hover:border-border transition-all"
+                      >
                         <Plus className="w-5 h-5" />
-                      </div>
+                      </button>
                     )}
                   </div>
                 )}

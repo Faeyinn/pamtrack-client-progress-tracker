@@ -110,7 +110,7 @@ export default function EditProjectPage() {
 
       {/* Header */}
       <header className="bg-background/40 backdrop-blur-2xl border-b border-border/40 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6" data-aos="fade-down">
           <div className="flex items-center justify-between relative z-10">
             <div className="flex items-center gap-6">
               <Link
@@ -153,7 +153,7 @@ export default function EditProjectPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10">
-        <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
+        <div data-aos="fade-up" data-aos-delay="200">
           <EditProjectForm project={project} />
         </div>
       </main>

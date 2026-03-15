@@ -133,7 +133,12 @@ export function ActivityFeed() {
               const Icon = config.icon;
 
               return (
-                <div key={activity.id} className="flex gap-5 group relative">
+                <div 
+                  key={activity.id} 
+                  data-aos="fade-up"
+                  data-aos-delay={index * 50}
+                  className="flex gap-5 group relative"
+                >
                   {/* Timeline Line - Premium Gradient */}
                   <div className="flex flex-col items-center">
                     <div

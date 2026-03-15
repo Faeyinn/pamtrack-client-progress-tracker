@@ -9,7 +9,7 @@ export function AosInit() {
     AOS.init({
       duration: 700,
       easing: "ease-out-cubic",
-      once: false,
+      once: true,
       offset: 72,
       mirror: false,
     });

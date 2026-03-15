@@ -36,8 +36,9 @@ export function TimelineItem({ log, isLatest, index }: TimelineItemProps) {
 
   return (
     <div
-      className="relative flex gap-4 sm:gap-6 group animate-in fade-in-50 slide-in-from-left-4"
-      style={{ animationDelay: `${index * 100}ms`, animationFillMode: "both" }}
+      className="relative flex gap-4 sm:gap-6 group"
+      data-aos="fade-left"
+      data-aos-delay={index * 100}
     >
       {/* Percentage/Status Indicator */}
       <div className="relative flex-shrink-0 z-10">

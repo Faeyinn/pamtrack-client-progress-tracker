@@ -1,3 +1,4 @@
+import React from "react";
 import { cn } from "@/lib/utils";
 
 const COLORS = [
@@ -10,7 +11,7 @@ const COLORS = [
 const ROWS = Array.from({ length: 34 });
 const COLS = Array.from({ length: 18 });
 
-export function Boxes({
+export const Boxes = React.memo(function Boxes({
   className,
   ...rest
 }: React.HTMLAttributes<HTMLDivElement>) {
@@ -62,4 +63,4 @@ export function Boxes({
       ))}
     </div>
   );
-}
+});
