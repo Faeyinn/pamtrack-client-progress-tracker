@@ -1,214 +1,132 @@
-# Client Progress Tracker (PAM Techno)
+# 🚀 PAMTrack: Client Progress Tracker
 
-Platform untuk memantau progres proyek klien secara real-time, lengkap dengan dashboard admin, magic link berbasis token, feedback klien, dan notifikasi WhatsApp.
+[![Next.js](https://img.shields.io/badge/Next.js-16.1-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-7.2-2D3748?style=flat-square&logo=prisma)](https://www.prisma.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
 
-![Version](https://img.shields.io/badge/version-0.1.0-blue)
-![Next.js](https://img.shields.io/badge/Next.js-16-black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
-![Tailwind](https://img.shields.io/badge/Tailwind-4-0ea5e9)
-![Prisma](https://img.shields.io/badge/Prisma-7.2.0-2d3748)
-![License](https://img.shields.io/badge/license-not%20specified-lightgrey)
-
----
-
-## Deskripsi
-
-Client Progress Tracker membantu tim PAM Techno mengelola proyek dan memberikan akses tracking yang mudah untuk klien.
-
-Masalah yang diselesaikan:
-
-- Klien kesulitan memantau progres tanpa update manual.
-- Admin membutuhkan cara cepat untuk mencatat log progres, membagikan progress link, dan menerima feedback.
+**PAMTrack** adalah platform manajemen progres proyek modern yang dirancang untuk menjembatani komunikasi antara tim pengembang (**PAM Techno**) dan klien. Platform ini memberikan transparansi penuh melalui pelacakan progres real-time tanpa perlu login bagi klien.
 
 ---
 
-## Fitur
+## ✨ Fitur Utama
 
-Sisi Admin:
+### 👨‍💼 Dashboard Admin (Internal)
+- **Analytics Overview**: Visualisasi statistik proyek aktif, selesai, dan total beban kerja.
+- **Project Management (CRUD)**: Kelola data proyek dengan sistem *auto-generate magic token*.
+- **Multi-Phase Tracking**: Sistem pelacakan dua fase utama: *Development* dan *Maintenance*.
+- **Timeline Logs**: Pencatatan log progres mendetail disertai persentase dan deskripsi visual.
+- **Feedback Management**: Pantau dan respon masukan langsung dari klien di setiap proyek.
 
-- Login admin (cookie session).
-- Dashboard ringkas untuk melihat status proyek dan progres terakhir.
-- CRUD proyek + auto-generate token (magic link).
-- Timeline progres (project logs) dengan persentase.
-- Feedback klien tampil di detail proyek.
-
-Sisi Klien (Public):
-
-- Tracking via token atau magic link.
-- Timeline progress dalam tampilan yang mudah dibaca.
-- Form feedback.
-- Token recovery (kirim ulang link via WhatsApp jika nomor terdaftar).
-
----
-
-## Tech Stack
-
-- Next.js (App Router)
-- React + TypeScript
-- Tailwind CSS + shadcn/ui
-- PostgreSQL
-- Prisma (adapter pg)
-- WhatsApp gateway via Fonnte
+### 👤 Portal Klien (Public)
+- **Magic Link Access**: Akses instan ke dashboard tracking tanpa perlu registrasi atau login.
+- **Interactive Timeline**: Visualisasi perjalanan proyek dari inisiasi hingga serah terima.
+- **Discussion Archive**: Akses cepat ke artefak diskusi seperti wireframe, user flow, dan dokumen desain.
+- **Instant Feedback**: Form komunikasi langsung untuk memberikan catatan pada setiap milestone.
+- **Token Recovery**: Sistem pemulihan link otomatis yang dikirimkan langsung ke WhatsApp klien via Fonnte.
 
 ---
 
-## Instalasi (Local Development)
+## 🛠️ Tech Stack
 
-Prasyarat:
+- **Framework**: [Next.js 16 (App Router)](https://nextjs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) & [shadcn/ui](https://ui.shadcn.com/)
+- **Database & ORM**: [PostgreSQL](https://www.postgresql.org/) & [Prisma](https://www.prisma.io/)
+- **Animation**: [Framer Motion](https://www.framer.com/motion/) & [AOS](https://michalsnik.github.io/aos/)
+- **Integrasi**:
+    - **Cloudinary**: Cloud storage untuk aset gambar dan dokumen.
+    - **Fonnte**: Gateway API untuk notifikasi WhatsApp dan pemulihan token.
 
+---
+
+## 🚀 Memulai (Local Development)
+
+### Prasyarat
 - Node.js 18+
 - pnpm
-- PostgreSQL
+- PostgreSQL instance
 
-Langkah:
+### Langkah Instalasi
 
-1) Install dependencies
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/username/pamtrack-client-progress-tracker.git
+   cd pamtrack-client-progress-tracker
+   ```
 
-```bash
-pnpm install
-```
+2. **Install Dependensi**
+   ```bash
+   pnpm install
+   ```
 
-2) Siapkan environment variables
+3. **Konfigurasi Environment**
+   Salin `.env.example` menjadi `.env` dan isi variabel yang diperlukan:
+   ```env
+   DATABASE_URL="postgresql://user:password@localhost:5432/pamtrack"
+   FONNTE_API_KEY="your_api_key"
+   CLOUDINARY_URL="your_cloudinary_url"
+   ```
 
-Buat file `.env` di root project dan isi minimal:
+4. **Setup Database**
+   ```bash
+   pnpm db:migrate
+   pnpm db:seed
+   ```
 
-```env
-DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/client_progress_tracker"
-
-FONNTE_API_KEY="your-fonnte-api-key"
-FONNTE_API_URL="https://api.fonnte.com/send"
-FONNTE_TIMEOUT_MS="15000"
-```
-
-3) Setup database
-
-```bash
-pnpm db:generate
-pnpm db:migrate
-pnpm db:seed
-```
-
-4) Jalankan dev server
-
-```bash
-pnpm dev
-```
-
-Lalu buka `http://localhost:3000`.
+5. **Jalankan Server**
+   ```bash
+   pnpm dev
+   ```
+   Akses aplikasi di [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## Usage
+## 📂 Struktur Proyek Utama
 
-Halaman utama:
-
-- Landing: `/`
-- Admin login: `/admin/login`
-- Admin dashboard: `/admin/dashboard`
-- Public tracking: `/track/[token]`
-
-Seed default (development):
-
-- `pnpm db:seed` membuat admin user `jaeyi` dengan password `jaeyipam` dan 1 sample project (token akan diprint di console).
-- Untuk production, ganti kredensial ini dan/atau buat user admin baru di database.
-
-Script penting:
-
-```bash
-pnpm dev        # start dev server
-pnpm build      # build production
-pnpm start      # run production build
-pnpm lint       # eslint
-
-pnpm db:generate
-pnpm db:migrate
-pnpm db:push
-pnpm db:seed
-pnpm db:studio
+```text
+├── app/                # Next.js App Router (Pages & API)
+│   ├── admin/          # Dashboard Internal (Protected)
+│   ├── track/          # Portal Klien (Public Tracking)
+│   └── api/            # Backend API Endpoints
+├── components/         # Reusable UI Components
+│   ├── admin/          # Komponen khusus Dashboard Admin
+│   ├── track/          # Komponen khusus Portal Klien
+│   └── ui/             # Base UI components (shadcn)
+├── lib/                # Business Logic & Utilities
+├── prisma/             # Database Schema & Seed scripts
+└── public/             # Static Assets
 ```
 
 ---
 
-## Konfigurasi
+## 📝 Script Tersedia
 
-Environment variables:
-
-| Variable | Wajib | Deskripsi |
-| --- | --- | --- |
-| `DATABASE_URL` | Ya | Connection string PostgreSQL (digunakan oleh Prisma + pg pool). |
-| `FONNTE_API_KEY` | Tidak | API key untuk pengiriman WhatsApp via Fonnte. |
-| `FONNTE_API_URL` | Tidak | Endpoint Fonnte (default: `https://api.fonnte.com/send`). |
-| `FONNTE_TIMEOUT_MS` | Tidak | Timeout request (default: 15000 ms). |
+- `pnpm dev`: Menjalankan server pengembangan.
+- `pnpm build`: Membangun aplikasi untuk produksi.
+- `pnpm start`: Menjalankan aplikasi hasil build.
+- `pnpm lint`: Menjalankan pengecekan ESLint.
+- `pnpm db:studio`: Membuka GUI Prisma Studio untuk mengelola database.
 
 ---
 
-## API
+## 🔐 Keamanan & Autentikasi
 
-Auth:
-
-- `POST /api/auth/login`
-- `POST /api/auth/logout`
-
-Projects:
-
-- `GET /api/projects`
-- `POST /api/projects`
-- `GET /api/projects/[id]`
-- `PUT /api/projects/[id]`
-- `DELETE /api/projects/[id]`
-
-Logs & feedback:
-
-- `GET /api/projects/[id]/logs`
-- `POST /api/projects/[id]/logs`
-- `GET /api/projects/[id]/feedbacks`
-
-Public tracking:
-
-- `GET /api/track/[token]`
-- `POST /api/track/validate`
-- `POST /api/track/recovery`
-- `POST /api/track/[token]/feedback`
+- **Session-Based**: Area admin diamankan menggunakan cookie session.
+- **Magic Tokens**: Akses klien menggunakan token unik (UUID) yang sulit ditebak.
+- **Input Sanitization**: Semua input divalidasi pada level API sebelum diproses ke database.
 
 ---
 
-## Database
+## 📄 Lisensi
 
-Schema Prisma ada di [prisma/schema.prisma](prisma/schema.prisma).
-
-Tabel utama:
-
-- `users` (admin)
-- `projects`
-- `project_logs`
-- `client_feedbacks`
+Proyek ini dikembangkan untuk kebutuhan internal **PAM Techno**. Hak cipta dilindungi.
 
 ---
 
-## Dokumentasi
+## 📧 Kontak & Dukungan
 
-- Alur sistem: [docs/flow-system.md](docs/flow-system.md)
-- Struktur halaman: [docs/pages-structure.md](docs/pages-structure.md)
-- Struktur project: [PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md)
-
----
-
-## Contributing
-
-Kontribusi dipersilakan.
-
-1) Buat branch fitur: `git checkout -b feature/nama-fitur`
-2) Pastikan lulus lint: `pnpm lint`
-3) Buat PR dengan deskripsi jelas dan langkah testing
-
----
-
-## License
-
-Repository ini belum menyertakan file lisensi. Jika proyek ini akan dipublikasikan, tambahkan file LICENSE dan perbarui badge/section ini.
-
----
-
-## Support
-
-- Email: fajar.saputra2907@gmail.com
+- **Developer**: Rahmat Fajar Saputra
+- **Email**: fajar.saputra2907@gmail.com
+- **Website**: [PAM Techno](https://pam-techno.id)
